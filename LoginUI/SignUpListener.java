@@ -19,7 +19,7 @@ public class SignUpListener implements ActionListener {
        SignUpManager signUp = new SignUpManager();
        if(signUp.accountChecker(userNameField.getText(), passwordField.getText())){
         JOptionPane.showMessageDialog(frame, "Account witht these already exists, please LogIn");
-       }else if(signUp.accountChecker(userNameField.getText())){
+       }else if(signUp.usernameChecker(userNameField.getText())){
         JOptionPane.showMessageDialog(frame, "Sorry an account with this userName already exists, choose another One");
        }else{
         signUp.accountCreator(userNameField.getText(), passwordField.getText());

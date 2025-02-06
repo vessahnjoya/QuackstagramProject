@@ -2,12 +2,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class SignInVerification {
+public class SignInManager {
 
       public boolean login(String userName, String password){
 
         try{
-            FileReader fileReader = new FileReader("Users.txt");
+            FileReader fileReader = new FileReader("data/users.txt");
             try (Scanner scannerReader = new Scanner(fileReader)) {
                 while(scannerReader.hasNextLine()){ 
                     String[] credentials = scannerReader.nextLine().split(",", 2);

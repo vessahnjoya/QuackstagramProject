@@ -7,7 +7,7 @@ public class SignUpManager {
 
     public boolean accountChecker(String userName, String password) {
         try {
-            FileReader fileReader = new FileReader("Users.txt");
+            FileReader fileReader = new FileReader("data/users.txt");
             try (Scanner scannerReader = new Scanner(fileReader)) {
                 while (scannerReader.hasNextLine()) {
                     String[] credentials = scannerReader.nextLine().split(",", 2);
@@ -23,9 +23,9 @@ public class SignUpManager {
         return false;
     }
 
-    public boolean accountChecker(String userName) {
+    public boolean usernameChecker(String userName) {
         try {
-            FileReader fileReader = new FileReader("Users.txt");
+            FileReader fileReader = new FileReader("data/users.txt");
             try (Scanner scannerReader = new Scanner(fileReader)) {
                 while (scannerReader.hasNextLine()) {
                     String[] credentials = scannerReader.nextLine().split(",", 2);
@@ -44,9 +44,8 @@ public class SignUpManager {
     }
 
     public void accountCreator(String userName, String password) {
-        try (FileWriter fileWriter = new FileWriter("Users.txt", true)) {
+        try (FileWriter fileWriter = new FileWriter("data/users.txt", true)) {
             fileWriter.write(userName + "," + password + System.getProperty("line.separator"));
-            System.out.println("Data successfully written to file");
         } catch (IOException error) {
             System.out.println(error.getMessage());
         }
