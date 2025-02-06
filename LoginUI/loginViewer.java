@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class loginViewer {
- main
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         // frame.getContentPane().setBackground(Color.black);
