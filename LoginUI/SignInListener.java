@@ -1,6 +1,5 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -20,7 +19,7 @@ public class SignInListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
        
-        SignInVerification signIn = new SignInVerification();
+        SignInManager signIn = new SignInManager();
         if(signIn.login(userNameField.getText(), passwordField.getText())){
             JOptionPane.showMessageDialog(frame, "LogIn Succesfull");
         }else{
