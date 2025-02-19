@@ -1,4 +1,6 @@
+package UI;
 import javax.swing.*;
+import User.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;

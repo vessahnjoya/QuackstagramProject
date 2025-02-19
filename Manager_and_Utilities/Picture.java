@@ -1,8 +1,9 @@
+package Manager_and_Utilities;
 import java.util.List;
 import java.util.ArrayList;
 
 // Represents a picture on Quackstagram
-class Picture {
+ public class Picture {    //public to handle error in User package
     private String imagePath;
     private String caption;
     private int likesCount;

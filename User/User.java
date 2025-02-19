@@ -1,8 +1,10 @@
+package User;
+import Manager_and_Utilities.*;
 import java.util.List;
 import java.util.ArrayList;
 
 // Represents a user on Quackstagram
-class User {
+ public class User {   // public to solve error in UI classes due to visibility
     private String username;
     private String bio;
     private String password;
