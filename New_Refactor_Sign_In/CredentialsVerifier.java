@@ -6,13 +6,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import User.*;
+import Hasher.*;
 public class CredentialsVerifier {
     private User verifyCredentials(String username, String password){
         try(BufferedReader reader  = new BufferedReader(new FileReader("data/credentials.txt"))){
             String line;
+            AffineCipher passwordDecrypterCipher = new AffineCipher(password);
             while((line = reader.readLine()) != null){
                 String[] credentials = line.split(":");
-                if(credentials[0].equals(username) && credentials[1].equals(password)){
+                if(credentials[0].equals(username) && credentials[1].equals(passwordDecrypterCipher.encrypt())){
                     String bio = credentials[2];
 
                     return new User(username, bio, password);
