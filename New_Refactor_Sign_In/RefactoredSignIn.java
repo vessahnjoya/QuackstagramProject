@@ -1,11 +1,9 @@
 package New_Refactor_Sign_In;
+import Refactor_UI.*;
+import User.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-
-import User.*;
-import Refactor_UI.*;
-import UI.*;
 
 public class RefactoredSignIn extends JFrame {
 
@@ -59,7 +57,6 @@ private void initializeUI(){
 
         return headerPanel;
     }
-
 
     private Component buttonPanel(){
         buttonPanel = new JPanel(new GridLayout(2, 1, 10, 10)); // Grid layout with 1 row, 2 columns
@@ -133,7 +130,7 @@ private void initializeUI(){
         btnSignIn.addActionListener(this::onSignInClicked);
 
         btnSignIn.setForeground(Color.BLACK);
-        btnSignIn.setBackground(Color.WHITE);
+        btnSignIn.setBackground(new Color(255, 90, 95));
 
         btnSignIn.setFocusPainted(false);
         btnSignIn.setBorderPainted(false);
@@ -194,43 +191,14 @@ private void onRegisterNowClicked(ActionEvent event) {
 
     // Open the SignUpUI frame
     SwingUtilities.invokeLater(() -> {
-        SignUpUI signUpFrame = new SignUpUI();
+        RefactoredSignUp signUpFrame = new RefactoredSignUp();
         signUpFrame.setVisible(true);
     });
 }
 
-/*private boolean verifyCredentials(String username, String password) {
-    try (BufferedReader reader = new BufferedReader(new FileReader("data/credentials.txt"))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] credentials = line.split(":");
-            if (credentials[0].equals(username) && credentials[1].equals(password)) {
-            String bio = credentials[2];
-            // Create User object and save information
-        newUser = new User(username, bio, password); // Assuming User constructor takes these parameters
-        saveUserInformation(newUser);
-    
-                return true;
-            }
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    return false;
-} */
-
-   /*private void saveUserInformation(User user) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/users.txt", false))) {
-            writer.write(user.toString());  // Implement a suitable toString method in User class
-        } 
-            catch (IOException e) {
-                e.printStackTrace();
-        }
-    }*/
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            SignInUI frame = new SignInUI();
+            RefactoredSignIn frame = new RefactoredSignIn();
             frame.setVisible(true);
         });
     }
