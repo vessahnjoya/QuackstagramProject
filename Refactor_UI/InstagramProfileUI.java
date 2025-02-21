@@ -1,6 +1,6 @@
-package UI;
-import javax.swing.*;
+package Refactor_UI;
 import User.*;
+import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -8,21 +8,17 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.awt.*;
 import java.nio.file.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+
 import java.util.stream.Stream;
 
 
 
-public class InstagramProfileUI extends JFrame {
+public class InstagramProfileUI extends BaseUI {
 
     private static final int WIDTH = 300;
     private static final int HEIGHT = 500;
     private static final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
     private static final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
-    private static final int NAV_ICON_SIZE = 20; // Corrected static size for bottom icons
     private JPanel contentPanel; // Panel to display the image grid or the clicked image
     private JPanel headerPanel;   // Panel for the header
     private JPanel navigationPanel; // Panel for the navigation
@@ -325,24 +321,7 @@ headerPanel.add(profileNameAndBioPanel);
     
     
     private JPanel createNavigationPanel() {
-        // Navigation Bar
-        JPanel navigationPanel = new JPanel();
-        navigationPanel.setBackground(new Color(249, 249, 249));
-        navigationPanel.setLayout(new BoxLayout(navigationPanel, BoxLayout.X_AXIS));
-        navigationPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-        navigationPanel.add(createIconButton("img/icons/home.png", "home"));
-        navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(createIconButton("img/icons/search.png","explore"));
-        navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(createIconButton("img/icons/add.png","add"));
-        navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(createIconButton("img/icons/heart.png","notification"));
-        navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(createIconButton("img/icons/profile.png", "profile"));
-
-        return navigationPanel;
-
+        return super.BaseCreateNavigationPanel();
     }
 
 private void initializeImageGrid() {
@@ -409,63 +388,28 @@ private void initializeImageGrid() {
     }
 
     private JButton createIconButton(String iconPath, String buttonType) {
-        ImageIcon iconOriginal = new ImageIcon(iconPath);
-        Image iconScaled = iconOriginal.getImage().getScaledInstance(NAV_ICON_SIZE, NAV_ICON_SIZE, Image.SCALE_SMOOTH);
-        JButton button = new JButton(new ImageIcon(iconScaled));
-        button.setBorder(BorderFactory.createEmptyBorder());
-        button.setContentAreaFilled(false);
-    
-        // Define actions based on button type
-        if ("home".equals(buttonType)) {
-            button.addActionListener(e -> openHomeUI());
-        } else if ("profile".equals(buttonType)) {
-            //
-        } else if ("notification".equals(buttonType)) {
-            button.addActionListener(e -> notificationsUI());
-        } else if ("explore".equals(buttonType)) {
-            button.addActionListener(e -> exploreUI());
-        } else if ("add".equals(buttonType)) {
-            button.addActionListener(e -> ImageUploadUI());
-        }
-        return button;
-    
-        
+
+        return super.BaseCreateIconButton(iconPath, buttonType);
     }
  
     private void ImageUploadUI() {
-        // Open InstagramProfileUI frame
-        this.dispose();
-        ImageUploadUI upload = new ImageUploadUI();
-        upload.setVisible(true);
+        super.BaseImageUploadUI();
     }
 
     private void openProfileUI() {
-        // Open InstagramProfileUI frame
-        this.dispose();
-        InstagramProfileUI profileUI = new InstagramProfileUI();
-        profileUI.setVisible(true);
+        super.BaseOpenProfileUI();
     }
  
      private void notificationsUI() {
-        // Open InstagramProfileUI frame
-        this.dispose();
-        NotificationsUI notificationsUI = new NotificationsUI();
-        notificationsUI.setVisible(true);
+            super.BaseNotificationsUI();
     }
  
     private void openHomeUI() {
-        // Open InstagramProfileUI frame
-        this.dispose();
-        QuakstagramHomeUI homeUI = new QuakstagramHomeUI();
-        homeUI.setVisible(true);
+        super.BaseOpenHomeUI();
     }
  
     private void exploreUI() {
-        // Open InstagramProfileUI frame
-        this.dispose();
-        ExploreUI explore = new ExploreUI();
-        explore.setVisible(true);
+        super.BaseExploreUI();
     }   
 
-    
 }

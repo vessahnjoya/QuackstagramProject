@@ -1,14 +1,12 @@
-package UI;
+package Refactor_UI;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import User.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -21,7 +19,7 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class QuakstagramHomeUI extends JFrame {
+public class QuakstagramHomeUI extends BaseUI {
     private static final int WIDTH = 300;
     private static final int HEIGHT = 500;
     private static final int NAV_ICON_SIZE = 20; // Corrected static size for bottom icons
@@ -296,14 +294,14 @@ private String[][] createSampleData() {
     return sampleData;
 }
 
-    private JButton createIconButton(String iconPath) {
-        ImageIcon iconOriginal = new ImageIcon(iconPath);
-        Image iconScaled = iconOriginal.getImage().getScaledInstance(NAV_ICON_SIZE, NAV_ICON_SIZE, Image.SCALE_SMOOTH);
-        JButton button = new JButton(new ImageIcon(iconScaled));
-        button.setBorder(BorderFactory.createEmptyBorder());
-        button.setContentAreaFilled(false);
-        return button;
-    }
+    // private JButton createIconButton(String iconPath) {
+    //     ImageIcon iconOriginal = new ImageIcon(iconPath);
+    //     Image iconScaled = iconOriginal.getImage().getScaledInstance(NAV_ICON_SIZE, NAV_ICON_SIZE, Image.SCALE_SMOOTH);
+    //     JButton button = new JButton(new ImageIcon(iconScaled));
+    //     button.setBorder(BorderFactory.createEmptyBorder());
+    //     button.setContentAreaFilled(false);
+    //     return button;
+    // }
 
     private void displayImage(String[] postData) {
         imageViewPanel.removeAll(); // Clear previous content
@@ -387,75 +385,27 @@ private String[][] createSampleData() {
     }
 
     private JButton createIconButton(String iconPath, String buttonType) {
-        ImageIcon iconOriginal = new ImageIcon(iconPath);
-        Image iconScaled = iconOriginal.getImage().getScaledInstance(NAV_ICON_SIZE, NAV_ICON_SIZE, Image.SCALE_SMOOTH);
-        JButton button = new JButton(new ImageIcon(iconScaled));
-        button.setBorder(BorderFactory.createEmptyBorder());
-        button.setContentAreaFilled(false);
- 
-        // Define actions based on button type
-        if ("home".equals(buttonType)) {
-            button.addActionListener(e -> openHomeUI());
-        } else if ("profile".equals(buttonType)) {
-            button.addActionListener(e -> openProfileUI());
-        } else if ("notification".equals(buttonType)) {
-            button.addActionListener(e -> notificationsUI());
-        } else if ("explore".equals(buttonType)) {
-            button.addActionListener(e -> exploreUI());
-        } else if ("add".equals(buttonType)) {
-            button.addActionListener(e -> ImageUploadUI());
-        }
-        return button;
- 
-        
+        return super.BaseCreateIconButton(iconPath, buttonType);
     }
  
     private void openProfileUI() {
-        // Open InstagramProfileUI frame
-        this.dispose();
-        String loggedInUsername = "";
- 
-         // Read the logged-in user's username from users.txt
-     try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-         String line = reader.readLine();
-         if (line != null) {
-             loggedInUsername = line.split(":")[0].trim();
-         }
-     } catch (IOException e) {
-         e.printStackTrace();
-     }
-      User user = new User(loggedInUsername);
-        InstagramProfileUI profileUI = new InstagramProfileUI(user);
-        profileUI.setVisible(true);
+        super.BaseOpenProfileUI();
     }
  
      private void notificationsUI() {
-        // Open InstagramProfileUI frame
-        this.dispose();
-        NotificationsUI notificationsUI = new NotificationsUI();
-        notificationsUI.setVisible(true);
+       super.BaseNotificationsUI();
     }
 
     private void ImageUploadUI() {
-        // Open InstagramProfileUI frame
-        this.dispose();
-        ImageUploadUI upload = new ImageUploadUI();
-        upload.setVisible(true);
+      super.BaseImageUploadUI();
     }
  
     private void openHomeUI() {
-        // Open InstagramProfileUI frame
-        this.dispose();
-        QuakstagramHomeUI homeUI = new QuakstagramHomeUI();
-        homeUI.setVisible(true);
+        super.BaseOpenHomeUI();
     }
  
     private void exploreUI() {
-        // Open InstagramProfileUI frame
-        this.dispose();
-        ExploreUI explore = new ExploreUI();
-        explore.setVisible(true);
+        super.BaseExploreUI();
     }
-
 
 }
