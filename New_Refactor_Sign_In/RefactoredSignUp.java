@@ -1,4 +1,5 @@
 package New_Refactor_Sign_In;
+import Hasher.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -212,7 +213,7 @@ public class RefactoredSignUp extends JFrame {
 
         registerUser(username, password, bio);
         openSignInUI();
-    }
+    } 
 
     private void showErrorMessage(String message){
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
@@ -261,7 +262,8 @@ public class RefactoredSignUp extends JFrame {
     
     private void saveCredentials(String username, String password, String bio) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/credentials.txt", true))) {
-            writer.write(username + ":" + password + ":" + bio);
+            AffineCipher passwordHasher = new AffineCipher(password);
+            writer.write(username + ":" + passwordHasher.encrypt() + ":" + bio);
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
