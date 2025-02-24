@@ -2,6 +2,9 @@ package Refactor_UI;
 
 import User.*;
 import javax.swing.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -187,6 +190,15 @@ public class InstagramProfileUI extends BaseUI {
         JButton followButton;
         if (isCurrentUser) {
             followButton = new JButton("Edit Profile");
+            followButton.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                   EditProfileUI(currentUser);
+                }
+                ;
+            });
         } else {
             followButton = new JButton("Follow");
 
@@ -379,6 +391,11 @@ public class InstagramProfileUI extends BaseUI {
         label.setFont(new Font("Arial", Font.BOLD, 12));
         label.setForeground(Color.BLACK);
         return label;
+    }
+
+    private void EditProfileUI(User user){
+        EditProfileUI editProfileUI = new EditProfileUI(user);
+        editProfileUI.setVisible(true);
     }
 
     // private JButton createIconButton(String iconPath, String buttonType) {
