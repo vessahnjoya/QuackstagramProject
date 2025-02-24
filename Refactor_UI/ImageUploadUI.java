@@ -76,7 +76,6 @@ public class ImageUploadUI extends BaseUI {
         add(contentPanel, BorderLayout.CENTER);
         add(navigationPanel, BorderLayout.SOUTH);
     }
-    
 
     private void uploadAction(ActionEvent event) {
         JFileChooser fileChooser = new JFileChooser();
@@ -84,7 +83,7 @@ public class ImageUploadUI extends BaseUI {
         fileChooser.setAcceptAllFileFilterUsed(false);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "png", "jpg", "jpeg");
         fileChooser.addChoosableFileFilter(filter);
-    
+
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
@@ -93,20 +92,20 @@ public class ImageUploadUI extends BaseUI {
                 int imageId = getNextImageId(username);
                 String fileExtension = getFileExtension(selectedFile);
                 String newFileName = username + "_" + imageId + "." + fileExtension;
-    
+
                 Path destPath = Paths.get("img", "uploaded", newFileName);
                 Files.copy(selectedFile.toPath(), destPath, StandardCopyOption.REPLACE_EXISTING);
-    
+
                 // Save the bio and image ID to a text file
                 saveImageInfo(username + "_" + imageId, username, bioTextArea.getText());
-    
+
                 // Load the image from the saved path
                 ImageIcon imageIcon = new ImageIcon(destPath.toString());
-    
+
                 // Check if imagePreviewLabel has a valid size
                 if (imagePreviewLabel.getWidth() > 0 && imagePreviewLabel.getHeight() > 0) {
                     Image image = imageIcon.getImage();
-    
+
                     // Calculate the dimensions for the image preview
                     int previewWidth = imagePreviewLabel.getWidth();
                     int previewHeight = imagePreviewLabel.getHeight();
@@ -117,32 +116,33 @@ public class ImageUploadUI extends BaseUI {
                     double scale = Math.min(widthRatio, heightRatio);
                     int scaledWidth = (int) (scale * imageWidth);
                     int scaledHeight = (int) (scale * imageHeight);
-    
+
                     // Set the image icon with the scaled image
                     imageIcon.setImage(image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH));
                 }
-    
+
                 imagePreviewLabel.setIcon(imageIcon);
-    
+
                 // // Update the flag to indicate that an image has been uploaded
                 // imageUploaded = true;
-    
+
                 // Change the text of the upload button
                 uploadButton.setText("Upload Another Image");
-    
+
                 JOptionPane.showMessageDialog(this, "Image uploaded and preview updated!");
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Error saving image: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error saving image: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-    
+
     private int getNextImageId(String username) throws IOException {
         Path storageDir = Paths.get("img", "uploaded"); // Ensure this is the directory where images are saved
         if (!Files.exists(storageDir)) {
             Files.createDirectories(storageDir);
         }
-    
+
         int maxId = 0;
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(storageDir, username + "_*")) {
             for (Path path : stream) {
@@ -163,22 +163,22 @@ public class ImageUploadUI extends BaseUI {
         }
         return maxId + 1; // Return the next available ID
     }
-    
+
     private void saveImageInfo(String imageId, String username, String bio) throws IOException {
         Path infoFilePath = Paths.get("img", "image_details.txt");
         if (!Files.exists(infoFilePath)) {
             Files.createFile(infoFilePath);
         }
-    
+
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    
+
         try (BufferedWriter writer = Files.newBufferedWriter(infoFilePath, StandardOpenOption.APPEND)) {
-            writer.write(String.format("ImageID: %s, Username: %s, Bio: %s, Timestamp: %s, Likes: 0", imageId, username, bio, timestamp));
+            writer.write(String.format("ImageID: %s, Username: %s, Bio: %s, Timestamp: %s, Likes: 0", imageId, username,
+                    bio, timestamp));
             writer.newLine();
         }
-    
-}
 
+    }
 
     private String getFileExtension(File file) {
         String name = file.getName();
@@ -195,45 +195,44 @@ public class ImageUploadUI extends BaseUI {
         // For example, save the bio text to a file or database
         JOptionPane.showMessageDialog(this, "Caption saved: " + bioText);
     }
-   
+
     private JPanel createHeaderPanel() {
-     return super.BaseCreateHeaderPanel();
-   }
-
-   private String readUsername() throws IOException {
-    Path usersFilePath = Paths.get("data", "users.txt");
-    try (BufferedReader reader = Files.newBufferedReader(usersFilePath)) {
-        String line = reader.readLine();
-        if (line != null) {
-            return line.split(":")[0]; // Extract the username from the first line
-        }
+        return super.BaseCreateHeaderPanel();
     }
-    return null; // Return null if no username is found
-}
 
-   private JPanel createNavigationPanel() {
+    private String readUsername() throws IOException {
+        Path usersFilePath = Paths.get("data", "users.txt");
+        try (BufferedReader reader = Files.newBufferedReader(usersFilePath)) {
+            String line = reader.readLine();
+            if (line != null) {
+                return line.split(":")[0]; // Extract the username from the first line
+            }
+        }
+        return null; // Return null if no username is found
+    }
+
+    private JPanel createNavigationPanel() {
         return super.BaseCreateNavigationPanel();
-   }
-
+    }
 
     // private JButton createIconButton(String iconPath, String buttonType) {
 
-    //     return super.BaseCreateIconButton(iconPath, buttonType);
+    // return super.BaseCreateIconButton(iconPath, buttonType);
     // }
- 
+
     // private void openProfileUI() {
-    //     super.BaseOpenProfileUI();
+    // super.BaseOpenProfileUI();
     // }
- 
-    //  private void notificationsUI() {
-    //     super.BaseNotificationsUI();
+
+    // private void notificationsUI() {
+    // super.BaseNotificationsUI();
     // }
- 
+
     // private void openHomeUI() {
-    //     super.BaseOpenHomeUI();
+    // super.BaseOpenHomeUI();
     // }
- 
+
     // private void exploreUI() {
-    //     super.BaseExploreUI();
+    // super.BaseExploreUI();
     // }
 }

@@ -1,4 +1,5 @@
 package Refactor_UI;
+
 import User.*;
 import javax.swing.*;
 import java.awt.*;
@@ -34,17 +35,17 @@ public class BaseUI extends JFrame {
 
         navigationPanel.add(BaseCreateIconButton("img/icons/home.png", "home"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(BaseCreateIconButton("img/icons/search.png","explore"));
+        navigationPanel.add(BaseCreateIconButton("img/icons/search.png", "explore"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(BaseCreateIconButton("img/icons/add.png","add"));
+        navigationPanel.add(BaseCreateIconButton("img/icons/add.png", "add"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(BaseCreateIconButton("img/icons/heart.png","notification"));
+        navigationPanel.add(BaseCreateIconButton("img/icons/heart.png", "notification"));
         navigationPanel.add(Box.createHorizontalGlue());
         navigationPanel.add(BaseCreateIconButton("img/icons/profile.png", "profile"));
 
-
         return navigationPanel;
     }
+
     @SuppressWarnings("unused")
     public JButton BaseCreateIconButton(String iconPath, String buttonType) {
         ImageIcon iconOriginal = new ImageIcon(iconPath);
@@ -67,14 +68,15 @@ public class BaseUI extends JFrame {
         }
         return button;
 
-
     }
+
     public void BaseImageUploadUI() {
         // Open InstagramProfileUI frame
         this.dispose();
         ImageUploadUI upload = new ImageUploadUI();
         upload.setVisible(true);
     }
+
     public void BaseOpenProfileUI() {
         // Open InstagramProfileUI frame
         this.dispose();
