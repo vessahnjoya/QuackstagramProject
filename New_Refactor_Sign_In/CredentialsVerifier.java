@@ -32,8 +32,9 @@ public class CredentialsVerifier {
     }
     
     public static void saveUserInformation(User user){
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("data/users.txt", false))){
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("data/users.txt", true))){
             writer.write(user.toString());
+            writer.newLine();
         } catch(IOException e){
             e.printStackTrace();
         }
