@@ -45,6 +45,7 @@ public class BaseUI extends JFrame {
 
         return navigationPanel;
     }
+    @SuppressWarnings("unused")
     public JButton BaseCreateIconButton(String iconPath, String buttonType) {
         ImageIcon iconOriginal = new ImageIcon(iconPath);
         Image iconScaled = iconOriginal.getImage().getScaledInstance(NAV_ICON_SIZE, NAV_ICON_SIZE, Image.SCALE_SMOOTH);
@@ -54,7 +55,7 @@ public class BaseUI extends JFrame {
 
         // Define actions based on button type
         if ("home".equals(buttonType)) {
-            button.addActionListener(e -> BaseOpenHomeUI());
+            button.addActionListener(_ -> BaseOpenHomeUI());
         } else if ("profile".equals(buttonType)) {
             button.addActionListener(e -> BaseOpenProfileUI());
         } else if ("notification".equals(buttonType)) {

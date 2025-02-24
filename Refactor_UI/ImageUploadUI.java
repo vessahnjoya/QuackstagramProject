@@ -16,12 +16,12 @@ public class ImageUploadUI extends BaseUI {
 
     private static final int WIDTH = 300;
     private static final int HEIGHT = 500;
-    private static final int NAV_ICON_SIZE = 20; // Size for navigation icons
+    // private static final int NAV_ICON_SIZE = 20; // Size for navigation icons
     private JLabel imagePreviewLabel;
     private JTextArea bioTextArea;
     private JButton uploadButton;
     private JButton saveButton;
-    private boolean imageUploaded = false;
+    // private boolean imageUploaded = false;
 
     public ImageUploadUI() {
         setTitle("Upload Image");
@@ -124,8 +124,8 @@ public class ImageUploadUI extends BaseUI {
     
                 imagePreviewLabel.setIcon(imageIcon);
     
-                // Update the flag to indicate that an image has been uploaded
-                imageUploaded = true;
+                // // Update the flag to indicate that an image has been uploaded
+                // imageUploaded = true;
     
                 // Change the text of the upload button
                 uploadButton.setText("Upload Another Image");
@@ -216,24 +216,24 @@ public class ImageUploadUI extends BaseUI {
    }
 
 
-    private JButton createIconButton(String iconPath, String buttonType) {
+    // private JButton createIconButton(String iconPath, String buttonType) {
 
-        return super.BaseCreateIconButton(iconPath, buttonType);
-    }
+    //     return super.BaseCreateIconButton(iconPath, buttonType);
+    // }
  
-    private void openProfileUI() {
-        super.BaseOpenProfileUI();
-    }
+    // private void openProfileUI() {
+    //     super.BaseOpenProfileUI();
+    // }
  
-     private void notificationsUI() {
-        super.BaseNotificationsUI();
-    }
+    //  private void notificationsUI() {
+    //     super.BaseNotificationsUI();
+    // }
  
-    private void openHomeUI() {
-        super.BaseOpenHomeUI();
-    }
+    // private void openHomeUI() {
+    //     super.BaseOpenHomeUI();
+    // }
  
-    private void exploreUI() {
-        super.BaseExploreUI();
-    }
+    // private void exploreUI() {
+    //     super.BaseExploreUI();
+    // }
 }

@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 public class QuakstagramHomeUI extends BaseUI {
     private static final int WIDTH = 300;
     private static final int HEIGHT = 500;
-    private static final int NAV_ICON_SIZE = 20; // Corrected static size for bottom icons
+    // private static final int NAV_ICON_SIZE = 20; // Corrected static size for bottom icons
     private static final int IMAGE_WIDTH = WIDTH - 100; // Width for the image posts
     private static final int IMAGE_HEIGHT = 150; // Height for the image posts
     private static final Color LIKE_BUTTON_COLOR = new Color(255, 90, 95); // Color for the like button
@@ -388,24 +388,24 @@ private String[][] createSampleData() {
         return super.BaseCreateIconButton(iconPath, buttonType);
     }
  
-    private void openProfileUI() {
-        super.BaseOpenProfileUI();
-    }
+    // private void openProfileUI() {
+    //     super.BaseOpenProfileUI();
+    // }
  
-     private void notificationsUI() {
-       super.BaseNotificationsUI();
-    }
+    //  private void notificationsUI() {
+    //    super.BaseNotificationsUI();
+    // }
 
-    private void ImageUploadUI() {
-      super.BaseImageUploadUI();
-    }
+    // private void ImageUploadUI() {
+    //   super.BaseImageUploadUI();
+    // }
  
-    private void openHomeUI() {
-        super.BaseOpenHomeUI();
-    }
+    // private void openHomeUI() {
+    //     super.BaseOpenHomeUI();
+    // }
  
-    private void exploreUI() {
-        super.BaseExploreUI();
-    }
+    // private void exploreUI() {
+    //     super.BaseExploreUI();
+    // }
 
 }
