@@ -107,18 +107,18 @@ public class InstagramProfileUI extends BaseUI {
     }
 
 
-      public InstagramProfileUI() {
+    //   public InstagramProfileUI() {
 
-        setTitle("DACS Profile");
-        setSize(WIDTH, HEIGHT);
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-        contentPanel = new JPanel();
-        headerPanel = createHeaderPanel();       // Initialize header panel
-        navigationPanel = createNavigationPanel(); // Initialize navigation panel
-        initializeUI();
-    }
+    //     setTitle("DACS Profile");
+    //     setSize(WIDTH, HEIGHT);
+    //     setMinimumSize(new Dimension(WIDTH, HEIGHT));
+    //     setDefaultCloseOperation(EXIT_ON_CLOSE);
+    //     setLayout(new BorderLayout());
+    //     contentPanel = new JPanel();
+    //     headerPanel = createHeaderPanel();       // Initialize header panel
+    //     navigationPanel = createNavigationPanel(); // Initialize navigation panel
+    //     initializeUI();
+    // }
 
     private void initializeUI() {
         getContentPane().removeAll(); // Clear existing components
@@ -134,6 +134,7 @@ public class InstagramProfileUI extends BaseUI {
         repaint();
     }
 
+    @SuppressWarnings("unused")
     private JPanel createHeaderPanel() {
         boolean isCurrentUser = false;
         String loggedInUsername = "";
@@ -359,6 +360,7 @@ private void initializeImageGrid() {
 
 
 
+    @SuppressWarnings("unused")
     private void displayImage(ImageIcon imageIcon) {
         contentPanel.removeAll(); // Remove existing content
         contentPanel.setLayout(new BorderLayout()); // Change layout for image display
@@ -387,29 +389,29 @@ private void initializeImageGrid() {
         return label;
     }
 
-    private JButton createIconButton(String iconPath, String buttonType) {
+    // private JButton createIconButton(String iconPath, String buttonType) {
 
-        return super.BaseCreateIconButton(iconPath, buttonType);
-    }
+    //     return super.BaseCreateIconButton(iconPath, buttonType);
+    // }
  
-    private void ImageUploadUI() {
-        super.BaseImageUploadUI();
-    }
+    // private void ImageUploadUI() {
+    //     super.BaseImageUploadUI();
+    // }
 
-    private void openProfileUI() {
-        super.BaseOpenProfileUI();
-    }
+    // private void openProfileUI() {
+    //     super.BaseOpenProfileUI();
+    // }
  
-     private void notificationsUI() {
-            super.BaseNotificationsUI();
-    }
+    //  private void notificationsUI() {
+    //         super.BaseNotificationsUI();
+    // }
  
-    private void openHomeUI() {
-        super.BaseOpenHomeUI();
-    }
+    // private void openHomeUI() {
+    //     super.BaseOpenHomeUI();
+    // }
  
-    private void exploreUI() {
-        super.BaseExploreUI();
-    }   
+    // private void exploreUI() {
+    //     super.BaseExploreUI();
+    // }   
 
 }

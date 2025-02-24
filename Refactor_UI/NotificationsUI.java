@@ -53,6 +53,7 @@ public class NotificationsUI extends BaseUI {
         if (parts[0].trim().equals(currentUsername)) {
             // Format the notification message
             String userWhoLiked = parts[1].trim();
+            @SuppressWarnings("unused")
             String imageId = parts[2].trim();
             String timestamp = parts[3].trim();
             String notificationMessage = userWhoLiked + " liked your picture - " + getElapsedTime(timestamp) + " ago";
@@ -108,29 +109,29 @@ private String getElapsedTime(String timestamp) {
         return super.BaseCreateNavigationPanel();
     }
 
-    private JButton createIconButton(String iconPath, String buttonType) {
-        return super.BaseCreateIconButton(iconPath, buttonType);
-    }
+//     private JButton createIconButton(String iconPath, String buttonType) {
+//         return super.BaseCreateIconButton(iconPath, buttonType);
+//     }
  
-    private void ImageUploadUI() {
-        super.BaseImageUploadUI();
-    }
+//     private void ImageUploadUI() {
+//         super.BaseImageUploadUI();
+//     }
 
 
- private void openProfileUI() {
-        super.BaseOpenProfileUI();
- }
+//  private void openProfileUI() {
+//         super.BaseOpenProfileUI();
+//  }
  
-     private void notificationsUI() {
-        super.BaseNotificationsUI();
-    }
+//      private void notificationsUI() {
+//         super.BaseNotificationsUI();
+//     }
  
-    private void openHomeUI() {
-        super.BaseOpenHomeUI();
-    }
+//     private void openHomeUI() {
+//         super.BaseOpenHomeUI();
+//     }
 
-    private void exploreUI() {
-        super.BaseExploreUI();
-    }
+//     private void exploreUI() {
+//         super.BaseExploreUI();
+//     }
 
 }

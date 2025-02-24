@@ -20,7 +20,7 @@ public class ExploreUI extends BaseUI {
 
     private static final int WIDTH = 300;
     private static final int HEIGHT = 500;
-    private static final int NAV_ICON_SIZE = 20; // Size for navigation icons
+    // private static final int NAV_ICON_SIZE = 20; // Size for navigation icons
     private static final int IMAGE_SIZE = WIDTH / 3; // Size for each image in the grid
 
     public ExploreUI() {
@@ -66,6 +66,7 @@ public class ExploreUI extends BaseUI {
     // Load images from the uploaded folder
     File imageDir = new File("img/uploaded");
     if (imageDir.exists() && imageDir.isDirectory()) {
+        @SuppressWarnings("unused")
         File[] imageFiles = imageDir.listFiles((dir, name) -> name.matches(".*\\.(png|jpg|jpeg)"));
         if (imageFiles != null) {
             for (File imageFile : imageFiles) {
@@ -103,7 +104,8 @@ public class ExploreUI extends BaseUI {
         return super.BaseCreateNavigationPanel();
    }
 
-   private void displayImage(String imagePath) {
+   @SuppressWarnings("unused")
+private void displayImage(String imagePath) {
     getContentPane().removeAll();
     setLayout(new BorderLayout());
 
@@ -224,28 +226,28 @@ topPanel.add(timeLabel, BorderLayout.EAST);
  repaint();
 }
 
-private JButton createIconButton(String iconPath, String buttonType) {
+// private JButton createIconButton(String iconPath, String buttonType) {
 
-    return super.BaseCreateIconButton(iconPath, buttonType);
-}
+//     return super.BaseCreateIconButton(iconPath, buttonType);
+// }
 
-private void ImageUploadUI() {
-        super.BaseImageUploadUI();
-}
-   private void openProfileUI() {
-        super.BaseOpenProfileUI();
-   }
+// private void ImageUploadUI() {
+//         super.BaseImageUploadUI();
+// }
+//    private void openProfileUI() {
+//         super.BaseOpenProfileUI();
+//    }
 
-    private void notificationsUI() {
-     super.BaseNotificationsUI();
-   }
+//     private void notificationsUI() {
+//      super.BaseNotificationsUI();
+//    }
 
-   private void openHomeUI() {
-   super.BaseOpenHomeUI();
-   }
+//    private void openHomeUI() {
+//    super.BaseOpenHomeUI();
+//    }
 
-   private void exploreUI() {
-       super.BaseExploreUI();
-   }   
+//    private void exploreUI() {
+//        super.BaseExploreUI();
+//    }   
  
 }
