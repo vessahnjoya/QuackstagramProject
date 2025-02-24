@@ -170,6 +170,7 @@ private void initializeUI(){
     String enteredPassword = txtPassword.getText();
     System.out.println(enteredUsername + " <-> " + enteredPassword);
     newUser = credentialsVerifier.authenticate(enteredUsername, enteredPassword);
+    
     if(newUser != null){
     System.out.println("It worked");
          // Close the SignUpUI frame

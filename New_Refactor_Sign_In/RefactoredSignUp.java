@@ -1,5 +1,6 @@
 package New_Refactor_Sign_In;
 import Hasher.*;
+import User.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,8 @@ public class RefactoredSignUp extends JFrame {
     private JLabel lblPhoto;
     private JLabel lblRegister;
 
+    private User newUser;
+    
     private final String credentialsFilePath = "data/credentials.txt";
     private final String profilePhotoStoragePath = "img/storage/profile/";
 
@@ -220,6 +223,8 @@ public class RefactoredSignUp extends JFrame {
     }
 
     private void registerUser(String username, String password, String bio){
+        newUser = new User(username, bio, password);
+        CredentialsVerifier.saveUserInformation(newUser);
         saveCredentials(username, password, bio);
         handleProfilePictureUpload();
         dispose();
