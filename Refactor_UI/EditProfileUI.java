@@ -3,14 +3,15 @@ package Refactor_UI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-
-import Manager_and_Utilities.*;
-
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IO;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.stream.*;
@@ -32,6 +33,7 @@ public class EditProfileUI extends JFrame {
     // private JPanel fieldsPanel;
     private JTextField txtBio;
 
+    private final String credentialsFilePath = "data/credentials.txt";
     private final String profilePhotoStoragePath = "img/storage/profile/";
 
     public EditProfileUI(User user) {
@@ -70,8 +72,8 @@ public class EditProfileUI extends JFrame {
 
         // JButton backButton = new JButton("Back");
         // backButton.addActionListener(e -> {
-        //     getContentPane().removeAll(); // Remove all components from the frame
-        //     initializeUI(); // Re-initialize the UI
+        // getContentPane().removeAll(); // Remove all components from the frame
+        // initializeUI(); // Re-initialize the UI
         // });
         // contentPanel.add(backButton, BorderLayout.SOUTH);
 
@@ -109,18 +111,27 @@ public class EditProfileUI extends JFrame {
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
-              InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
-              igProfile.setVisible(true);
+                InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
+                igProfile.setVisible(true);
             }
-            });
+        });
 
         return cancelButton;
     }
 
     private Component submitButton() {
         submitButton = new JButton("Submit");
-        SubmitButtonListener listener = new SubmitButtonListener(currentUser);
-        submitButton.addActionListener(listener);
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveNewBio(currentUser, credentialsFilePath);
+                dispose();
+                InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
+                igProfile.setVisible(true);
+            }
+
+        });
         return submitButton;
     }
 
@@ -136,10 +147,10 @@ public class EditProfileUI extends JFrame {
     private Component uploadPhoto() {
         btnUploadPhoto = new JButton("Upload Photo");
         btnUploadPhoto.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        handleProfilePictureUpload();
-        }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleProfilePictureUpload();
+            }
         });
 
         return btnUploadPhoto;
@@ -165,4 +176,27 @@ public class EditProfileUI extends JFrame {
         }
     }
 
+    public void saveNewBio(User user, String newBio) {
+        newBio = txtBio.getText();
+       String username = user.getUsername();
+        String currentBio = user.getBio();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(credentialsFilePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] credentials = line.split(":");
+                if (credentials[0].equals(username) && credentials[2].equals(currentBio)) {
+                    try(BufferedWriter writer = new BufferedWriter(new FileWriter(credentialsFilePath, true))){ 
+                     writer.write(user.toString());
+
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
