@@ -106,8 +106,13 @@ public class EditProfileUI extends JFrame {
 
     private Component cancelButton() {
         cancelButton = new JButton("Cancel");
-        CancelButtonListener listener = new CancelButtonListener(currentUser);
-        cancelButton.addActionListener(listener);
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+              InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
+              igProfile.setVisible(true);
+            }
+            });
 
         return cancelButton;
     }
