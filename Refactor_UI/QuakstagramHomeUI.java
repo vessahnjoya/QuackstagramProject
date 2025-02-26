@@ -262,6 +262,9 @@ public class QuakstagramHomeUI extends BaseUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (followedUsers.isEmpty()) {
+            return new String[0][];
+        }
 
         // Temporary structure to hold the data
         String[][] tempData = new String[100][]; // Assuming a maximum of 100 posts for simplicity
