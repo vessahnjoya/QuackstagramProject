@@ -7,6 +7,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import New_Refactor_Sign_In.*;
+import User.*;
+
 
 public class BaseUI extends JFrame {
     private static final int NAV_ICON_SIZE = 20;
@@ -78,23 +81,22 @@ public class BaseUI extends JFrame {
     }
 
     public void BaseOpenProfileUI() {
-        // Open InstagramProfileUI frame
         this.dispose();
-        String loggedInUsername = "";
 
-        // Read the logged-in user's username from users.txt
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-            String line = reader.readLine();
-            if (line != null) {
-                loggedInUsername = line.split(":")[0].trim();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Access the logged-in username correctly
+        String loggedInUsername = RefactoredSignIn.getLoggedInUsername(); // ✅ Fix: Use the getter method
+
+        if (loggedInUsername == null || loggedInUsername.isEmpty()) {
+            System.out.println("Error: No user is logged in!");
+            return;
         }
+
+        // Open profile with the correct user
         User user = new User(loggedInUsername);
         InstagramProfileUI profileUI = new InstagramProfileUI(user);
         profileUI.setVisible(true);
     }
+
 
     public void BaseNotificationsUI() {
         // Open InstagramProfileUI frame

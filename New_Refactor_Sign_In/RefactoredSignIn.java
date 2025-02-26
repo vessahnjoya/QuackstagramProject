@@ -11,7 +11,7 @@ public class RefactoredSignIn extends JFrame {
     private static final int HEIGHT = 500;
 
     private User newUser;
-    private JTextField txtUsername;
+    private static JTextField txtUsername;
     private JTextField txtPassword;
     private JButton btnSignIn;
     private JButton btnRegisterNow;
@@ -123,6 +123,9 @@ private void initializeUI(){
         fieldsPanel.add(txtPassword);
 
         return txtPassword;
+    }
+    public static String getLoggedInUsername() {
+        return txtUsername.getText().trim();
     }
 
     private Component signInButton(){

@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import New_Refactor_Sign_In.*;
 
 public class QuakstagramHomeUI extends BaseUI {
     private static final int WIDTH = 300;
@@ -224,8 +225,7 @@ public class QuakstagramHomeUI extends BaseUI {
 
             // Record the like in notifications.txt
             String notification = String.format("%s; %s; %s; %s\n", imageOwner, currentUser, imageId, timestamp);
-            try (BufferedWriter notificationWriter = Files.newBufferedWriter(Paths.get("data", "notifications.txt"),
-                    StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+            try (BufferedWriter notificationWriter = Files.newBufferedWriter(Paths.get("data", "notifications.txt"), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
                 notificationWriter.write(notification);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -234,11 +234,17 @@ public class QuakstagramHomeUI extends BaseUI {
     }
 
     private String[][] createSampleData() {
-        String currentUser = "";
+        String currentUser = RefactoredSignIn.getLoggedInUsername();
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-            String line = reader.readLine();
-            if (line != null) {
-                currentUser = line.split(":")[0].trim();
+            String line;
+
+            while ((line = reader.readLine()) != null) {  // Iterate through each line
+                String[] parts = line.split(":");
+
+                if (parts.length > 0 && parts[0].trim().equalsIgnoreCase(currentUser)) {
+                    currentUser = parts[0].trim();
+                    break; // Stop searching once found
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -265,13 +271,33 @@ public class QuakstagramHomeUI extends BaseUI {
             String line;
             while ((line = reader.readLine()) != null && count < tempData.length) {
                 String[] details = line.split(", ");
-                String imagePoster = details[1].split(": ")[1];
+                String imagePoster ="";
+                if (details.length > 1 && details[1].contains(": ")) {
+                    String[] posterSplit = details[1].split(": ");
+                    if (posterSplit.length > 1) {
+                        imagePoster = posterSplit[1]; // Safe to access
+                    }
+                }
                 if (followedUsers.contains(imagePoster)) {
-                    String imagePath = "img/uploaded/" + details[0].split(": ")[1] + ".png"; // Assuming PNG format
-                    String description = details[2].split(": ")[1];
-                    String likes = "Likes: " + details[4].split(": ")[1];
+                    String imagePath = ""; // Assuming PNG format
+                    if (details.length > 0 && details[0].contains(": ")) {
+                        String[] imageSplit = details[0].split(": ");
+                        imagePath = (imageSplit.length > 1) ? "img/uploaded/" + imageSplit[1] + ".png" : "img/default.png";
+                    }
 
-                    tempData[count++] = new String[] { imagePoster, description, likes, imagePath };
+                    String description = "";
+                    if (details.length > 2 && details[2].contains(": ")) {
+                        String[] descSplit = details[2].split(": ");
+                        description = (descSplit.length > 1) ? descSplit[1] : "No description";
+                    }
+
+                    String likes = "";
+                    if (details.length > 4 && details[4].contains(": ")) {
+                        String[] likesSplit = details[4].split(": ");
+                        likes = (likesSplit.length > 1) ? "Likes: " + likesSplit[1] : "Likes: 0";
+                    }
+
+                    tempData[count++] = new String[]{imagePoster, description, likes, imagePath};
                 }
             }
         } catch (IOException e) {
@@ -284,6 +310,7 @@ public class QuakstagramHomeUI extends BaseUI {
 
         return sampleData;
     }
+
 
     // private JButton createIconButton(String iconPath) {
     // ImageIcon iconOriginal = new ImageIcon(iconPath);

@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import New_Refactor_Sign_In.*;
 
 public class NotificationsUI extends BaseUI {
 
@@ -38,11 +39,17 @@ public class NotificationsUI extends BaseUI {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         // Read the current username from users.txt
-        String currentUsername = "";
+        String currentUsername = RefactoredSignIn.getLoggedInUsername();
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-            String line = reader.readLine();
-            if (line != null) {
-                currentUsername = line.split(":")[0].trim();
+            String line;
+
+            while ((line = reader.readLine()) != null) {  // Iterate through each line
+                String[] parts = line.split(":");
+
+                if (parts.length > 0 && parts[0].trim().equalsIgnoreCase(currentUsername)) {
+                    currentUsername = parts[0].trim();
+                    break; // Stop searching once found
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
