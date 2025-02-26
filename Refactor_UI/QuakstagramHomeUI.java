@@ -177,12 +177,21 @@ public class QuakstagramHomeUI extends BaseUI {
 
     private void handleLikeAction(String imageId, JLabel likesLabel) {
         Path detailsPath = Paths.get("img", "image_details.txt");
+        Path likesTrackingPath = Paths.get("data", "likes_tracking.txt");
         StringBuilder newContent = new StringBuilder();
         boolean updated = false;
-        String currentUser = "";
+        boolean alreadyLiked = false;
+        String currentUser = RefactoredSignIn.getLoggedInUsername();
         String imageOwner = "";
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
+        // Ensure likes_tracking.txt exists
+        try {
+            if (!Files.exists(likesTrackingPath)) {
+                Files.createFile(likesTrackingPath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // Retrieve the current user from users.txt
         try (BufferedReader userReader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
             String line = userReader.readLine();
@@ -192,6 +201,24 @@ public class QuakstagramHomeUI extends BaseUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Check if the user has already liked this post
+        try (BufferedReader likesReader = Files.newBufferedReader(likesTrackingPath)) {
+            String line;
+            while ((line = likesReader.readLine()) != null) {
+                if (line.equals(currentUser + ";" + imageId)) {
+                    alreadyLiked = true;
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (alreadyLiked) {
+            JOptionPane.showMessageDialog(null, "You have already liked this post!", "Like Failed", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
 
         // Read and update image_details.txt
         try (BufferedReader reader = Files.newBufferedReader(detailsPath)) {
@@ -227,6 +254,13 @@ public class QuakstagramHomeUI extends BaseUI {
             String notification = String.format("%s; %s; %s; %s\n", imageOwner, currentUser, imageId, timestamp);
             try (BufferedWriter notificationWriter = Files.newBufferedWriter(Paths.get("data", "notifications.txt"), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
                 notificationWriter.write(notification);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // Record the like in likes_tracking.txt to prevent duplicate likes
+            try (BufferedWriter likesWriter = Files.newBufferedWriter(likesTrackingPath, StandardOpenOption.APPEND)) {
+                likesWriter.write(currentUser + ";" + imageId);
+                likesWriter.newLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
