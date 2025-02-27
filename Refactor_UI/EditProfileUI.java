@@ -33,6 +33,9 @@ public class EditProfileUI extends JFrame {
     // private JPanel fieldsPanel;
     private JTextField txtBio;
 
+    boolean imgUploaded = false;
+    boolean bioUpdated = false;
+
     private final String credentialsFilePath = "data/credentials.txt";
     private final String profilePhotoStoragePath = "img/storage/profile/";
 
@@ -125,10 +128,12 @@ public class EditProfileUI extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                saveNewBio(currentUser, credentialsFilePath);
+                if(imgUploaded || bioUpdated){
+                    saveNewBio(currentUser, credentialsFilePath);
                 dispose();
                 InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
                 igProfile.setVisible(true);
+                }   
             }
 
         });
@@ -188,7 +193,7 @@ public class EditProfileUI extends JFrame {
                 if (credentials[0].equals(username) && credentials[2].equals(currentBio)) {
                     try(BufferedWriter writer = new BufferedWriter(new FileWriter(credentialsFilePath, true))){ 
                      writer.write(user.toString());
-
+                     bioUpdated = true;
                     }catch(IOException e){
                         e.printStackTrace();
                     }
