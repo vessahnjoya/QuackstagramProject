@@ -59,7 +59,7 @@ public class BaseUI extends JFrame {
 
         // Define actions based on button type
         if ("home".equals(buttonType)) {
-            button.addActionListener(_ -> BaseOpenHomeUI());
+            button.addActionListener(e -> BaseOpenHomeUI());
         } else if ("profile".equals(buttonType)) {
             button.addActionListener(e -> BaseOpenProfileUI());
         } else if ("notification".equals(buttonType)) {
