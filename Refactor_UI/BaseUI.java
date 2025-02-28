@@ -3,12 +3,7 @@ package Refactor_UI;
 import User.*;
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import New_Refactor_Sign_In.*;
-import User.*;
 
 
 public class BaseUI extends JFrame {

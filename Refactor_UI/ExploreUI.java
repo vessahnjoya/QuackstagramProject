@@ -38,8 +38,8 @@ public class ExploreUI extends BaseUI {
         getContentPane().removeAll(); // Clear existing components
         setLayout(new BorderLayout()); // Reset the layout manager
 
-        JPanel headerPanel = createHeaderPanel(); // Method from your InstagramProfileUI class
-        JPanel navigationPanel = createNavigationPanel(); // Method from your InstagramProfileUI class
+        JPanel headerPanel = super.BaseCreateHeaderPanel(); // Method from your InstagramProfileUI class
+        JPanel navigationPanel = super.BaseCreateNavigationPanel(); // Method from your InstagramProfileUI class
         JPanel mainContentPanel = createMainContentPanel();
 
         // Add panels to the frame
@@ -98,22 +98,14 @@ public class ExploreUI extends BaseUI {
         return mainContentPanel;
     }
 
-    private JPanel createHeaderPanel() {
-        return super.BaseCreateHeaderPanel();
-    }
-
-    private JPanel createNavigationPanel() {
-        return super.BaseCreateNavigationPanel();
-    }
-
     @SuppressWarnings("unused")
     private void displayImage(String imagePath) {
         getContentPane().removeAll();
         setLayout(new BorderLayout());
 
         // Add the header and navigation panels back
-        add(createHeaderPanel(), BorderLayout.NORTH);
-        add(createNavigationPanel(), BorderLayout.SOUTH);
+        add(super.BaseCreateHeaderPanel(), BorderLayout.NORTH);
+        add(super.BaseCreateNavigationPanel(), BorderLayout.SOUTH);
 
         JPanel imageViewerPanel = new JPanel(new BorderLayout());
 
@@ -184,8 +176,8 @@ public class ExploreUI extends BaseUI {
         add(bottomPanel, BorderLayout.SOUTH);
 
         // Re-add the header and navigation panels
-        add(createHeaderPanel(), BorderLayout.NORTH);
-        add(createNavigationPanel(), BorderLayout.SOUTH);
+        add(super.BaseCreateHeaderPanel(), BorderLayout.NORTH);
+        add(super.BaseCreateNavigationPanel(), BorderLayout.SOUTH);
 
         // Panel for the back button
         JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -198,9 +190,9 @@ public class ExploreUI extends BaseUI {
 
         backButton.addActionListener(e -> {
             getContentPane().removeAll();
-            add(createHeaderPanel(), BorderLayout.NORTH);
+            add(super.BaseCreateHeaderPanel(), BorderLayout.NORTH);
             add(createMainContentPanel(), BorderLayout.CENTER);
-            add(createNavigationPanel(), BorderLayout.SOUTH);
+            add(super.BaseCreateNavigationPanel(), BorderLayout.SOUTH);
             revalidate();
             repaint();
         });
@@ -227,29 +219,5 @@ public class ExploreUI extends BaseUI {
         revalidate();
         repaint();
     }
-
-    // private JButton createIconButton(String iconPath, String buttonType) {
-
-    // return super.BaseCreateIconButton(iconPath, buttonType);
-    // }
-
-    // private void ImageUploadUI() {
-    // super.BaseImageUploadUI();
-    // }
-    // private void openProfileUI() {
-    // super.BaseOpenProfileUI();
-    // }
-
-    // private void notificationsUI() {
-    // super.BaseNotificationsUI();
-    // }
-
-    // private void openHomeUI() {
-    // super.BaseOpenHomeUI();
-    // }
-
-    // private void exploreUI() {
-    // super.BaseExploreUI();
-    // }
 
 }

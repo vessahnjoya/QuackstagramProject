@@ -103,23 +103,11 @@ public class InstagramProfileUI extends BaseUI {
         setLayout(new BorderLayout());
         contentPanel = new JPanel();
         headerPanel = createHeaderPanel(); // Initialize header panel
-        navigationPanel = createNavigationPanel(); // Initialize navigation panel
+        navigationPanel = super.BaseCreateNavigationPanel(); // Initialize navigation panel
 
         initializeUI();
     }
 
-    // public InstagramProfileUI() {
-
-    // setTitle("DACS Profile");
-    // setSize(WIDTH, HEIGHT);
-    // setMinimumSize(new Dimension(WIDTH, HEIGHT));
-    // setDefaultCloseOperation(EXIT_ON_CLOSE);
-    // setLayout(new BorderLayout());
-    // contentPanel = new JPanel();
-    // headerPanel = createHeaderPanel(); // Initialize header panel
-    // navigationPanel = createNavigationPanel(); // Initialize navigation panel
-    // initializeUI();
-    // }
 
     private void initializeUI() {
         getContentPane().removeAll(); // Clear existing components
@@ -327,10 +315,6 @@ public class InstagramProfileUI extends BaseUI {
         }
     }
 
-    private JPanel createNavigationPanel() {
-        return super.BaseCreateNavigationPanel();
-    }
-
     private void initializeImageGrid() {
         contentPanel.removeAll(); // Clear existing content
         contentPanel.setLayout(new GridLayout(0, 3, 5, 5)); // Grid layout for image grid
@@ -398,29 +382,5 @@ public class InstagramProfileUI extends BaseUI {
         editProfileUI.setVisible(true);
     }
 
-    // private JButton createIconButton(String iconPath, String buttonType) {
-
-    // return super.BaseCreateIconButton(iconPath, buttonType);
-    // }
-
-    // private void ImageUploadUI() {
-    // super.BaseImageUploadUI();
-    // }
-
-    // private void openProfileUI() {
-    // super.BaseOpenProfileUI();
-    // }
-
-    // private void notificationsUI() {
-    // super.BaseNotificationsUI();
-    // }
-
-    // private void openHomeUI() {
-    // super.BaseOpenHomeUI();
-    // }
-
-    // private void exploreUI() {
-    // super.BaseExploreUI();
-    // }
 
 }
