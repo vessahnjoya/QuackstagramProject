@@ -33,8 +33,8 @@ public class ImageUploadUI extends BaseUI {
     }
 
     private void initializeUI() {
-        JPanel headerPanel = createHeaderPanel(); // Reuse the createHeaderPanel method
-        JPanel navigationPanel = createNavigationPanel(); // Reuse the createNavigationPanel method
+        JPanel headerPanel = super.BaseCreateHeaderPanel(); // Reuse the createHeaderPanel method
+        JPanel navigationPanel = super.BaseCreateNavigationPanel(); // Reuse the createNavigationPanel method
 
         // Main content panel
         JPanel contentPanel = new JPanel();
@@ -196,9 +196,9 @@ public class ImageUploadUI extends BaseUI {
         JOptionPane.showMessageDialog(this, "Caption saved: " + bioText);
     }
 
-    private JPanel createHeaderPanel() {
-        return super.BaseCreateHeaderPanel();
-    }
+    // private JPanel createHeaderPanel() {
+    //     return super.BaseCreateHeaderPanel();
+    // }
 
     private String readUsername() throws IOException {
         Path usersFilePath = Paths.get("data", "users.txt");
@@ -211,9 +211,9 @@ public class ImageUploadUI extends BaseUI {
         return null; // Return null if no username is found
     }
 
-    private JPanel createNavigationPanel() {
-        return super.BaseCreateNavigationPanel();
-    }
+    // private JPanel createNavigationPanel() {
+    //     return super.BaseCreateNavigationPanel();
+    // }
 
     // private JButton createIconButton(String iconPath, String buttonType) {
 

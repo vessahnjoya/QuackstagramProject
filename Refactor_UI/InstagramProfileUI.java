@@ -103,7 +103,7 @@ public class InstagramProfileUI extends BaseUI {
         setLayout(new BorderLayout());
         contentPanel = new JPanel();
         headerPanel = createHeaderPanel(); // Initialize header panel
-        navigationPanel = createNavigationPanel(); // Initialize navigation panel
+        navigationPanel = super.BaseCreateNavigationPanel(); // Initialize navigation panel
 
         initializeUI();
     }
@@ -327,9 +327,9 @@ public class InstagramProfileUI extends BaseUI {
         }
     }
 
-    private JPanel createNavigationPanel() {
-        return super.BaseCreateNavigationPanel();
-    }
+    // private JPanel createNavigationPanel() {
+    //     return super.BaseCreateNavigationPanel();
+    // }
 
     private void initializeImageGrid() {
         contentPanel.removeAll(); // Clear existing content

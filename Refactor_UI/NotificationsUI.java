@@ -28,8 +28,8 @@ public class NotificationsUI extends BaseUI {
     private void initializeUI() {
         // Reuse the header and navigation panel creation methods from the
         // InstagramProfileUI class
-        JPanel headerPanel = createHeaderPanel();
-        JPanel navigationPanel = createNavigationPanel();
+        JPanel headerPanel = super.BaseCreateHeaderPanel();
+        JPanel navigationPanel = super.BaseCreateNavigationPanel();
 
         // Content Panel for notifications
         JPanel contentPanel = new JPanel();
@@ -111,13 +111,13 @@ public class NotificationsUI extends BaseUI {
         return timeElapsed.toString();
     }
 
-    private JPanel createHeaderPanel() {
-        return super.BaseCreateHeaderPanel();
-    }
+    // private JPanel createHeaderPanel() {
+    //     return super.BaseCreateHeaderPanel();
+    // }
 
-    private JPanel createNavigationPanel() {
-        return super.BaseCreateNavigationPanel();
-    }
+    // private JPanel createNavigationPanel() {
+    //     return super.BaseCreateNavigationPanel();
+    // }
 
     // private JButton createIconButton(String iconPath, String buttonType) {
     // return super.BaseCreateIconButton(iconPath, buttonType);
