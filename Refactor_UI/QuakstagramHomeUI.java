@@ -34,6 +34,7 @@ public class QuakstagramHomeUI extends BaseUI {
     private JPanel cardPanel;
     private JPanel homePanel;
     private JPanel imageViewPanel;
+    private DirectMessagingUI directMessagingUI;
 
     public QuakstagramHomeUI() {
         setTitle("Quakstagram Home");
@@ -54,6 +55,12 @@ public class QuakstagramHomeUI extends BaseUI {
 
         add(cardPanel, BorderLayout.CENTER);
         cardLayout.show(cardPanel, "Home"); // Start with the home view
+
+        // Initialize the messaging UI
+        directMessagingUI = new DirectMessagingUI(getCurrentUser());
+
+        // Add the messaging panel to the card panel
+        cardPanel.add(directMessagingUI, "Messages");
 
         // Header Panel (reuse from InstagramProfileUI or customize for home page)
         // Header with the Register label
@@ -83,8 +90,11 @@ public class QuakstagramHomeUI extends BaseUI {
          msgIconPanel.setBackground(new Color(51, 51, 51)); // same background as header 
          msgIconPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10)); // Add padding around the button
          msgIconPanel.add(msgIconButton);
-         msgIconButton.addActionListener(e -> cardLayout.show(cardPanel, "Messages"));
-
+         msgIconButton.addActionListener(e -> {
+            directMessagingUI.refreshChat(); // Refresh the chat history
+            cardLayout.show(cardPanel, "Messages"); // Switch to the messaging panel
+        });
+        
          // Add the message icon button to the header panel
          headerPanel.add(msgIconPanel, BorderLayout.EAST); // Add to the right side of the header
 
