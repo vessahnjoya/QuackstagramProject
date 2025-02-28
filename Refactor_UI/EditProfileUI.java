@@ -6,21 +6,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
-
+import java.io.*;
 import User.*;
 
 public class EditProfileUI extends JFrame {
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 500;
-    private static final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
-    private static final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
+      final int WIDTH = 300;
+      final int HEIGHT = 500;
+      final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
+      final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
     private JPanel contentPanel; // Panel to display the image grid or the clicked image
     private JPanel buttonPanel;
     private JPanel bioFieldPanel;

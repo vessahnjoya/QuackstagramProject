@@ -9,9 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -19,10 +17,10 @@ import java.util.stream.Stream;
 
 public class ExploreUI extends BaseUI {
 
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 500;
+    // private static final int WIDTH = 300;
+    // private static final int HEIGHT = 500;
     // private static final int NAV_ICON_SIZE = 20; // Size for navigation icons
-    private static final int IMAGE_SIZE = WIDTH / 3; // Size for each image in the grid
+    // private static final int IMAGE_SIZE = WIDTH / 3; // Size for each image in the grid
 
     public ExploreUI() {
         setTitle("Explore");

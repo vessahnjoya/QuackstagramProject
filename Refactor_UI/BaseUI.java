@@ -5,9 +5,13 @@ import javax.swing.*;
 import java.awt.*;
 import New_Refactor_Sign_In.*;
 
-
-public class BaseUI extends JFrame {
-    private static final int NAV_ICON_SIZE = 20;
+public abstract class BaseUI extends JFrame {
+    public static final int NAV_ICON_SIZE = 20;
+    public static final int WIDTH = 300;
+    public static final int HEIGHT = 500;
+    public static final int IMAGE_SIZE = WIDTH / 3; // Size for each image in the grid
+    public static final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
+    public static final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
 
     public JPanel BaseCreateHeaderPanel() {
 
@@ -91,7 +95,6 @@ public class BaseUI extends JFrame {
         InstagramProfileUI profileUI = new InstagramProfileUI(user);
         profileUI.setVisible(true);
     }
-
 
     public void BaseNotificationsUI() {
         // Open InstagramProfileUI frame

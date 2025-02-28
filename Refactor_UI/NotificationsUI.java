@@ -13,8 +13,8 @@ import New_Refactor_Sign_In.*;
 
 public class NotificationsUI extends BaseUI {
 
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 500;
+    // private static final int WIDTH = 300;
+    // private static final int HEIGHT = 500;
 
     public NotificationsUI() {
         setTitle("Notifications");
