@@ -95,15 +95,15 @@ public class QuakstagramHomeUI extends BaseUI {
         navigationPanel.setLayout(new BoxLayout(navigationPanel, BoxLayout.X_AXIS));
         navigationPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        navigationPanel.add(createIconButton("img/icons/home.png", "home"));
+        navigationPanel.add(super.BaseCreateIconButton("img/icons/home.png", "home"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(createIconButton("img/icons/search.png", "explore"));
+        navigationPanel.add(super.BaseCreateIconButton("img/icons/search.png", "explore"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(createIconButton("img/icons/add.png", "add"));
+        navigationPanel.add(super.BaseCreateIconButton("img/icons/add.png", "add"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(createIconButton("img/icons/heart.png", "notification"));
+        navigationPanel.add(super.BaseCreateIconButton("img/icons/heart.png", "notification"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(createIconButton("img/icons/profile.png", "profile"));
+        navigationPanel.add(super.BaseCreateIconButton("img/icons/profile.png", "profile"));
 
         add(navigationPanel, BorderLayout.SOUTH);
     }
@@ -502,30 +502,6 @@ public class QuakstagramHomeUI extends BaseUI {
         // Call displayImage with updated postData
         displayImage(postData);
     }
-
-    private JButton createIconButton(String iconPath, String buttonType) {
-        return super.BaseCreateIconButton(iconPath, buttonType);
-    }
-
-    // private void openProfileUI() {
-    // super.BaseOpenProfileUI();
-    // }
-
-    // private void notificationsUI() {
-    // super.BaseNotificationsUI();
-    // }
-
-    // private void ImageUploadUI() {
-    // super.BaseImageUploadUI();
-    // }
-
-    // private void openHomeUI() {
-    // super.BaseOpenHomeUI();
-    // }
-
-    // private void exploreUI() {
-    // super.BaseExploreUI();
-    // }
     private JPanel createCommentPanel(String imageId) {
         JPanel commentPanel = new JPanel();
         commentPanel.setLayout(new BorderLayout());

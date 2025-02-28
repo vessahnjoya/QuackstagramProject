@@ -111,36 +111,4 @@ public class NotificationsUI extends BaseUI {
         return timeElapsed.toString();
     }
 
-    // private JPanel createHeaderPanel() {
-    //     return super.BaseCreateHeaderPanel();
-    // }
-
-    // private JPanel createNavigationPanel() {
-    //     return super.BaseCreateNavigationPanel();
-    // }
-
-    // private JButton createIconButton(String iconPath, String buttonType) {
-    // return super.BaseCreateIconButton(iconPath, buttonType);
-    // }
-
-    // private void ImageUploadUI() {
-    // super.BaseImageUploadUI();
-    // }
-
-    // private void openProfileUI() {
-    // super.BaseOpenProfileUI();
-    // }
-
-    // private void notificationsUI() {
-    // super.BaseNotificationsUI();
-    // }
-
-    // private void openHomeUI() {
-    // super.BaseOpenHomeUI();
-    // }
-
-    // private void exploreUI() {
-    // super.BaseExploreUI();
-    // }
-
 }
