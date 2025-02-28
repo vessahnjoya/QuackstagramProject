@@ -11,10 +11,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-//import java.io.IO;
 import java.io.IOException;
-import java.nio.file.*;
-import java.util.stream.*;
+
 
 import User.*;
 
@@ -22,7 +20,6 @@ public class EditProfileUI extends JFrame {
     private static final int WIDTH = 300;
     private static final int HEIGHT = 500;
     private static final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
-    private static final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
     private JPanel contentPanel; // Panel to display the image grid or the clicked image
     private JPanel buttonPanel;
     private JPanel bioFieldPanel;
@@ -30,7 +27,6 @@ public class EditProfileUI extends JFrame {
     private JButton submitButton, cancelButton;
     private JButton btnUploadPhoto;
     private JPanel photoUploadPanel;
-    // private JPanel fieldsPanel;
     private JTextField txtBio;
 
     private final String credentialsFilePath = "data/credentials.txt";
@@ -69,16 +65,6 @@ public class EditProfileUI extends JFrame {
         JLabel fullSizeImageLabel = new JLabel(imageIcon);
         fullSizeImageLabel.setHorizontalAlignment(JLabel.CENTER);
         contentPanel.add(fullSizeImageLabel, BorderLayout.CENTER);
-
-        // JButton backButton = new JButton("Back");
-        // backButton.addActionListener(e -> {
-        // getContentPane().removeAll(); // Remove all components from the frame
-        // initializeUI(); // Re-initialize the UI
-        // });
-        // contentPanel.add(backButton, BorderLayout.SOUTH);
-
-        // revalidate();
-        // repaint();
     }
 
     private Component photoUploadPanel() {
@@ -102,7 +88,6 @@ public class EditProfileUI extends JFrame {
         contentPanel.setLayout(new GridLayout(0, 2, 5, 5)); // Grid layout for image grid
         contentPanel.add(imgaeIcon());
         contentPanel.add(photoUploadPanel());
-
         return contentPanel;
     }
 
@@ -115,7 +100,6 @@ public class EditProfileUI extends JFrame {
                 igProfile.setVisible(true);
             }
         });
-
         return cancelButton;
     }
 
@@ -130,7 +114,6 @@ public class EditProfileUI extends JFrame {
                 InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
                 igProfile.setVisible(true);
             }
-
         });
         return submitButton;
     }

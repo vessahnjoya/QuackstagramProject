@@ -1,4 +1,5 @@
 Xylo: Lorin
 Zara: Lorin
 Mystar: Lorin; Zara
-Lorin: Mystar; Zara; freeze; LouisBoch
+Lorin: Mystar; Zara; freeze; LouisBoch, A
+A: Mystar; Zara; freeze; LouisBoch
