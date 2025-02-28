@@ -34,6 +34,8 @@ public class QuakstagramHomeUI extends BaseUI {
     private JPanel cardPanel;
     private JPanel homePanel;
     private JPanel imageViewPanel;
+    private DirectMessagingUI directMessagingUI;
+
 
     public QuakstagramHomeUI() {
         setTitle("Quakstagram Home");
@@ -54,6 +56,13 @@ public class QuakstagramHomeUI extends BaseUI {
 
         add(cardPanel, BorderLayout.CENTER);
         cardLayout.show(cardPanel, "Home"); // Start with the home view
+
+        // Initialize the messaging UI
+        directMessagingUI = new DirectMessagingUI(getCurrentUser());
+
+        // Add the messaging panel to the card panel
+        cardPanel.add(directMessagingUI, "Messages");
+
 
         // Header Panel (reuse from InstagramProfileUI or customize for home page)
         // Header with the Register label
