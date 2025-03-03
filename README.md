@@ -1,15 +1,12 @@
 # QuackstagramProject
 
-Welcome to Quackstagram, a Cheapo software solutions social Media App.
+Welcome to Quackstagram, a Cheapo software solutions social Media App. 
+
+The core of this app revolves around letting users set up and personalize their profiles.
+Users sign up, log in, and add a personal touch with photos and bios, just like they
+would on Instagram. Once that's done, users can start sharing snapshots of their lives
+by uploading images with captions.
 
 # Run code
-
-To run Quackstagram, you first need to clone its repository. Do so by typing the following command in your terminal:
-
-```
-gh repo clone vessahnjoya/QuackstagramProject
-```
-
-After cloning, open the project folder in your IDE.
 
 Select and run the class Main.java
