@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -32,8 +31,10 @@ public class RefactoredSignUp extends JFrame {
 
     private User newUser;
 
-    private final String credentialsFilePath = "data/credentials.txt";
-    private final String profilePhotoStoragePath = "img/storage/profile/";
+    private SignUpCredentials saveProfilePicture = new SignUpCredentials();
+    private SignUpCredentials saveCredentials = new SignUpCredentials();
+    private SignUpCredentials doesUsernameExist = new SignUpCredentials();
+
 
     public RefactoredSignUp() {
         setTitle("Quackstagram - Register");
@@ -182,18 +183,19 @@ public class RefactoredSignUp extends JFrame {
         add(buttonPanel(), BorderLayout.SOUTH);
     }
 
-    private void onRegisterClicked(ActionEvent event) {
+    private boolean onRegisterClicked(ActionEvent event) {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         String bio = txtBio.getText();
 
-        if (doesUsernameExist(username)) {
+        if (doesUsernameExist.userExistence(username)) {
             showErrorMessage("Username already exists. Please choose a different username.");
-            return;
+            return false;
         }
 
         registerUser(username, password, bio);
         openSignInUI();
+                return rootPaneCheckingEnabled;
     }
 
     private void showErrorMessage(String message) {
@@ -203,23 +205,9 @@ public class RefactoredSignUp extends JFrame {
     private void registerUser(String username, String password, String bio) {
         newUser = new User(username, bio, password);
         CredentialsVerifier.saveUserInformation(newUser);
-        saveCredentials(username, password, bio);
+        saveCredentials.saveCreds(username, password, bio);
         handleProfilePictureUpload();
         dispose();
-    }
-
-    private boolean doesUsernameExist(String username) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(credentialsFilePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith(username + ":")) {
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     // Method to handle profile picture upload
@@ -229,27 +217,7 @@ public class RefactoredSignUp extends JFrame {
         fileChooser.setFileFilter(filter);
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            saveProfilePicture(selectedFile, txtUsername.getText());
-        }
-    }
-
-    private void saveProfilePicture(File file, String username) {
-        try {
-            BufferedImage image = ImageIO.read(file);
-            File outputFile = new File(profilePhotoStoragePath + username + ".png");
-            ImageIO.write(image, "png", outputFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void saveCredentials(String username, String password, String bio) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/credentials.txt", true))) {
-            AffineCipher passwordHasher = new AffineCipher(password);
-            writer.write(username + ":" + passwordHasher.encrypt() + ":" + bio);
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
+            saveProfilePicture.savePFP(selectedFile, txtUsername.getText());
         }
     }
 
