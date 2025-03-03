@@ -1,12 +1,11 @@
-package New_Refactor_Sign_In;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import User.*;
-import Hasher.*;
+
 public class CredentialsVerifier {
     private User verifyCredentials(String username, String password){
         try(BufferedReader reader  = new BufferedReader(new FileReader("data/credentials.txt"))){

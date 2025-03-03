@@ -1,6 +1,4 @@
-package Refactor_UI;
 
-import User.*;
 import javax.swing.*;
 
 import java.awt.event.ActionEvent;

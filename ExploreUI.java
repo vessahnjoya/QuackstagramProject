@@ -1,6 +1,4 @@
-package Refactor_UI;
 
-import User.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

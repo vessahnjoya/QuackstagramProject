@@ -1,7 +1,4 @@
-package New_Refactor_Sign_In;
 
-import Hasher.*;
-import User.*;
 import javax.swing.*;
 
 import java.awt.*;

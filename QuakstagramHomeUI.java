@@ -1,4 +1,4 @@
-package Refactor_UI;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import New_Refactor_Sign_In.*;
+
 
 public class QuakstagramHomeUI extends BaseUI {
     private  final int IMAGE_WIDTH = WIDTH - 100; // Width for the image posts
@@ -32,6 +32,7 @@ public class QuakstagramHomeUI extends BaseUI {
     private JPanel imageViewPanel;
     private DirectMessagingUI directMessagingUI;
 
+    @SuppressWarnings("unused")
     public QuakstagramHomeUI() {
         setTitle("Quakstagram Home");
         setSize(WIDTH, HEIGHT);

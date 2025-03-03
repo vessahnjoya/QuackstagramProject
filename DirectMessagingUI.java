@@ -1,4 +1,4 @@
-package Refactor_UI;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +21,7 @@ public class DirectMessagingUI extends JPanel {
         initializeUI();
     }
 
+    @SuppressWarnings("unused")
     private void initializeUI() {
         // Panel for the list of users
         JPanel userListPanel = new JPanel();

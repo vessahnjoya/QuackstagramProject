@@ -1,9 +1,7 @@
-package Refactor_UI;
 
-import User.*;
 import javax.swing.*;
 import java.awt.*;
-import New_Refactor_Sign_In.*;
+
 
 public abstract class BaseUI extends JFrame {
     public static final int NAV_ICON_SIZE = 20;

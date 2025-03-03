@@ -1,4 +1,3 @@
-package Refactor_UI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -7,7 +6,6 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.io.*;
-import User.*;
 
 public class EditProfileUI extends JFrame {
       final int WIDTH = 300;

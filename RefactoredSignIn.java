@@ -1,7 +1,4 @@
-package New_Refactor_Sign_In;
 
-import Refactor_UI.*;
-import User.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package Hasher;
+
 public class AffineCipher {
     private String password;
 
