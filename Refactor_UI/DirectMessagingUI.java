@@ -137,7 +137,7 @@ public class DirectMessagingUI extends JPanel {
             e.printStackTrace();
         }
     }
-    // This method insures that the chat doesn't refresh itself again when click on the user 
+    // This method ensures that the chat doesn't refresh itself again when click on the user 
     public void refreshChat() {
         if (selectedUser != null) {
             openChat(selectedUser); // Reload the chat history for the selected user

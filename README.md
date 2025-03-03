@@ -12,4 +12,4 @@ gh repo clone vessahnjoya/QuackstagramProject
 
 After cloning, open the project folder in your IDE.
 
-Click on the folder, New-Refactor_SignIn and run the class RefactoredSignIn.java
+Click on the folder, New-Refactor_SignIn and run the class Main.java
