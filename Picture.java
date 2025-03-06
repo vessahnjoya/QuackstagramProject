@@ -1,9 +1,8 @@
-
 import java.util.List;
 import java.util.ArrayList;
 
 // Represents a picture on Quackstagram
- public class Picture {    //public to handle error in User package
+public class Picture { // public to handle error in User package
     private String imagePath;
     private String caption;
     private int likesCount;
@@ -27,8 +26,19 @@ import java.util.ArrayList;
     }
 
     // Getter methods for picture details
-    public String getImagePath() { return imagePath; }
-    public String getCaption() { return caption; }
-    public int getLikesCount() { return likesCount; }
-    public List<String> getComments() { return comments; }
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public List<String> getComments() {
+        return comments;
+    }
 }

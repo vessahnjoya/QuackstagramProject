@@ -1,6 +1,6 @@
-# QuackstagramProject
+# QuakstagramProject
 
-Welcome to Quackstagram, a Cheapo software solutions social Media App. 
+Welcome to Quakstagram, a Cheapo software solutions social Media App. 
 
 The core of this app revolves around letting users set up and personalize their profiles.
 Users sign up, log in, and add a personal touch with photos and bios, just like they

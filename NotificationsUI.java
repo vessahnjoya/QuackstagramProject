@@ -1,5 +1,4 @@
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -10,11 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-
 public class NotificationsUI extends BaseUI {
-
-    // private static final int WIDTH = 300;
-    // private static final int HEIGHT = 500;
 
     public NotificationsUI() {
         setTitle("Notifications");
@@ -43,7 +38,7 @@ public class NotificationsUI extends BaseUI {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
             String line;
 
-            while ((line = reader.readLine()) != null) {  // Iterate through each line
+            while ((line = reader.readLine()) != null) { // Iterate through each line
                 String[] parts = line.split(":");
 
                 if (parts.length > 0 && parts[0].trim().equalsIgnoreCase(currentUsername)) {
@@ -74,9 +69,6 @@ public class NotificationsUI extends BaseUI {
 
                     JLabel notificationLabel = new JLabel(notificationMessage);
                     notificationPanel.add(notificationLabel, BorderLayout.CENTER);
-
-                    // Add profile icon (if available) and timestamp
-                    // ... (Additional UI components if needed)
 
                     contentPanel.add(notificationPanel);
                 }
