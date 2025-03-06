@@ -81,7 +81,7 @@ public abstract class BaseUI extends JFrame {
         this.dispose();
 
         // Access the logged-in username correctly
-        String loggedInUsername = RefactoredSignIn.getLoggedInUsername(); // ✅ Fix: Use the getter method
+        String loggedInUsername = RefactoredSignIn.getLoggedInUsername(); // Fix: Use the getter method
 
         if (loggedInUsername == null || loggedInUsername.isEmpty()) {
             System.out.println("Error: No user is logged in!");
