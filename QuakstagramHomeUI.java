@@ -542,7 +542,7 @@ public class QuakstagramHomeUI extends BaseUI {
                 String comment = commentField.getText().trim();
                 if (!comment.isEmpty()) {
                     saveComment(imageId, comment);
-                    commentsArea.append(getCurrentUser() + comment + "\n");
+                    commentsArea.append( getCurrentUser() + comment + "\n");
                     commentField.setText("");
                 }
             }
@@ -596,16 +596,20 @@ public class QuakstagramHomeUI extends BaseUI {
     }
 
     // Method to get the name of user 
-    private String getCurrentUser() {
-        String currentUser = "";
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-            String line = reader.readLine();
-            if (line != null) {
-                currentUser = line.split(":")[0].trim(); 
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return currentUser + " say's: ";
+    // private String getCurrentUser() {
+    //     String currentUser = "";
+    //     try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
+    //         String line = reader.readLine();
+    //         if (line != null) {
+    //             currentUser = line.split(":")[0].trim(); 
+    //         }
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+    //     return currentUser + " say's: ";
+    // }
+
+    private String getCurrentUser(){
+        return RefactoredSignIn.getLoggedInUsername();
     }
 }
