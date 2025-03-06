@@ -23,9 +23,9 @@ import java.time.format.DateTimeFormatter;
 
 
 public class QuakstagramHomeUI extends BaseUI {
-    private  final int IMAGE_WIDTH = WIDTH - 100; // Width for the image posts
-    private  final int IMAGE_HEIGHT = 150; // Height for the image posts
-    private  final Color LIKE_BUTTON_COLOR = new Color(255, 90, 95); // Color for the like button
+    private final int IMAGE_WIDTH = WIDTH - 100; // Width for the image posts
+    private final int IMAGE_HEIGHT = 150; // Height for the image posts
+    private final Color LIKE_BUTTON_COLOR = new Color(255, 90, 95); // Color for the like button
     private CardLayout cardLayout;
     private JPanel cardPanel;
     private JPanel homePanel;
@@ -54,7 +54,7 @@ public class QuakstagramHomeUI extends BaseUI {
         cardLayout.show(cardPanel, "Home"); // Start with the home view
 
         // Initialize the messaging UI
-        directMessagingUI = new DirectMessagingUI(getCurrentUser());
+        directMessagingUI = new DirectMessagingUI(CommentsUI.getCurrentUser());
 
         // Add the messaging panel to the card panel
         cardPanel.add(directMessagingUI, "Messages");
@@ -62,40 +62,40 @@ public class QuakstagramHomeUI extends BaseUI {
         // Header Panel (reuse from InstagramProfileUI or customize for home page)
         // Header with the Register label
         JPanel headerPanel = new JPanel(new BorderLayout());
-          headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
-          headerPanel.setPreferredSize(new Dimension(WIDTH, 40)); // Give the header a fixed height
-          
-          //Register Panel
-          JLabel lblRegister = new JLabel("🐥 Quackstagram 🐥");
-          lblRegister.setFont(new Font("Arial", Font.BOLD, 16));
-          lblRegister.setForeground(Color.WHITE); // Set the text color to white
-          lblRegister.setHorizontalAlignment(SwingConstants.CENTER);
+        headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
+        headerPanel.setPreferredSize(new Dimension(WIDTH, 40)); // Give the header a fixed height
 
-          headerPanel.add(lblRegister, BorderLayout.CENTER);
-        
-          // Message Icon Button 
-         ImageIcon msgIcon = new ImageIcon("img/icons/msgIcon.png");
-         Image msgIconScale = msgIcon.getImage().getScaledInstance(35,35, Image.SCALE_SMOOTH);
-         JButton msgIconButton = new JButton(new ImageIcon(msgIconScale));
-         msgIconButton.setBorder(BorderFactory.createEmptyBorder());
-         msgIconButton.setContentAreaFilled(false);
-         msgIconButton.setBorderPainted(false); // Remove border
-         msgIconButton.setPreferredSize(new Dimension(30, 30)); // Set preferred size
+        //Register Panel
+        JLabel lblRegister = new JLabel("🐥 Quackstagram 🐥");
+        lblRegister.setFont(new Font("Arial", Font.BOLD, 16));
+        lblRegister.setForeground(Color.WHITE); // Set the text color to white
+        lblRegister.setHorizontalAlignment(SwingConstants.CENTER);
 
-         // Create a panel to hold the button with padding
-         JPanel msgIconPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0)); 
-         msgIconPanel.setBackground(new Color(51, 51, 51)); // same background as header 
-         msgIconPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10)); // Add padding around the button
-         msgIconPanel.add(msgIconButton);
-         msgIconButton.addActionListener(e -> {
+        headerPanel.add(lblRegister, BorderLayout.CENTER);
+
+        // Message Icon Button
+        ImageIcon msgIcon = new ImageIcon("img/icons/msgIcon.png");
+        Image msgIconScale = msgIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+        JButton msgIconButton = new JButton(new ImageIcon(msgIconScale));
+        msgIconButton.setBorder(BorderFactory.createEmptyBorder());
+        msgIconButton.setContentAreaFilled(false);
+        msgIconButton.setBorderPainted(false); // Remove border
+        msgIconButton.setPreferredSize(new Dimension(30, 30)); // Set preferred size
+
+        // Create a panel to hold the button with padding
+        JPanel msgIconPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        msgIconPanel.setBackground(new Color(51, 51, 51)); // same background as header
+        msgIconPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10)); // Add padding around the button
+        msgIconPanel.add(msgIconButton);
+        msgIconButton.addActionListener(e -> {
             directMessagingUI.refreshChat(); // Refresh the chat history
             cardLayout.show(cardPanel, "Messages"); // Switch to the messaging panel
         });
-        
-         // Add the message icon button to the header panel
-         headerPanel.add(msgIconPanel, BorderLayout.EAST); // Add to the right side of the header
 
-         add(headerPanel, BorderLayout.NORTH);
+        // Add the message icon button to the header panel
+        headerPanel.add(msgIconPanel, BorderLayout.EAST); // Add to the right side of the header
+
+        add(headerPanel, BorderLayout.NORTH);
         // Navigation Bar
         JPanel navigationPanel = new JPanel();
         navigationPanel.setBackground(new Color(249, 249, 249));
@@ -180,14 +180,14 @@ public class QuakstagramHomeUI extends BaseUI {
                 }
             });
 
-             // Button for the comment  
+            // Button for the comment
             ImageIcon commentIcon = new ImageIcon("img/icons/CommentIcon.png");
             Image iconScaled = commentIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             JButton commentIconButton = new JButton(new ImageIcon(iconScaled));
             commentIconButton.setBorder(BorderFactory.createEmptyBorder());
             commentIconButton.setContentAreaFilled(false);
             commentIconButton.setBorderPainted(false); // Remove border
-            
+
             // Create another Panel to innclude the comment icon on the left
             JPanel commentPanelIcon = new JPanel(new FlowLayout(FlowLayout.LEFT));
             commentPanelIcon.setBackground(Color.WHITE); // Set the background color for the comment panel
@@ -196,7 +196,7 @@ public class QuakstagramHomeUI extends BaseUI {
             commentPanelIcon.add(commentIconButton);
 
             // Comment Panel where its initially hidden until pressed
-            JPanel commentPanel = createCommentPanel(imageId);
+            JPanel commentPanel = CommentsUI.createCommentPanel(imageId);
             commentPanel.setVisible(false); // hide the panel at first 
 
             // Action listener for the comment button 
@@ -204,7 +204,7 @@ public class QuakstagramHomeUI extends BaseUI {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     commentPanel.setVisible(!commentPanel.isVisible()); // show the panel
-                    itemPanel.revalidate(); 
+                    itemPanel.revalidate();
                     itemPanel.repaint();
                 }
             });
@@ -370,7 +370,7 @@ public class QuakstagramHomeUI extends BaseUI {
             String line;
             while ((line = reader.readLine()) != null && count < tempData.length) {
                 String[] details = line.split(", ");
-                String imagePoster ="";
+                String imagePoster = "";
                 if (details.length > 1 && details[1].contains(": ")) {
                     String[] posterSplit = details[1].split(": ");
                     if (posterSplit.length > 1) {
@@ -461,8 +461,8 @@ public class QuakstagramHomeUI extends BaseUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Create and display the comment panel
-                JPanel commentPanel = createCommentPanel(imageId);
-        
+                JPanel commentPanel = CommentsUI.createCommentPanel(imageId);
+
                 // Create a dialog to display the comment panel
                 JDialog commentDialog = new JDialog();
                 commentDialog.setTitle("Comments");
@@ -508,93 +508,5 @@ public class QuakstagramHomeUI extends BaseUI {
 
         // Call displayImage with updated postData
         displayImage(postData);
-    }
-    private JPanel createCommentPanel(String imageId) {
-        JPanel commentPanel = new JPanel();
-        commentPanel.setLayout(new BorderLayout());
-        commentPanel.setBackground(Color.WHITE);
-        commentPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY)); //  a border for better visualization 
-    
-        // Text area to display comments
-        JTextArea commentsArea = new JTextArea();
-        commentsArea.setEditable(false); // User will not be able to change the comments 
-        commentsArea.setBackground(new Color(240, 240, 240)); // Light gray background
-        commentsArea.setLineWrap(true); // this will enable the text area panel to be the same as the comment panel 
-        commentsArea.setWrapStyleWord(true); 
-
-        // The scroll bar for the comment 
-        JScrollPane scrollPane = new JScrollPane(commentsArea);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder()); // Remove the border of the scroll pane
-        commentPanel.add(scrollPane, BorderLayout.CENTER);
-
-        // Panel to add new comments
-        JPanel newCommentPanel = new JPanel(new BorderLayout());
-        JTextField commentField = new JTextField();
-        JButton submitButton = new JButton("➡︎");
-    
-        // Load existing comments
-        loadComments(imageId, commentsArea);
-    
-        // Add action listener to the submit button
-        ActionListener submitAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String comment = commentField.getText().trim();
-                if (!comment.isEmpty()) {
-                    saveComment(imageId, comment);
-                    commentsArea.append( getCurrentUser() + comment + "\n");
-                    commentField.setText("");
-                }
-            }
-        };
-        submitButton.addActionListener(submitAction);
-        
-        // Add the fact that wehn you press enter it also sends the comment 
-        commentField.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                submitAction.actionPerformed(null); // makes the same action as submit 
-              }
-          }
-     });
-    
-        newCommentPanel.add(commentField, BorderLayout.CENTER);
-        newCommentPanel.add(submitButton, BorderLayout.EAST);
-        commentPanel.add(newCommentPanel, BorderLayout.SOUTH);
-
-        return commentPanel;
-    }
-
-    // methode to save the comment in local repo
-    private void saveComment(String imageId, String comment) {
-        String currentUser = getCurrentUser();
-        String commentEntry = imageId + ": " + currentUser + comment + "\n";
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "comments.txt"), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-            writer.write(commentEntry);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Methode to load the comment in comment section 
-    private void loadComments(String imageId, JTextArea commentsArea) {
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "comments.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith(imageId + ": ")) {
-                    String[] parts = line.split(": ", 3); 
-                    if (parts.length == 3) {
-                        String username = parts[1];
-                        String comment = parts[2];
-                        commentsArea.append(username + ": " + comment + "\n"); // Displays the username and comment
-                    }
-            }
-        }
-     } catch (IOException e) {
-        }
-    }
-    private String getCurrentUser(){
-        return RefactoredSignIn.getLoggedInUsername();
     }
 }
