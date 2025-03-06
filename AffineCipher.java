@@ -6,11 +6,11 @@ public class AffineCipher {
         this.password = password;
     }
 
-    private String getPassword() {
-        return password;
-    }
+    // private String getPassword() {
+    //     return password;
+    // }
     public String encrypt() {
-        String passwordText = getPassword();
+        String passwordText = password;
         final char[] charPlainText = passwordText.toCharArray();
         final char[] charCipher = new char[charPlainText.length];
         int letter_value = 0;
