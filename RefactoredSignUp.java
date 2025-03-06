@@ -206,7 +206,7 @@ public class RefactoredSignUp extends JFrame {
         newUser = new User(username, bio, password);
         CredentialsVerifier.saveUserInformation(newUser);
         saveCredentials.saveCreds(username, password, bio);
-        handleProfilePictureUpload();
+        // handleProfilePictureUpload();
         dispose();
     }
 
