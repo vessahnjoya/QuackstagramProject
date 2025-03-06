@@ -13,7 +13,7 @@ import java.util.ArrayList;
     private List<Picture> pictures;
 
     public User(String username, String bio, String password) {
-        this.username = username;
+        this.username = RefactoredSignIn.getLoggedInUsername();
         this.bio = bio;
         this.password = password;
         this.pictures = new ArrayList<>();

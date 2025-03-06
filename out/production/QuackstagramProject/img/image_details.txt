@@ -13,4 +13,3 @@ ImageID: Lorin_5, Username: Lorin, Bio: mood rn
 
 , Timestamp: 2025-02-25 22:45:02, Likes: 0
 ImageID: abdul_1, Username: abdul, Bio: Enter a caption, Timestamp: 2025-03-06 16:03:25, Likes: 0
-ImageID: abdul_2, Username: abdul, Bio: post, Timestamp: 2025-03-06 16:06:45, Likes: 0

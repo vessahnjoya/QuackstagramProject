@@ -88,7 +88,7 @@ public class ImageUploadUI extends BaseUI {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             try {
-                String username = readUsername(); // Read username from users.txt
+                String username = RefactoredSignIn.getLoggedInUsername(); // Read username from users.txt
                 int imageId = getNextImageId(username);
                 String fileExtension = getFileExtension(selectedFile);
                 String newFileName = username + "_" + imageId + "." + fileExtension;
