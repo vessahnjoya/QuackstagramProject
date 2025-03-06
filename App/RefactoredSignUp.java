@@ -47,8 +47,11 @@ public class RefactoredSignUp extends JFrame {
 
     private void initializeUI() {
         addComponent();
+        Color backgroundColor = new Color(201, 189, 0);
+        getContentPane().setBackground(backgroundColor); // Set the main frame's background
+        fieldsPanel.setBackground(backgroundColor); // Set the fields panel background
+        buttonPanel.setBackground(backgroundColor); // Set the button panel background
     }
-
     private Component headerPanel() {
         headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
@@ -69,69 +72,102 @@ public class RefactoredSignUp extends JFrame {
     }
 
     private Component profilePicture() {
-        lblPhoto = new JLabel();
+        JLabel lblPhoto = new JLabel();
 
-        lblPhoto.setPreferredSize(new Dimension(80, 80));
         lblPhoto.setHorizontalAlignment(JLabel.CENTER);
         lblPhoto.setVerticalAlignment(JLabel.CENTER);
-        lblPhoto.setIcon(new ImageIcon(
-                new ImageIcon("img/logos/DACS.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
 
-        JPanel photoPanel = new JPanel(); // Use a panel to center the photo label
-        photoPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        photoPanel.add(lblPhoto);
+        Image scaledImage = new ImageIcon("img/logos/DACS.png").getImage()
+                .getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        lblPhoto.setIcon(new ImageIcon(scaledImage));
+
+        JPanel photoPanel = new JPanel(new BorderLayout());
+        photoPanel.setBackground(new Color(201, 189, 0));
+        photoPanel.setOpaque(true);
+
+        photoPanel.add(lblPhoto, BorderLayout.CENTER);
 
         return photoPanel;
     }
-
     private Component textField() {
         fieldsPanel = new JPanel();
-
         fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.Y_AXIS));
         fieldsPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
+        fieldsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        fieldsPanel.setBackground(new Color(201, 189, 0)); // Add this line to set the yellow background
+
+        fieldsPanel.add(Box.createVerticalGlue());
         fieldsPanel.add(profilePicture());
+        fieldsPanel.add(Box.createVerticalStrut(10));
         fieldsPanel.add(usernameField());
+        fieldsPanel.add(Box.createVerticalStrut(10));
         fieldsPanel.add(bioField());
+        fieldsPanel.add(Box.createVerticalStrut(10));
         fieldsPanel.add(passwordField());
-        fieldsPanel.add(uploadPhoto(), BorderLayout.CENTER);
+        fieldsPanel.add(Box.createVerticalStrut(10));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        buttonPanel.setBackground(new Color(201, 189, 0)); // Ensure button panel matches the yellow
+        buttonPanel.add(uploadPhoto());
+        fieldsPanel.add(buttonPanel);
+
+        fieldsPanel.add(Box.createVerticalGlue());
 
         return fieldsPanel;
     }
 
+
+
+
     private Component usernameField() {
         txtUsername = new JTextField("Username");
         txtUsername.setForeground(Color.GRAY);
-
+        txtUsername.setPreferredSize(new Dimension(200, 30)); // Preferred size
+        txtUsername.setMaximumSize(new Dimension(200, 30)); // Maximum size
         return txtUsername;
-    }
-
-    private Component bioField() {
-        txtBio = new JTextField("Bio");
-        txtBio.setForeground(Color.GRAY);
-
-        return txtBio;
     }
 
     private Component passwordField() {
         txtPassword = new JTextField("Password");
         txtPassword.setForeground(Color.GRAY);
-
+        txtPassword.setPreferredSize(new Dimension(200, 30)); // Preferred size
+        txtPassword.setMaximumSize(new Dimension(200, 30)); // Maximum size
         return txtPassword;
     }
 
-    private Component uploadPhoto() {
-        btnUploadPhoto = new JButton("Upload Photo");
+    private Component bioField() {
+        txtBio = new JTextField("Bio");
+        txtBio.setForeground(Color.GRAY);
+        txtBio.setPreferredSize(new Dimension(200, 30)); // Preferred size
+        txtBio.setMaximumSize(new Dimension(200, 30)); // Maximum size
+        return txtBio;
+    }
 
+
+    private Component uploadPhoto() {
+        JButton btnUploadPhoto = new JButton("Upload Photo");
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        buttonPanel.setBackground(new Color(201, 189, 0)); // Match yellow color
+        buttonPanel.setOpaque(true);
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder());
+
+        buttonPanel.add(btnUploadPhoto);
         btnUploadPhoto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handleProfilePictureUpload();
             }
         });
+        // Add revalidate and repaint to ensure the color is updated
+        buttonPanel.revalidate();
+        buttonPanel.repaint();
 
-        return btnUploadPhoto;
+        return buttonPanel;
     }
+
+
+
 
     private Component registerButton() {
         btnRegister = new JButton("Register");

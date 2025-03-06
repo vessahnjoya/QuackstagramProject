@@ -33,6 +33,10 @@ public class RefactoredSignIn extends JFrame {
 
     private void initializeUI() {
         addComponents();
+        Color backgroundColor = new Color(201, 189, 0);
+        getContentPane().setBackground(backgroundColor); // Set the main frame's background
+        fieldsPanel.setBackground(backgroundColor); // Set the fields panel background
+        buttonPanel.setBackground(backgroundColor); // Set the button panel background
     }
 
     private Component headerPanel() {
@@ -70,31 +74,36 @@ public class RefactoredSignIn extends JFrame {
         fieldsPanel.add(passwordField());
 
         fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.Y_AXIS));
-        fieldsPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
+        fieldsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         return fieldsPanel;
     }
 
     private Component profilePicture() {
-        lblPhoto = new JLabel();
+        JLabel lblPhoto = new JLabel();
 
-        lblPhoto.setPreferredSize(new Dimension(80, 80));
         lblPhoto.setHorizontalAlignment(JLabel.CENTER);
         lblPhoto.setVerticalAlignment(JLabel.CENTER);
-        lblPhoto.setIcon(new ImageIcon(
-                new ImageIcon("img/logos/DACS.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH)));
 
-        JPanel photoPanel = new JPanel(); // Use a panel to center the photo label
-        photoPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        Image scaledImage = new ImageIcon("img/logos/DACS.png").getImage()
+                .getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        lblPhoto.setIcon(new ImageIcon(scaledImage));
 
-        photoPanel.add(lblPhoto);
+        JPanel photoPanel = new JPanel(new BorderLayout());
+        photoPanel.setBackground(new Color(201, 189, 0));
+        photoPanel.setOpaque(true);
+
+        photoPanel.add(lblPhoto, BorderLayout.CENTER);
 
         return photoPanel;
     }
 
+
     private Component usernameField() {
         txtUsername = new JTextField("Username");
         txtUsername.setForeground(Color.BLACK);
+        txtUsername.setPreferredSize(new Dimension(200, 30)); // Preferred size
+        txtUsername.setMaximumSize(new Dimension(200, 30)); // Maximum size
 
         fieldsPanel.add(Box.createVerticalStrut(10));
         fieldsPanel.add(txtUsername);
@@ -105,12 +114,15 @@ public class RefactoredSignIn extends JFrame {
     private Component passwordField() {
         txtPassword = new JTextField("Password");
         txtPassword.setForeground(Color.BLACK);
+        txtPassword.setPreferredSize(new Dimension(200, 30)); // Preferred size
+        txtPassword.setMaximumSize(new Dimension(200, 30)); // Maximum size
 
         fieldsPanel.add(Box.createVerticalStrut(10));
         fieldsPanel.add(txtPassword);
 
         return txtPassword;
     }
+
 
     public static String getLoggedInUsername() {
         return txtUsername.getText().trim();
