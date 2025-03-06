@@ -5,10 +5,6 @@ public class AffineCipher {
     public AffineCipher(String password) {
         this.password = password;
     }
-
-    // private String getPassword() {
-    //     return password;
-    // }
     public String encrypt() {
         String passwordText = password;
         final char[] charPlainText = passwordText.toCharArray();
