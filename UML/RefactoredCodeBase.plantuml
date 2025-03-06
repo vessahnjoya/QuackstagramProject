@@ -1,0 +1,208 @@
+@startuml quackStagramUML
+top to bottom direction
+skinparam linetype ortho
+
+class AffineCipher {
+    + AffineCipher(String)
+    - password: String
+    + encrypt(): String
+}
+abstract class BaseUI {
+    + BaseUI()
+    + BaseCreateHeaderPanel(): JPanel
+    + BaseOpenProfileUI(): void
+    + BaseNotificationsUI(): void
+    + BaseCreateIconButton(String, String): JButton
+    + BaseExploreUI(): void
+    + BaseImageUploadUI(): void
+    + BaseCreateNavigationPanel(): JPanel
+    + BaseOpenHomeUI(): void
+    NAV_ICON_SIZE: int
+    WIDTH: int
+    HEIGHT: int
+    IMAGE_SIZE: int
+    GRID_IMAGE_SIZE: int
+    PROFILE_IMAGE_SIZE: int
+
+
+}
+class CredentialsVerifier {
+    + CredentialsVerifier()
+    + saveUserInformation(User): void
+    - verifyCredentials(String, String): User?
+    + authenticate(String, String): User
+}
+class DirectMessagingUI {
+    + DirectMessagingUI(String):
+    - initializeUI(): void
+    - openChat(String): void
+    + refreshChat(): void
+    - loadChatHistory(String): void
+    - sendMessage(String, String, String): void
+}
+class EditProfileUI {
+    + EditProfileUI(User)
+    - bioFieldPanel(): Component
+    - photoUploadPanel(): Component
+    + saveNewBio(User, String): void
+    - uploadPhoto(): Component
+    - contentPanel(): Component
+    - displayImage(ImageIcon): void
+    - imgaeIcon(): Component
+    - saveProfilePicture(File, String): void
+    - cancelButton(): Component
+    + initializeUI(): void
+    - submitButton(): Component
+    - handleProfilePictureUpload(): void
+    - buttonPanel(): Component
+}
+class ExploreUI extends BaseUI{
+    + ExploreUI():
+    - initializeUI(): void
+    - createMainContentPanel(): JPanel
+    - displayImage(String): void
+}
+class ImageLikesManager {
+    + ImageLikesManager():
+    - readLikes(): Map<String, Set<String>>
+    + likeImage(String, String): void
+    - saveLikes(Map<String, Set<String>>): void
+}
+class ImageUploadUI extends BaseUI {
+    + ImageUploadUI()
+    - readUsername(): String?
+    - getNextImageId(String): int
+    - saveImageInfo(String, String, String): void
+    - saveBioAction(ActionEvent): void
+    - initializeUI(): void
+    - uploadAction(ActionEvent): void
+    - getFileExtension(File): String
+}
+class InstagramProfileUI extends BaseUI{
+    + InstagramProfileUI(User)
+    - initializeImageGrid(): void
+    - initializeUI(): void
+    - createHeaderPanel(): JPanel
+    - handleFollowAction(String): void
+    - displayImage(ImageIcon): void
+    - EditProfileUI(User): void
+    - createStatLabel(String, String): JLabel
+}
+class NotificationsUI extends BaseUI {
+    + NotificationsUI()
+    - getElapsedTime(String): String
+    - initializeUI(): void
+}
+class Picture {
+    + Picture(String, String):
+    - imagePath: String
+    - caption: String
+    - comments: List<String>
+    - likesCount: int
+    + like(): void
+    + addComment(String): void
+}
+class QuakstagramHomeUI extends BaseUI{
+    + QuakstagramHomeUI()
+    - displayImage(String[]): void
+    - populateContentPanel(JPanel, String[][]): void
+    - createSampleData(): String[][]
+    - handleLikeAction(String, JLabel): void
+    - loadComments(String, JTextArea): void
+    - saveComment(String, String): void
+    - initializeUI(): void
+    - refreshDisplayImage(String[], String): void
+    - createCommentPanel(String): JPanel
+    currentUser: String
+}
+class RefactoredSignIn {
+    + RefactoredSignIn()
+    - headerPanel(): Component
+    - registerButton(): Component
+    - onRegisterNowClicked(ActionEvent): void
+    - registerPanel(): Component
+    - passwordField(): Component
+    - onSignInClicked(ActionEvent): void
+    - textField(): Component
+    - buttonPanel(): Component
+    - signInButton(): Component
+    - initializeUI(): void
+    - profilePicture(): Component
+    - addComponents(): void
+    - usernameField(): Component
+    loggedInUsername: String
+}
+class RefactoredSignUp {
+    + RefactoredSignUp()
+    - initializeUI(): void
+    - signInButton(): Component
+    - registerUser(String, String, String): void
+    - showErrorMessage(String): void
+    - onRegisterClicked(ActionEvent): boolean
+    - buttonPanel(): Component
+    - usernameField(): Component
+    - addComponent(): void
+    - textField(): Component
+    - passwordField(): Component
+    - openSignInUI(): void
+    - handleProfilePictureUpload(): void
+    - bioField(): Component
+    - uploadPhoto(): Component
+    - registerPanel(): Component
+    - headerPanel(): Component
+    - profilePicture(): Component
+    - registerButton(): Component
+}
+class SignUpCredentials {
+    + SignUpCredentials():
+    + saveCreds(String, String, String): void
+    - saveProfilePicture(File, String): void
+    + savePFP(File, String): void
+    - saveCredentials(String, String, String): void
+    - doesUsernameExist(String): boolean
+    + userExistence(String): boolean
+}
+class User {
+    + User(String, String, String):
+    + User(String):
+    - postsCount: int
+    - pictures: List<Picture>
+    - username: String
+    - bio: String
+    - followingCount: int
+    - followersCount: int
+    + addPicture(Picture): void
+    + toString(): String
+}
+class UserRelationshipManager {
+    + UserRelationshipManager():
+    + followUser(String, String): void
+    + getFollowing(String): List<String>
+    - isAlreadyFollowing(String, String): boolean
+    + getFollowers(String): List<String>
+}
+
+BaseUI                   -[dashed]->  User
+CredentialsVerifier      -[dashed]->  AffineCipher
+CredentialsVerifier      -[dashed]->  User
+EditProfileUI            -[dashed]->  InstagramProfileUI
+EditProfileUI           "1" *--> "1" User
+ExploreUI                -[dashed]->  InstagramProfileUI
+ExploreUI                -[dashed]->  User
+InstagramProfileUI       -[dashed]->  EditProfileUI
+InstagramProfileUI      "1" *-[plain]-> "1" User
+QuakstagramHomeUI       "1" *-[plain]-> "1" DirectMessagingUI
+QuakstagramHomeUI        -[dashed]->  DirectMessagingUI
+RefactoredSignIn        "1" *-[plain]-> "1" CredentialsVerifier
+RefactoredSignIn         -[dashed]->  CredentialsVerifier
+RefactoredSignIn         -[dashed]->  InstagramProfileUI
+RefactoredSignIn         -[dashed]->  RefactoredSignUp
+RefactoredSignIn        "1" *-[plain]-> "1" User
+RefactoredSignUp         -[dashed]->  RefactoredSignIn
+RefactoredSignUp         -[dashed]->  SignUpCredentials
+RefactoredSignUp        "1" *-[plain]-> "1" SignUpCredentials
+RefactoredSignUp         -[dashed]->  User
+RefactoredSignUp        "1" *-[plain]-> "1" User
+SignUpCredentials        -[dashed]->  AffineCipher
+User                    "1" *-[plain]-> "*" Picture
+@enduml
