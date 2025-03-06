@@ -594,21 +594,6 @@ public class QuakstagramHomeUI extends BaseUI {
      } catch (IOException e) {
         }
     }
-
-    // Method to get the name of user 
-    // private String getCurrentUser() {
-    //     String currentUser = "";
-    //     try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-    //         String line = reader.readLine();
-    //         if (line != null) {
-    //             currentUser = line.split(":")[0].trim(); 
-    //         }
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //     }
-    //     return currentUser + " say's: ";
-    // }
-
     private String getCurrentUser(){
         return RefactoredSignIn.getLoggedInUsername();
     }

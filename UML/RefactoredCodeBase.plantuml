@@ -24,8 +24,6 @@ abstract class BaseUI {
     GRID_IMAGE_SIZE: int
     PROFILE_IMAGE_SIZE: int
     pageLabel: JLabel
-
-
 }
 class CredentialsVerifier {
     + CredentialsVerifier()
@@ -114,6 +112,7 @@ class QuakstagramHomeUI extends BaseUI{
     - initializeUI(): void
     - refreshDisplayImage(String[], String): void
     - createCommentPanel(String): JPanel
+    -getCurrentUser(): String
     currentUser: String
 }
 class RefactoredSignIn {
@@ -194,6 +193,7 @@ InstagramProfileUI       -[dashed]->  EditProfileUI
 InstagramProfileUI      "1" *-[plain]-> "1" User
 QuakstagramHomeUI       "1" *-[plain]-> "1" DirectMessagingUI
 QuakstagramHomeUI        -[dashed]->  DirectMessagingUI
+QuakstagramHomeUI        -[dashed]->  RefactoredSignIn
 RefactoredSignIn        "1" *-[plain]-> "1" CredentialsVerifier
 RefactoredSignIn         -[dashed]->  CredentialsVerifier
 RefactoredSignIn         -[dashed]->  InstagramProfileUI
