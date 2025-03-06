@@ -176,7 +176,7 @@ public class QuakstagramHomeUI extends BaseUI {
             likeButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    handleLikeAction(imageId, likesLabel);
+                    LikeFunctionality.handleLikeAction(imageId, likesLabel);
                 }
             });
 
@@ -234,98 +234,6 @@ public class QuakstagramHomeUI extends BaseUI {
             spacingPanel.setPreferredSize(new Dimension(WIDTH - 10, 5)); // Set the height for spacing
             spacingPanel.setBackground(new Color(230, 230, 230)); // Grey color for spacing
             panel.add(spacingPanel);
-        }
-    }
-
-    private void handleLikeAction(String imageId, JLabel likesLabel) {
-        Path detailsPath = Paths.get("img", "image_details.txt");
-        Path likesTrackingPath = Paths.get("data", "likes_tracking.txt");
-        StringBuilder newContent = new StringBuilder();
-        boolean updated = false;
-        boolean alreadyLiked = false;
-        String currentUser = RefactoredSignIn.getLoggedInUsername();
-        String imageOwner = "";
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        // Ensure likes_tracking.txt exists
-        try {
-            if (!Files.exists(likesTrackingPath)) {
-                Files.createFile(likesTrackingPath);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Retrieve the current user from users.txt
-        try (BufferedReader userReader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-            String line = userReader.readLine();
-            if (line != null) {
-                currentUser = line.split(":")[0].trim();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Check if the user has already liked this post
-        try (BufferedReader likesReader = Files.newBufferedReader(likesTrackingPath)) {
-            String line;
-            while ((line = likesReader.readLine()) != null) {
-                if (line.equals(currentUser + ";" + imageId)) {
-                    alreadyLiked = true;
-                    break;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (alreadyLiked) {
-            JOptionPane.showMessageDialog(null, "You have already liked this post!", "Like Failed", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-
-        // Read and update image_details.txt
-        try (BufferedReader reader = Files.newBufferedReader(detailsPath)) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.contains("ImageID: " + imageId)) {
-                    String[] parts = line.split(", ");
-                    imageOwner = parts[1].split(": ")[1];
-                    int likes = Integer.parseInt(parts[4].split(": ")[1]);
-                    likes++; // Increment the likes count
-                    parts[4] = "Likes: " + likes;
-                    line = String.join(", ", parts);
-
-                    // Update the UI
-                    likesLabel.setText("Likes: " + likes);
-                    updated = true;
-                }
-                newContent.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Write updated likes back to image_details.txt
-        if (updated) {
-            try (BufferedWriter writer = Files.newBufferedWriter(detailsPath)) {
-                writer.write(newContent.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // Record the like in notifications.txt
-            String notification = String.format("%s; %s; %s; %s\n", imageOwner, currentUser, imageId, timestamp);
-            try (BufferedWriter notificationWriter = Files.newBufferedWriter(Paths.get("data", "notifications.txt"), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-                notificationWriter.write(notification);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            // Record the like in likes_tracking.txt to prevent duplicate likes
-            try (BufferedWriter likesWriter = Files.newBufferedWriter(likesTrackingPath, StandardOpenOption.APPEND)) {
-                likesWriter.write(currentUser + ";" + imageId);
-                likesWriter.newLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -409,7 +317,6 @@ public class QuakstagramHomeUI extends BaseUI {
 
         return sampleData;
     }
-
     private void displayImage(String[] postData) {
         imageViewPanel.removeAll(); // Clear previous content
 
@@ -446,11 +353,11 @@ public class QuakstagramHomeUI extends BaseUI {
         likeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handleLikeAction(imageId, likesLabel); // Update this line
+                LikeFunctionality.handleLikeAction(imageId, likesLabel); // Update this line
                 refreshDisplayImage(postData, imageId); // Refresh the view
             }
         });
-        // Button for the comment text  
+        // Button for the comment text
         ImageIcon commentIcon = new ImageIcon("img/icons/CommentIcon .png");
         Image iconScaled = commentIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
         JButton commentIconButton = new JButton(new ImageIcon(iconScaled));
