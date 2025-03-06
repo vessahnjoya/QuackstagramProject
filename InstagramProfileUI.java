@@ -15,10 +15,6 @@ import java.util.stream.Stream;
 
 public class InstagramProfileUI extends BaseUI {
 
-    // private static final int WIDTH = 300;
-    // private static final int HEIGHT = 500;
-    // private static final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
-    // private static final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
     private JPanel contentPanel; // Panel to display the image grid or the clicked image
     private JPanel headerPanel; // Panel for the header
     private JPanel navigationPanel; // Panel for the navigation
@@ -106,7 +102,6 @@ public class InstagramProfileUI extends BaseUI {
         initializeUI();
     }
 
-
     private void initializeUI() {
         getContentPane().removeAll(); // Clear existing components
 
@@ -181,9 +176,8 @@ public class InstagramProfileUI extends BaseUI {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     dispose();
-                   EditProfileUI(currentUser);
-                }
-                ;
+                    EditProfileUI(currentUser);
+                };
             });
         } else {
             followButton = new JButton("Follow");
@@ -375,10 +369,9 @@ public class InstagramProfileUI extends BaseUI {
         return label;
     }
 
-    private void EditProfileUI(User user){
+    private void EditProfileUI(User user) {
         EditProfileUI editProfileUI = new EditProfileUI(user);
         editProfileUI.setVisible(true);
     }
-
 
 }

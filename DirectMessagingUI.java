@@ -131,8 +131,8 @@ public class DirectMessagingUI extends JPanel {
     }
     // Method to send messages
     private void sendMessage(String sender, String receiver, String message) {
-        String messageEntry = sender + ": " + receiver + ": " + message + "\n";
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "messages.txt"), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+        String messageEntry = sender + ": " + receiver + ": " + message;
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "messages.txt"),StandardOpenOption.APPEND)) {
             writer.write(messageEntry);
         } catch (IOException e) {
             e.printStackTrace();
