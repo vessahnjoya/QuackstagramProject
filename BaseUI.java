@@ -10,6 +10,7 @@ public abstract class BaseUI extends JFrame {
     public static final int IMAGE_SIZE = WIDTH / 3; // Size for each image in the grid
     public static final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
     public static final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
+    private  static  JLabel lblRegister;
 
     public JPanel BaseCreateHeaderPanel() {
 
@@ -17,7 +18,7 @@ public abstract class BaseUI extends JFrame {
         // Header with the Register label
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
-        JLabel lblRegister = new JLabel(" Explore 🐥");
+        //  lblRegister = new JLabel(" Explore 🐥");
         lblRegister.setFont(new Font("Arial", Font.BOLD, 16));
         lblRegister.setForeground(Color.WHITE); // Set the text color to white
         headerPanel.add(lblRegister);
@@ -64,6 +65,7 @@ public abstract class BaseUI extends JFrame {
         } else if ("explore".equals(buttonType)) {
             button.addActionListener(e -> BaseExploreUI());
         } else if ("add".equals(buttonType)) {
+           
             button.addActionListener(e -> BaseImageUploadUI());
         }
         return button;
@@ -73,6 +75,7 @@ public abstract class BaseUI extends JFrame {
     public void BaseImageUploadUI() {
         // Open InstagramProfileUI frame
         this.dispose();
+        lblRegister = new JLabel("Image Upload 🐥");
         ImageUploadUI upload = new ImageUploadUI();
         upload.setVisible(true);
     }
@@ -97,6 +100,7 @@ public abstract class BaseUI extends JFrame {
     public void BaseNotificationsUI() {
         // Open InstagramProfileUI frame
         this.dispose();
+        lblRegister = new JLabel("Notification 🐥");
         NotificationsUI notificationsUI = new NotificationsUI();
         notificationsUI.setVisible(true);
     }
@@ -111,6 +115,7 @@ public abstract class BaseUI extends JFrame {
     public void BaseExploreUI() {
         // Open InstagramProfileUI frame
         this.dispose();
+        lblRegister = new JLabel("Explore 🐥");
         ExploreUI explore = new ExploreUI();
         explore.setVisible(true);
     }
