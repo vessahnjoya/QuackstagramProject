@@ -23,6 +23,7 @@ abstract class BaseUI {
     IMAGE_SIZE: int
     GRID_IMAGE_SIZE: int
     PROFILE_IMAGE_SIZE: int
+    pageLabel: JLabel
 
 
 }
