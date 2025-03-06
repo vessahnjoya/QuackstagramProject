@@ -25,7 +25,7 @@ git clone https://github.com/vessahnjoya/QuackstagramProject.git
 
 ### Step 2: Compile and Run the Main Application
 
-open the folder App
+open the folder `App`
 
 Open the file `Main.java`, and click on run OR type the following inside your terminal
 
