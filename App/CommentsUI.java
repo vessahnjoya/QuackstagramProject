@@ -72,7 +72,7 @@ public class CommentsUI {
     // methode to save the comment in local repo
     private static void saveComment(String imageId, String comment) {
         String currentUser = getCurrentUser();
-        String commentEntry = imageId + ": " + currentUser + comment + "\n";
+        String commentEntry = imageId + ": " + currentUser +" say's: "+  comment + "\n";
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "comments.txt"), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
             writer.write(commentEntry);
         } catch (IOException e) {

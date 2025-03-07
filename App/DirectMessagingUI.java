@@ -95,8 +95,11 @@ public class DirectMessagingUI extends JPanel {
         // Button to go back to home page 
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> {
-            CardLayout cardLayout = (CardLayout) getParent().getParent().getLayout();
-            cardLayout.show(getParent().getParent(), "Home");
+            getParent().getParent().setVisible(false);
+           QuakstagramHomeUI home = new QuakstagramHomeUI();
+           home.setVisible(true);;
+            // CardLayout cardLayout = (CardLayout) getParent().getParent().getLayout();
+            // cardLayout.show(getParent().getParent(), "Home");
         });
         add(backButton, BorderLayout.NORTH);
     }
