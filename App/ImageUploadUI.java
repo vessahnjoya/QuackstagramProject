@@ -193,15 +193,4 @@ public class ImageUploadUI extends BaseUI {
         JOptionPane.showMessageDialog(this, "Caption saved: " + bioText);
     }
 
-    private String readUsername() throws IOException {
-        Path usersFilePath = Paths.get("data", "users.txt");
-        try (BufferedReader reader = Files.newBufferedReader(usersFilePath)) {
-            String line = reader.readLine();
-            if (line != null) {
-                return line.split(":")[0]; // Extract the username from the first line
-            }
-        }
-        return null; // Return null if no username is found
-    }
-
 }
