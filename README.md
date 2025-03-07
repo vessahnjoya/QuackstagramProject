@@ -8,6 +8,7 @@
 ## Project Overview
 
 Welcome to Quakstagram, a Cheapo software solutions social Media App.
+![alt text](ReadMeImages/LoginUI.png)
 
 The core of this app revolves around letting users set up and personalize their profiles.
 Users sign up, log in, and add a personal touch with photos and bios, just as they
