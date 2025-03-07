@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 public class CommentsUI {
-    static JPanel createCommentPanel(String imageId) {
+   public static JPanel createCommentPanel(String imageId) {
         JPanel commentPanel = new JPanel();
         commentPanel.setLayout(new BorderLayout());
         commentPanel.setBackground(Color.WHITE);
@@ -97,7 +97,7 @@ public class CommentsUI {
         } catch (IOException e) {
         }
     }
-    static String getCurrentUser(){
+    public static String getCurrentUser(){
         return RefactoredSignIn.getLoggedInUsername();
     }
 }
