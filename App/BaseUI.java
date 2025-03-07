@@ -36,11 +36,11 @@ public abstract class BaseUI extends JFrame {
 
         navigationPanel.add(BaseCreateIconButton("img/icons/home.png", "home"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(BaseCreateIconButton("img/icons/search.png", "explore"));
+        navigationPanel.add(BaseCreateIconButton("img/icons/explore.png", "explore"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(BaseCreateIconButton("img/icons/add.png", "add"));
+        navigationPanel.add(BaseCreateIconButton("img/icons/upload.png", "upload"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(BaseCreateIconButton("img/icons/heart.png", "notification"));
+        navigationPanel.add(BaseCreateIconButton("img/icons/notifications.png", "notification"));
         navigationPanel.add(Box.createHorizontalGlue());
         navigationPanel.add(BaseCreateIconButton("img/icons/profile.png", "profile"));
 
@@ -64,8 +64,7 @@ public abstract class BaseUI extends JFrame {
             button.addActionListener(e -> BaseNotificationsUI());
         } else if ("explore".equals(buttonType)) {
             button.addActionListener(e -> BaseExploreUI());
-        } else if ("add".equals(buttonType)) {
-           
+        } else if ("upload".equals(buttonType)) {
             button.addActionListener(e -> BaseImageUploadUI());
         }
         return button;
@@ -108,6 +107,7 @@ public abstract class BaseUI extends JFrame {
     public void BaseOpenHomeUI() {
         // Open InstagramProfileUI frame
         this.dispose();
+        // pageLabel = new JLabel("Quackstagram🐥");
         QuakstagramHomeUI homeUI = new QuakstagramHomeUI();
         homeUI.setVisible(true);
     }

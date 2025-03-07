@@ -59,7 +59,7 @@ public class QuakstagramHomeUI extends BaseUI {
         headerPanel.setPreferredSize(new Dimension(WIDTH, 40)); // Give the header a fixed height
 
         //Register Panel
-        JLabel lblRegister = new JLabel("🐥 Quackstagram 🐥");
+        JLabel lblRegister = new JLabel("Quackstagram 🐥");
         lblRegister.setFont(new Font("Arial", Font.BOLD, 16));
         lblRegister.setForeground(Color.WHITE); // Set the text color to white
         lblRegister.setHorizontalAlignment(SwingConstants.CENTER);
@@ -97,11 +97,11 @@ public class QuakstagramHomeUI extends BaseUI {
 
         navigationPanel.add(super.BaseCreateIconButton("img/icons/home.png", "home"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(super.BaseCreateIconButton("img/icons/search.png", "explore"));
+        navigationPanel.add(super.BaseCreateIconButton("img/icons/explore.png", "explore"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(super.BaseCreateIconButton("img/icons/add.png", "add"));
+        navigationPanel.add(super.BaseCreateIconButton("img/icons/upload.png", "upload"));
         navigationPanel.add(Box.createHorizontalGlue());
-        navigationPanel.add(super.BaseCreateIconButton("img/icons/heart.png", "notification"));
+        navigationPanel.add(super.BaseCreateIconButton("img/icons/notifications.png", "notification"));
         navigationPanel.add(Box.createHorizontalGlue());
         navigationPanel.add(super.BaseCreateIconButton("img/icons/profile.png", "profile"));
 

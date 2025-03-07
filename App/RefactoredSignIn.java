@@ -14,7 +14,6 @@ public class RefactoredSignIn extends JFrame {
     private JTextField txtPassword;
     private JButton btnSignIn;
     private JButton btnRegisterNow;
-    private JLabel lblPhoto;
     private JLabel lblRegister;
     private JPanel fieldsPanel;
     private JPanel headerPanel;

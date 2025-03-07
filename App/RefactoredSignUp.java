@@ -23,10 +23,8 @@ public class RefactoredSignUp extends JFrame {
     private JPanel buttonPanel;
 
     private JButton btnRegister;
-    private JButton btnUploadPhoto;
     private JButton btnSignIn;
 
-    private JLabel lblPhoto;
     private JLabel lblRegister;
 
     private User newUser;
@@ -34,7 +32,6 @@ public class RefactoredSignUp extends JFrame {
     private SignUpCredentials saveProfilePicture = new SignUpCredentials();
     private SignUpCredentials saveCredentials = new SignUpCredentials();
     private SignUpCredentials doesUsernameExist = new SignUpCredentials();
-
 
     public RefactoredSignUp() {
         setTitle("Quackstagram - Register");
@@ -52,6 +49,7 @@ public class RefactoredSignUp extends JFrame {
         fieldsPanel.setBackground(backgroundColor); // Set the fields panel background
         buttonPanel.setBackground(backgroundColor); // Set the button panel background
     }
+
     private Component headerPanel() {
         headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
@@ -89,6 +87,7 @@ public class RefactoredSignUp extends JFrame {
 
         return photoPanel;
     }
+
     private Component textField() {
         fieldsPanel = new JPanel();
         fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.Y_AXIS));
@@ -117,9 +116,6 @@ public class RefactoredSignUp extends JFrame {
         return fieldsPanel;
     }
 
-
-
-
     private Component usernameField() {
         txtUsername = new JTextField("Username");
         txtUsername.setForeground(Color.GRAY);
@@ -144,7 +140,6 @@ public class RefactoredSignUp extends JFrame {
         return txtBio;
     }
 
-
     private Component uploadPhoto() {
         JButton btnUploadPhoto = new JButton("Upload Photo");
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -165,9 +160,6 @@ public class RefactoredSignUp extends JFrame {
 
         return buttonPanel;
     }
-
-
-
 
     private Component registerButton() {
         btnRegister = new JButton("Register");
@@ -231,7 +223,7 @@ public class RefactoredSignUp extends JFrame {
 
         registerUser(username, password, bio);
         openSignInUI();
-                return rootPaneCheckingEnabled;
+        return rootPaneCheckingEnabled;
     }
 
     private void showErrorMessage(String message) {
