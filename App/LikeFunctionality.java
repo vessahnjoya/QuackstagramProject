@@ -8,8 +8,15 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+/**
+ * This class handles the like functionality
+ */
 public class LikeFunctionality {
+    /**
+     * This method handles the like functionality inide the home UI
+     * @param imageId
+     * @param likesLabel
+     */
     static void handleLikeAction(String imageId, JLabel likesLabel) {
         Path detailsPath = Paths.get("img", "image_details.txt");
         Path likesTrackingPath = Paths.get("data", "likes_tracking.txt");

@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
+/**
+ * This class provides interface for home UI and inherits implementation from baseUi class
+ */
 public class QuakstagramHomeUI extends BaseUI {
     private final int IMAGE_WIDTH = WIDTH - 100; // Width for the image posts
     private final int IMAGE_HEIGHT = 150; // Height for the image posts
@@ -22,6 +24,9 @@ public class QuakstagramHomeUI extends BaseUI {
     private JPanel imageViewPanel;
     private DirectMessagingUI directMessagingUI;
 
+    /** 
+     * The cnstructor sets, adds default values for frame and initializes UI
+     */
     @SuppressWarnings("unused")
     public QuakstagramHomeUI() {
         setTitle("Quakstagram Home");
@@ -104,7 +109,9 @@ public class QuakstagramHomeUI extends BaseUI {
 
         add(navigationPanel, BorderLayout.SOUTH);
     }
-
+/**
+ * This method intializes UI components and adds them to the frame
+ */
     private void initializeUI() {
 
         // Content Scroll Panel
@@ -123,7 +130,11 @@ public class QuakstagramHomeUI extends BaseUI {
         homePanel.add(scrollPane, BorderLayout.CENTER);
 
     }
-
+/**
+ * This method populates the content panel with different posts with formatting and adds them to the frame
+ * @param panel
+ * @param sampleData
+ */
     private void populateContentPanel(JPanel panel, String[][] sampleData) {
 
         for (String[] postData : sampleData) {
@@ -228,6 +239,10 @@ public class QuakstagramHomeUI extends BaseUI {
         }
     }
 
+    /**
+     * This method create sample data from users txt file
+     * @return sample data
+     */
     private String[][] createSampleData() {
         String currentUser = RefactoredSignIn.getLoggedInUsername();
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
@@ -310,6 +325,10 @@ public class QuakstagramHomeUI extends BaseUI {
         return sampleData;
     }
 
+    /**
+     * This methods display images with comments and like functionalities
+     * @param postData
+     */
     private void displayImage(String[] postData) {
         imageViewPanel.removeAll(); // Clear previous content
 
@@ -391,6 +410,12 @@ public class QuakstagramHomeUI extends BaseUI {
         cardLayout.show(cardPanel, "ImageView"); // Switch to the image view
     }
 
+    /**
+     * This method displays images with updated data
+     * 
+     * @param postData
+     * @param imageId
+     */
     private void refreshDisplayImage(String[] postData, String imageId) {
         // Read updated likes count from image_details.txt
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("img", "image_details.txt"))) {

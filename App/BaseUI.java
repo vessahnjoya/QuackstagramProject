@@ -1,32 +1,40 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * BaseUI is an abstract class that provides common UI components and navigation functionalities
+ * and serves a base for other UI components
+ */
 public abstract class BaseUI extends JFrame {
     public static final int NAV_ICON_SIZE = 20;
     public static final int WIDTH = 300;
     public static final int HEIGHT = 500;
-    public static final int IMAGE_SIZE = WIDTH / 3; // Size for each image in the grid
-    public static final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
-    public static final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
+    public static final int IMAGE_SIZE = WIDTH / 3;
+    public static final int GRID_IMAGE_SIZE = WIDTH / 3;
+    public static final int PROFILE_IMAGE_SIZE = 80;
     private static JLabel pageLabel;
 
+    /**
+     * Creates and returns the header panel with a page label
+     * @return JPanel representing the header
+     */
     public JPanel BaseCreateHeaderPanel() {
-
-        // Header Panel (reuse from InstagramProfileUI or customize for home page)
-        // Header with the Register label
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
-        // pageLabel = new JLabel(" Explore 🐥");
+        headerPanel.setBackground(new Color(51, 51, 51));
+        
         pageLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        pageLabel.setForeground(Color.WHITE); // Set the text color to white
+        pageLabel.setForeground(Color.WHITE);
         headerPanel.add(pageLabel);
-        headerPanel.setPreferredSize(new Dimension(WIDTH, 40)); // Give the header a fixed height
+        headerPanel.setPreferredSize(new Dimension(WIDTH, 40));
+        
         return headerPanel;
     }
 
+    /**
+     * Creates and returns the navigation panel with icon buttons for different functionalities
+     * @return JPanel representing the navigation bar
+     */
     public JPanel BaseCreateNavigationPanel() {
-        // Create and return the navigation panel
-        // Navigation Bar
         JPanel navigationPanel = new JPanel();
         navigationPanel.setBackground(new Color(249, 249, 249));
         navigationPanel.setLayout(new BoxLayout(navigationPanel, BoxLayout.X_AXIS));
@@ -45,6 +53,12 @@ public abstract class BaseUI extends JFrame {
         return navigationPanel;
     }
 
+    /**
+     * Creates an icon button with a specified image and button type
+     * @param iconPath   The path to the icon image
+     * @param buttonType The type of button (e.g., "home", "profile", "upload")
+     * @return JButton representing the navigation button
+     */
     @SuppressWarnings("unused")
     public JButton BaseCreateIconButton(String iconPath, String buttonType) {
         ImageIcon iconOriginal = new ImageIcon(iconPath);
@@ -54,64 +68,76 @@ public abstract class BaseUI extends JFrame {
         button.setContentAreaFilled(false);
 
         // Define actions based on button type
-        if ("home".equals(buttonType)) {
-            button.addActionListener(e -> BaseOpenHomeUI());
-        } else if ("profile".equals(buttonType)) {
-            button.addActionListener(e -> BaseOpenProfileUI());
-        } else if ("notification".equals(buttonType)) {
-            button.addActionListener(e -> BaseNotificationsUI());
-        } else if ("explore".equals(buttonType)) {
-            button.addActionListener(e -> BaseExploreUI());
-        } else if ("upload".equals(buttonType)) {
-            button.addActionListener(e -> BaseImageUploadUI());
+        switch (buttonType) {
+            case "home":
+                button.addActionListener(e -> BaseOpenHomeUI());
+                break;
+            case "profile":
+                button.addActionListener(e -> BaseOpenProfileUI());
+                break;
+            case "notification":
+                button.addActionListener(e -> BaseNotificationsUI());
+                break;
+            case "explore":
+                button.addActionListener(e -> BaseExploreUI());
+                break;
+            case "upload":
+                button.addActionListener(e -> BaseImageUploadUI());
+                break;
         }
         return button;
-
     }
 
+    /**
+     * Opens the Image Upload UI and disposes of the current frame
+     */
     public void BaseImageUploadUI() {
-        // Open InstagramProfileUI frame
         this.dispose();
         pageLabel = new JLabel("Image Upload 🐥");
         ImageUploadUI upload = new ImageUploadUI();
         upload.setVisible(true);
     }
 
+    /**
+     * Opens the Profile UI with the currently logged-in user and disposes of the current frame
+     */
     public void BaseOpenProfileUI() {
         this.dispose();
 
-        // Access the logged-in username correctly
-        String loggedInUsername = RefactoredSignIn.getLoggedInUsername(); // Fix: Use the getter method
-
+        String loggedInUsername = RefactoredSignIn.getLoggedInUsername();
         if (loggedInUsername == null || loggedInUsername.isEmpty()) {
             System.out.println("Error: No user is logged in!");
             return;
         }
 
-        // Open profile with the correct user
         User user = new User(loggedInUsername);
         InstagramProfileUI profileUI = new InstagramProfileUI(user);
         profileUI.setVisible(true);
     }
 
+    /**
+     * Opens the Notifications UI and disposes of the current frame
+     */
     public void BaseNotificationsUI() {
-        // Open InstagramProfileUI frame
         this.dispose();
         pageLabel = new JLabel("Notification 🐥");
         NotificationsUI notificationsUI = new NotificationsUI();
         notificationsUI.setVisible(true);
     }
 
+    /**
+     * Opens the Home UI and disposes of the current frame
+     */
     public void BaseOpenHomeUI() {
-        // Open InstagramProfileUI frame
         this.dispose();
-        // pageLabel = new JLabel("Quackstagram🐥");
         QuakstagramHomeUI homeUI = new QuakstagramHomeUI();
         homeUI.setVisible(true);
     }
 
+    /**
+     * Opens the Explore UI and disposes of the current frame
+     */
     public void BaseExploreUI() {
-        // Open InstagramProfileUI frame
         this.dispose();
         pageLabel = new JLabel("Explore 🐥");
         ExploreUI explore = new ExploreUI();

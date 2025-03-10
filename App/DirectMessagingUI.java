@@ -6,19 +6,28 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-
+/**
+ * This class provides user interface for communication with other users
+ */
 public class DirectMessagingUI extends JPanel {
     private String currentUser;
     private String selectedUser;
     private JTextArea chatArea;
     private JLabel usernameLabel; // Label to display the selected username
 
+    /**
+     * The constructor initializes the currentUser, and UI
+     * @param currentUser this is the logged In user
+     */
     public DirectMessagingUI(String currentUser) {
         this.currentUser = currentUser;
         setLayout(new BorderLayout());
         initializeUI();
     }
 
+    /**
+     * This method initializes the UI by creating a panel with users and textArea
+     */
     @SuppressWarnings("unused")
     private void initializeUI() {
         // Panel for the list of users
@@ -76,7 +85,7 @@ public class DirectMessagingUI extends JPanel {
         sendButton.addActionListener(e -> {
             String message = inputField.getText().trim();
             if (!message.isEmpty()) {
-                sendMessage(currentUser, selectedUser, message);
+                saveMessage(currentUser, selectedUser, message);
                 chatArea.append(currentUser + message + "\n");
                 inputField.setText("");
             }
@@ -100,16 +109,20 @@ public class DirectMessagingUI extends JPanel {
         add(backButton, BorderLayout.NORTH);
     }
 
-    // Open the chat with User
-    private void openChat(String username) {
+/**
+ * This method opens the chat upon clicking of a username
+ * @param username this is the selectedUser
+ */    private void openChat(String username) {
         selectedUser = username;
         usernameLabel.setText("Texting " + username); // Set the username label
         chatArea.setText(""); // Clear the chat area
         loadChatHistory(selectedUser);
     }
 
-    // Method to get the old messages
-    private void loadChatHistory(String username) {
+/**
+ * This method is used to load previous messages between two users
+ * @param username this is the receiver
+ */    private void loadChatHistory(String username) {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "messages.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -131,8 +144,12 @@ public class DirectMessagingUI extends JPanel {
         }
     }
 
-    // Method to send messages
-    private void sendMessage(String sender, String receiver, String message) {
+/**
+ * This method is used to save Messages 
+ * @param sender logged in user sending message
+ * @param receiver selected user
+ * @param message 
+ */    private void saveMessage(String sender, String receiver, String message) {
         String messageEntry = sender + ": " + receiver + ": " + message;
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "messages.txt"),
                 StandardOpenOption.APPEND)) {
@@ -142,8 +159,9 @@ public class DirectMessagingUI extends JPanel {
         }
     }
 
-    // This method ensures that the chat doesn't refresh itself again when click on
-    // the user
+    /**
+     * This method ensures that the chat doesn't refresh itself again when a chat is already opened upon misclick
+     */
     public void refreshChat() {
         if (selectedUser != null) {
             openChat(selectedUser); // Reload the chat history for the selected user

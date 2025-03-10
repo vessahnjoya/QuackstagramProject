@@ -9,6 +9,9 @@ import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * This class provides an interface for uploading of an image with a caption
+ */
 public class ImageUploadUI extends BaseUI {
 
     private JLabel imagePreviewLabel;
@@ -24,7 +27,9 @@ public class ImageUploadUI extends BaseUI {
         setLayout(new BorderLayout());
         initializeUI();
     }
-
+/**
+ * This method initializes the ui components and add them to the frame
+ */
     private void initializeUI() {
         JPanel headerPanel = super.BaseCreateHeaderPanel(); // Reuse the createHeaderPanel method
         JPanel navigationPanel = super.BaseCreateNavigationPanel(); // Reuse the createNavigationPanel method
@@ -69,7 +74,10 @@ public class ImageUploadUI extends BaseUI {
         add(contentPanel, BorderLayout.CENTER);
         add(navigationPanel, BorderLayout.SOUTH);
     }
-
+/**
+ * This method handles upload action precisely file selction and displays an error if the file format is not supported
+ * @param event defines if the action has occured
+ */
     private void uploadAction(ActionEvent event) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select an image file");
@@ -129,7 +137,12 @@ public class ImageUploadUI extends BaseUI {
             }
         }
     }
-
+/**
+ * This method ensures the pictures are saved in the correct directory and 
+ * @param username user uploading image
+ * @return Id + 1
+ * @throws IOException
+ */
     private int getNextImageId(String username) throws IOException {
         Path storageDir = Paths.get("img", "uploaded"); // Ensure this is the directory where images are saved
         if (!Files.exists(storageDir)) {
@@ -156,7 +169,13 @@ public class ImageUploadUI extends BaseUI {
         }
         return maxId + 1; // Return the next available ID
     }
-
+/**
+ * This method saves the user, image and bio info into a txt file
+ * @param imageId 
+ * @param username
+ * @param bio
+ * @throws IOException
+ */
     private void saveImageInfo(String imageId, String username, String bio) throws IOException {
         Path infoFilePath = Paths.get("img", "image_details.txt");
         if (!Files.exists(infoFilePath)) {
@@ -182,6 +201,10 @@ public class ImageUploadUI extends BaseUI {
         return name.substring(lastIndexOf + 1);
     }
 
+    /**
+     * This method save the bio
+     * @param event
+     */
     private void saveBioAction(ActionEvent event) {
         // Here you would handle saving the bio text
         String bioText = bioTextArea.getText();

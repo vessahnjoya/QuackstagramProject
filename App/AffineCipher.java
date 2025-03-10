@@ -1,10 +1,23 @@
+/**
+ * This class provides a simple implementation of the Affine Cipher
+ * This implementation only supports encryption of lowercase letters
+ */
 public class AffineCipher {
     private String password;
 
+     /**
+     * Constructor to initialize the password
+     * @param password The plaintext to be encrypted
+     */
     public AffineCipher(String password) {
         this.password = password;
     }
 
+    /**
+     * Encrypts the stored password using a mathematical formula
+     * Non-alphabetic characters remain unchanged
+     * @return The encrypted string
+     */
     public String encrypt() {
         String passwordText = password;
         final char[] charPlainText = passwordText.toCharArray();

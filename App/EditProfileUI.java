@@ -5,7 +5,10 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.io.*;
-
+/**
+ * This class provides user interface for profile customization
+ * This class is not functional!
+ */
 public class EditProfileUI extends JFrame {
     final int WIDTH = 300;
     final int HEIGHT = 500;
@@ -26,6 +29,7 @@ public class EditProfileUI extends JFrame {
     private final String credentialsFilePath = "data/credentials.txt";
     private final String profilePhotoStoragePath = "img/storage/profile/";
 
+
     public EditProfileUI(User user) {
         currentUser = user;
         setTitle("Edit Profile");
@@ -42,6 +46,7 @@ public class EditProfileUI extends JFrame {
         add(buttonPanel(), BorderLayout.SOUTH);
     }
 
+ 
     private Component bioFieldPanel() {
         bioFieldPanel = new JPanel();
         txtBio = new JTextField("Bio", 10);
@@ -148,6 +153,7 @@ public class EditProfileUI extends JFrame {
         }
     }
 
+  
     private void saveProfilePicture(File file, String username) {
         try {
             BufferedImage image = ImageIO.read(file);
