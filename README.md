@@ -24,6 +24,12 @@ Clone the Quackstagram repository from GitHub to your local machine:
 ```bash
 git clone https://github.com/vessahnjoya/QuackstagramProject.git
 ```
+OR 
+
+Inside Vs code, do the following commands:
+```
+Ctrl+shift+P, type git clone and press Enter, and enter the provided URL above
+```
 
 ### Step 2: Compile and Run the Main Application
 
