@@ -77,7 +77,7 @@ public class DirectMessagingUI extends JPanel {
             String message = inputField.getText().trim();
             if (!message.isEmpty()) {
                 sendMessage(currentUser, selectedUser, message);
-                chatArea.append(currentUser + message + "\n");
+                chatArea.append(currentUser+ ": " + message + "\n");
                 inputField.setText("");
             }
         });
