@@ -47,7 +47,10 @@ public class RefactoredSignUp extends JFrame {
         fieldsPanel.setBackground(backgroundColor); // Set the fields panel background
         buttonPanel.setBackground(backgroundColor); // Set the button panel background
     }
-
+/**
+ * This method creates a header panel that contains  a register label and adds design
+ * @return header panel
+ */
     private Component headerPanel() {
         headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
@@ -57,7 +60,10 @@ public class RefactoredSignUp extends JFrame {
 
         return headerPanel;
     }
-
+/**
+ * This method creates a label
+ * @return lblRegister
+ */
     private Component registerPanel() {
         lblRegister = new JLabel("Quackstagram 🐥");
 
@@ -66,7 +72,10 @@ public class RefactoredSignUp extends JFrame {
 
         return lblRegister;
     }
-
+/**
+ * This method is used to add dacs logo to a panel
+ * @return photo panel
+ */
     private Component profilePicture() {
         JLabel lblPhoto = new JLabel();
 
@@ -85,7 +94,10 @@ public class RefactoredSignUp extends JFrame {
 
         return photoPanel;
     }
-
+/**
+ * This mlethod is used to different textfields to a field panel and add formatting
+ * @return fieldpanel
+ */
     private Component textField() {
         fieldsPanel = new JPanel();
         fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.Y_AXIS));
@@ -113,7 +125,10 @@ public class RefactoredSignUp extends JFrame {
 
         return fieldsPanel;
     }
-
+/**
+ * This method is used to  create a username textField
+ * @return usernamefield
+ */
     private Component usernameField() {
         txtUsername = new JTextField("Username");
         txtUsername.setForeground(Color.GRAY);
@@ -121,7 +136,10 @@ public class RefactoredSignUp extends JFrame {
         txtUsername.setMaximumSize(new Dimension(200, 30)); // Maximum size
         return txtUsername;
     }
-
+/**
+ * This method is used to  create a password textField
+ * @return passwordfield
+ */
     private Component passwordField() {
         txtPassword = new JTextField("Password");
         txtPassword.setForeground(Color.GRAY);
@@ -129,7 +147,10 @@ public class RefactoredSignUp extends JFrame {
         txtPassword.setMaximumSize(new Dimension(200, 30)); // Maximum size
         return txtPassword;
     }
-
+/**
+ * This method is used to  create a Bio textField
+ * @return bioField
+ */
     private Component bioField() {
         txtBio = new JTextField("Bio");
         txtBio.setForeground(Color.GRAY);
@@ -137,7 +158,10 @@ public class RefactoredSignUp extends JFrame {
         txtBio.setMaximumSize(new Dimension(200, 30)); // Maximum size
         return txtBio;
     }
-
+/**
+ * This method is used to create an upload photo button and adds it action listener
+ * @return upload photo button
+ */
     private Component uploadPhoto() {
         JButton btnUploadPhoto = new JButton("Upload Photo");
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -159,6 +183,10 @@ public class RefactoredSignUp extends JFrame {
         return buttonPanel;
     }
 
+    /**
+ * This method is used to create a Register button and add its action listener
+ * @return register button
+ */
     private Component registerButton() {
         btnRegister = new JButton("Register");
         btnRegister.addActionListener(this::onRegisterClicked);
@@ -176,7 +204,10 @@ public class RefactoredSignUp extends JFrame {
 
         return btnRegister;
     }
-
+/**
+ * This method is used to create a signIn button and add its action listener
+ * @return signIn button
+ */
     private Component signInButton() {
         btnSignIn = new JButton("Already have an account? Sign In");
         btnSignIn.setBackground(blueColor);
@@ -192,7 +223,10 @@ public class RefactoredSignUp extends JFrame {
 
         return btnSignIn;
     }
-
+/**
+ * This method is used to add both register and signIn button to a panel
+ * @return button panel
+ */
     private Component buttonPanel() {
         buttonPanel = new JPanel(new GridLayout(2, 1)); // Grid layout with 2 row, 1 columns
         buttonPanel.setBackground(Color.white);
@@ -203,12 +237,19 @@ public class RefactoredSignUp extends JFrame {
         return buttonPanel;
     }
 
+    /**
+     * This method is used to add components to the frame
+     */
     private void addComponent() {
         add(headerPanel(), BorderLayout.NORTH);
         add(textField(), BorderLayout.CENTER);
         add(buttonPanel(), BorderLayout.SOUTH);
     }
-
+    /**
+     * This method calls is used when the entered username is new to the system hence register users and opens sign in page
+     * @param event
+     * @return boolean value
+     */
     private boolean onRegisterClicked(ActionEvent event) {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
@@ -224,19 +265,29 @@ public class RefactoredSignUp extends JFrame {
         return rootPaneCheckingEnabled;
     }
 
+    /**
+     * This method is called to display an error message on the frame
+     * @param message
+     */
     private void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
-
+    /**
+     * This method register's User upon sign Up
+     * @param username
+     * @param password
+     * @param bio
+     */
     private void registerUser(String username, String password, String bio) {
         newUser = new User(username, bio, password);
         CredentialsVerifier.saveUserInformation(newUser);
         saveCredentials.saveCreds(username, password, bio);
-        // handleProfilePictureUpload();
         dispose();
     }
 
-    // Method to handle profile picture upload
+    /**
+     * This method handles the upload of the profile picture
+     */
     private void handleProfilePictureUpload() {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
@@ -246,7 +297,9 @@ public class RefactoredSignUp extends JFrame {
             saveProfilePicture.savePFP(selectedFile, txtUsername.getText());
         }
     }
-
+/**
+ * This method opens the sign In page
+ */
     private void openSignInUI() {
         // Close the SignUpUI frame
         dispose();

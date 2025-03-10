@@ -6,7 +6,12 @@ public class UserRelationshipManager {
 
     private final String followersFilePath = "data/followers.txt";
 
-    // Method to follow a user
+    /**
+     * This method is use to save a information o=upon following of a user
+     * @param follower
+     * @param followed
+     * @throws IOException
+     */
     public void followUser(String follower, String followed) throws IOException {
         if (!isAlreadyFollowing(follower, followed)) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(followersFilePath, true))) {
@@ -16,8 +21,13 @@ public class UserRelationshipManager {
         }
     }
 
-    // Method to check if a user is already following another user
-    private boolean isAlreadyFollowing(String follower, String followed) throws IOException {
+/**
+ * This method checks whether a User is already following another one
+ * @param follower
+ * @param followed
+ * @return boolean
+ * @throws IOException
+ */    private boolean isAlreadyFollowing(String follower, String followed) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(followersFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -29,8 +39,12 @@ public class UserRelationshipManager {
         return false;
     }
 
-    // Method to get the list of followers for a user
-    public List<String> getFollowers(String username) throws IOException {
+/**
+ * This method is used to get a hser's followers
+ * @param username
+ * @return list of followers
+ * @throws IOException
+ */    public List<String> getFollowers(String username) throws IOException {
         List<String> followers = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(followersFilePath))) {
             String line;
@@ -44,8 +58,12 @@ public class UserRelationshipManager {
         return followers;
     }
 
-    // Method to get the list of users a user is following
-    public List<String> getFollowing(String username) throws IOException {
+/**
+ * This method get the lost of followed Users
+ * @param username
+ * @return List of followings
+ * @throws IOException
+ */    public List<String> getFollowing(String username) throws IOException {
         List<String> following = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(followersFilePath))) {
             String line;

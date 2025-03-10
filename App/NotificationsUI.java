@@ -10,6 +10,9 @@ import java.time.temporal.ChronoUnit;
 
 public class NotificationsUI extends BaseUI {
 
+     /**
+     * The Constructor Initializes the UI
+     */
     public NotificationsUI() {
         setTitle("Notifications");
         setSize(WIDTH, HEIGHT);
@@ -19,6 +22,10 @@ public class NotificationsUI extends BaseUI {
         initializeUI();
     }
 
+    /**
+     * Initializes the user interface by setting up the header, navigation,
+     * and content panels
+     */
     private void initializeUI() {
         // Reuse the header and navigation panel creation methods from the
         // InstagramProfileUI class
@@ -81,6 +88,12 @@ public class NotificationsUI extends BaseUI {
         add(navigationPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Computes the elapsed time since a given timestamp
+     * 
+     * @param timestamp The timestamp in "yyyy-MM-dd HH:mm:ss" format
+     * @return A string representing elapsed time
+     */
     private String getElapsedTime(String timestamp) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime timeOfNotification = LocalDateTime.parse(timestamp, formatter);

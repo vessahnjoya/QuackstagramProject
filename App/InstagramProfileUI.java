@@ -18,6 +18,10 @@ public class InstagramProfileUI extends BaseUI {
     private JPanel navigationPanel; // Panel for the navigation
     private User currentUser; // User object to store the current user's information
 
+    /**
+     * The constructor initializes fields such as current user and counts, and UI
+     * @param user
+     */
     public InstagramProfileUI(User user) {
         this.currentUser = user;
         // Initialize counts
@@ -99,7 +103,9 @@ public class InstagramProfileUI extends BaseUI {
 
         initializeUI();
     }
-
+/**
+ * This methods initializes UI and adds components to JFrame
+ */
     private void initializeUI() {
         getContentPane().removeAll(); // Clear existing components
 
@@ -114,6 +120,10 @@ public class InstagramProfileUI extends BaseUI {
         repaint();
     }
 
+    /**
+     * This method creates a header panel containing username info and statistics, profile picture
+     * @return header panel
+     */
     @SuppressWarnings("unused")
     private JPanel createHeaderPanel() {
         boolean isCurrentUser = false;
@@ -247,7 +257,10 @@ public class InstagramProfileUI extends BaseUI {
         return headerPanel;
 
     }
-
+/**
+ * This method handles following of users and saves the following
+ * @param usernameToFollow user to follow
+ */
     private void handleFollowAction(String usernameToFollow) {
         Path followingFilePath = Paths.get("data", "following.txt");
         Path usersFilePath = Paths.get("data", "users.txt");
@@ -300,7 +313,9 @@ public class InstagramProfileUI extends BaseUI {
             e.printStackTrace();
         }
     }
-
+/**
+ * This method creates an Image grid that contains users post
+ */
     private void initializeImageGrid() {
         contentPanel.removeAll(); // Clear existing content
         contentPanel.setLayout(new GridLayout(0, 3, 5, 5)); // Grid layout for image grid
@@ -334,7 +349,10 @@ public class InstagramProfileUI extends BaseUI {
         revalidate();
         repaint();
     }
-
+/**
+ * This method is used to display users image
+ * @param imageIcon
+ */
     @SuppressWarnings("unused")
     private void displayImage(ImageIcon imageIcon) {
         contentPanel.removeAll(); // Remove existing content
@@ -354,7 +372,12 @@ public class InstagramProfileUI extends BaseUI {
         revalidate();
         repaint();
     }
-
+/**
+ * This method creates the statistics panel for user
+ * @param number
+ * @param text
+ * @return
+ */
     private JLabel createStatLabel(String number, String text) {
         JLabel label = new JLabel("<html><div style='text-align: center;'>" + number + "<br/>" + text + "</div></html>",
                 SwingConstants.CENTER);
@@ -362,7 +385,10 @@ public class InstagramProfileUI extends BaseUI {
         label.setForeground(Color.BLACK);
         return label;
     }
-
+/**
+ * This method is used to open profile customization
+ * @param user
+ */
     private void EditProfileUI(User user) {
         EditProfileUI editProfileUI = new EditProfileUI(user);
         editProfileUI.setVisible(true);

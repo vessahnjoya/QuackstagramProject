@@ -2,6 +2,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
+/**
+ * This class handles Ui components related to sign In pages and some logic such
+ * as calling of credentialsverifier class
+ */
 public class RefactoredSignIn extends JFrame {
 
     private static final int WIDTH = 300;
@@ -19,6 +23,9 @@ public class RefactoredSignIn extends JFrame {
     private JPanel buttonPanel;
     private CredentialsVerifier credentialsVerifier;
 
+    /**
+     * The constructor initializes default values for the frame
+     */
     public RefactoredSignIn() {
         setTitle("Quackstagram - Register");
         setSize(WIDTH, HEIGHT);
@@ -29,6 +36,9 @@ public class RefactoredSignIn extends JFrame {
         initializeUI();
     }
 
+    /**
+     * This method initializes UI componentq and sets design data
+     */
     private void initializeUI() {
         addComponents();
         Color backgroundColor = new Color(201, 189, 0);
@@ -37,15 +47,25 @@ public class RefactoredSignIn extends JFrame {
         buttonPanel.setBackground(backgroundColor); // Set the button panel background
     }
 
+    /**
+     * This method creates a header panel to whoch is added the register Panel
+     * 
+     * @return header panel
+     */
     private Component headerPanel() {
         headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
         headerPanel.setPreferredSize(new Dimension(WIDTH, 40)); // Give the header a fixed height
 
-        headerPanel.add(registerPanel());
+        headerPanel.add(registerLabel());
         return headerPanel;
     }
 
+    /**
+     * This method creates a pannel containing sign In and sign Up buttons
+     * 
+     * @return button panel
+     */
     private Component buttonPanel() {
         buttonPanel = new JPanel(new GridLayout(2, 1)); // Grid layout with 2 row, 1 columns
         buttonPanel.setBackground(Color.white);
@@ -56,7 +76,12 @@ public class RefactoredSignIn extends JFrame {
         return buttonPanel;
     }
 
-    private Component registerPanel() {
+    /**
+     * This method creates a register label with App name
+     * 
+     * @return register label (lblRegister)
+     */
+    private Component registerLabel() {
         lblRegister = new JLabel("Quackstagram 🐥");
 
         lblRegister.setFont(new Font("Arial", Font.ITALIC, 20));
@@ -65,6 +90,11 @@ public class RefactoredSignIn extends JFrame {
         return lblRegister;
     }
 
+    /**
+     * This method a
+     * 
+     * @return
+     */
     private Component textField() {
         fieldsPanel = new JPanel();
         fieldsPanel.add(profilePicture());
@@ -77,6 +107,11 @@ public class RefactoredSignIn extends JFrame {
         return fieldsPanel;
     }
 
+    /**
+     * This methods adds the dacs logo to a panel
+     * 
+     * @return photo panel
+     */
     private Component profilePicture() {
         JLabel lblPhoto = new JLabel();
 
@@ -96,6 +131,11 @@ public class RefactoredSignIn extends JFrame {
         return photoPanel;
     }
 
+    /**
+     * This methods creates a field to input for username
+     * 
+     * @return username textfield(txtUsername)
+     */
     private Component usernameField() {
         txtUsername = new JTextField("Username");
         txtUsername.setForeground(Color.BLACK);
@@ -108,6 +148,11 @@ public class RefactoredSignIn extends JFrame {
         return txtUsername;
     }
 
+    /**
+     * This methods creates a field to input for password
+     * 
+     * @return password field (txtPassword)
+     */
     private Component passwordField() {
         txtPassword = new JTextField("Password");
         txtPassword.setForeground(Color.BLACK);
@@ -120,10 +165,21 @@ public class RefactoredSignIn extends JFrame {
         return txtPassword;
     }
 
+    /**
+     * This method is used to get the logged In user's username directly from the
+     * username field
+     * 
+     * @return username
+     */
     public static String getLoggedInUsername() {
         return txtUsername.getText().trim();
     }
 
+    /**
+     * This methods create a sign In button and add an action listener to it
+     * 
+     * @return Sign In button
+     */
     private Component signInButton() {
         btnSignIn = new JButton("Sign-In");
         btnSignIn.addActionListener(this::onSignInClicked);
@@ -139,6 +195,11 @@ public class RefactoredSignIn extends JFrame {
         return btnSignIn;
     }
 
+    /**
+     * This methods create a register button and add an action listener to it
+     * 
+     * @return register button
+     */
     private Component registerButton() {
         btnRegisterNow = new JButton("No Account? Register Now");
         btnRegisterNow.addActionListener(this::onRegisterNowClicked);
@@ -152,12 +213,21 @@ public class RefactoredSignIn extends JFrame {
         return btnRegisterNow;
     }
 
+    /**
+     * This method adds Components to Frame
+     */
     private void addComponents() {
         add(headerPanel(), BorderLayout.NORTH);
         add(textField(), BorderLayout.CENTER);
         add(buttonPanel(), BorderLayout.SOUTH);
     }
 
+    /**
+     * This methods calls the credentials verfier class and verifies enterred
+     * credentials and if correct open the profile UI page
+     * 
+     * @param event
+     */
     private void onSignInClicked(ActionEvent event) {
         String enteredUsername = txtUsername.getText();
         String enteredPassword = txtPassword.getText();
@@ -179,6 +249,11 @@ public class RefactoredSignIn extends JFrame {
         }
     }
 
+    /**
+     * This method opens sign Up page
+     * 
+     * @param event
+     */
     private void onRegisterNowClicked(ActionEvent event) {
         // Close the SignInUI frame
         dispose();

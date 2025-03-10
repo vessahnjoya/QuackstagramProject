@@ -87,7 +87,10 @@ public class ExploreUI extends BaseUI {
         mainContentPanel.add(scrollPane); // This will stretch to take up remaining space
         return mainContentPanel;
     }
-
+/**
+ * This method is used to display Images present in the image details txt file
+ * @param imagePath
+ */
     @SuppressWarnings("unused")
     private void displayImage(String imagePath) {
         getContentPane().removeAll();
