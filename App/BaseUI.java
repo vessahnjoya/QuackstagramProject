@@ -1,7 +1,5 @@
-
 import javax.swing.*;
 import java.awt.*;
-
 
 public abstract class BaseUI extends JFrame {
     public static final int NAV_ICON_SIZE = 20;
@@ -10,7 +8,7 @@ public abstract class BaseUI extends JFrame {
     public static final int IMAGE_SIZE = WIDTH / 3; // Size for each image in the grid
     public static final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
     public static final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
-    private  static  JLabel pageLabel;
+    private static JLabel pageLabel;
 
     public JPanel BaseCreateHeaderPanel() {
 
@@ -18,7 +16,7 @@ public abstract class BaseUI extends JFrame {
         // Header with the Register label
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
-        //  pageLabel = new JLabel(" Explore 🐥");
+        // pageLabel = new JLabel(" Explore 🐥");
         pageLabel.setFont(new Font("Arial", Font.BOLD, 16));
         pageLabel.setForeground(Color.WHITE); // Set the text color to white
         headerPanel.add(pageLabel);

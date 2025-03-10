@@ -1,5 +1,3 @@
-
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -13,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
 
 public class QuakstagramHomeUI extends BaseUI {
     private final int IMAGE_WIDTH = WIDTH - 100; // Width for the image posts
@@ -58,7 +55,7 @@ public class QuakstagramHomeUI extends BaseUI {
         headerPanel.setBackground(new Color(51, 51, 51)); // Set a darker background for the header
         headerPanel.setPreferredSize(new Dimension(WIDTH, 40)); // Give the header a fixed height
 
-        //Register Panel
+        // Register Panel
         JLabel lblRegister = new JLabel("Quackstagram 🐥");
         lblRegister.setFont(new Font("Arial", Font.BOLD, 16));
         lblRegister.setForeground(Color.WHITE); // Set the text color to white
@@ -114,7 +111,8 @@ public class QuakstagramHomeUI extends BaseUI {
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS)); // Vertical box layout
         JScrollPane scrollPane = new JScrollPane(contentPanel);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // Never allow// horizontal scrolling
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // Never allow//
+                                                                                                 // horizontal scrolling
 
         String[][] sampleData = createSampleData();
         populateContentPanel(contentPanel, sampleData);
@@ -190,9 +188,9 @@ public class QuakstagramHomeUI extends BaseUI {
 
             // Comment Panel where its initially hidden until pressed
             JPanel commentPanel = CommentsUI.createCommentPanel(imageId);
-            commentPanel.setVisible(false); // hide the panel at first 
+            commentPanel.setVisible(false); // hide the panel at first
 
-            // Action listener for the comment button 
+            // Action listener for the comment button
             commentIconButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -202,7 +200,7 @@ public class QuakstagramHomeUI extends BaseUI {
                 }
             });
 
-            // add the item to the item panel 
+            // add the item to the item panel
             itemPanel.add(nameLabel);
             itemPanel.add(imageLabel);
             itemPanel.add(descriptionLabel);
@@ -235,7 +233,7 @@ public class QuakstagramHomeUI extends BaseUI {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
             String line;
 
-            while ((line = reader.readLine()) != null) {  // Iterate through each line
+            while ((line = reader.readLine()) != null) { // Iterate through each line
                 String[] parts = line.split(":");
 
                 if (parts.length > 0 && parts[0].trim().equalsIgnoreCase(currentUser)) {
@@ -282,7 +280,8 @@ public class QuakstagramHomeUI extends BaseUI {
                     String imagePath = ""; // Assuming PNG format
                     if (details.length > 0 && details[0].contains(": ")) {
                         String[] imageSplit = details[0].split(": ");
-                        imagePath = (imageSplit.length > 1) ? "img/uploaded/" + imageSplit[1] + ".png" : "img/default.png";
+                        imagePath = (imageSplit.length > 1) ? "img/uploaded/" + imageSplit[1] + ".png"
+                                : "img/default.png";
                     }
 
                     String description = "";
@@ -297,7 +296,7 @@ public class QuakstagramHomeUI extends BaseUI {
                         likes = (likesSplit.length > 1) ? "Likes: " + likesSplit[1] : "Likes: 0";
                     }
 
-                    tempData[count++] = new String[]{imagePoster, description, likes, imagePath};
+                    tempData[count++] = new String[] { imagePoster, description, likes, imagePath };
                 }
             }
         } catch (IOException e) {
@@ -310,6 +309,7 @@ public class QuakstagramHomeUI extends BaseUI {
 
         return sampleData;
     }
+
     private void displayImage(String[] postData) {
         imageViewPanel.removeAll(); // Clear previous content
 

@@ -1,4 +1,3 @@
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -8,10 +7,10 @@ import java.awt.*;
 import java.io.*;
 
 public class EditProfileUI extends JFrame {
-      final int WIDTH = 300;
-      final int HEIGHT = 500;
-      final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
-      final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
+    final int WIDTH = 300;
+    final int HEIGHT = 500;
+    final int PROFILE_IMAGE_SIZE = 80; // Adjusted size for the profile image to match UI
+    final int GRID_IMAGE_SIZE = WIDTH / 3; // Static size for grid images
     private JPanel contentPanel; // Panel to display the image grid or the clicked image
     private JPanel buttonPanel;
     private JPanel bioFieldPanel;
@@ -19,7 +18,6 @@ public class EditProfileUI extends JFrame {
     private JButton submitButton, cancelButton;
     private JButton btnUploadPhoto;
     private JPanel photoUploadPanel;
-    // private JPanel fieldsPanel;
     private JTextField txtBio;
 
     boolean imgUploaded = false;
@@ -61,16 +59,6 @@ public class EditProfileUI extends JFrame {
         JLabel fullSizeImageLabel = new JLabel(imageIcon);
         fullSizeImageLabel.setHorizontalAlignment(JLabel.CENTER);
         contentPanel.add(fullSizeImageLabel, BorderLayout.CENTER);
-
-        // JButton backButton = new JButton("Back");
-        // backButton.addActionListener(e -> {
-        // getContentPane().removeAll(); // Remove all components from the frame
-        // initializeUI(); // Re-initialize the UI
-        // });
-        // contentPanel.add(backButton, BorderLayout.SOUTH);
-
-        // revalidate();
-        // repaint();
     }
 
     private Component photoUploadPanel() {
@@ -117,12 +105,12 @@ public class EditProfileUI extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(imgUploaded || bioUpdated){
+                if (imgUploaded || bioUpdated) {
                     saveNewBio(currentUser, credentialsFilePath);
-                dispose();
-                InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
-                igProfile.setVisible(true);
-                }   
+                    dispose();
+                    InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
+                    igProfile.setVisible(true);
+                }
             }
 
         });
@@ -172,7 +160,7 @@ public class EditProfileUI extends JFrame {
 
     public void saveNewBio(User user, String newBio) {
         newBio = txtBio.getText();
-       String username = user.getUsername();
+        String username = user.getUsername();
         String currentBio = user.getBio();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(credentialsFilePath))) {
@@ -180,10 +168,10 @@ public class EditProfileUI extends JFrame {
             while ((line = reader.readLine()) != null) {
                 String[] credentials = line.split(":");
                 if (credentials[0].equals(username) && credentials[2].equals(currentBio)) {
-                    try(BufferedWriter writer = new BufferedWriter(new FileWriter(credentialsFilePath, true))){ 
-                     writer.write(user.toString());
-                     bioUpdated = true;
-                    }catch(IOException e){
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(credentialsFilePath, true))) {
+                        writer.write(user.toString());
+                        bioUpdated = true;
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }

@@ -1,6 +1,4 @@
-
 import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -164,10 +162,6 @@ public class InstagramProfileUI extends BaseUI {
         statsPanel.add(createStatLabel(Integer.toString(currentUser.getFollowingCount()), "Following"));
         statsPanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 10, 0)); // Add some vertical padding
 
-        // Follow Button
-        // Follow or Edit Profile Button
-        // followButton.addActionListener(e ->
-        // handleFollowAction(currentUser.getUsername()));
         JButton followButton;
         if (isCurrentUser) {
             followButton = new JButton("Edit Profile");

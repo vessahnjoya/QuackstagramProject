@@ -1,10 +1,10 @@
-
 public class AffineCipher {
     private String password;
 
     public AffineCipher(String password) {
         this.password = password;
     }
+
     public String encrypt() {
         String passwordText = password;
         final char[] charPlainText = passwordText.toCharArray();
@@ -21,6 +21,6 @@ public class AffineCipher {
             }
 
         }
-        return new String(charCipher); 
+        return new String(charCipher);
     }
 }

@@ -1,4 +1,3 @@
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -14,11 +13,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.stream.Stream;
 
 public class ExploreUI extends BaseUI {
-
-    // private static final int WIDTH = 300;
-    // private static final int HEIGHT = 500;
-    // private static final int NAV_ICON_SIZE = 20; // Size for navigation icons
-    // private static final int IMAGE_SIZE = WIDTH / 3; // Size for each image in the grid
 
     public ExploreUI() {
         setTitle("Explore");

@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -55,13 +53,12 @@ public class DirectMessagingUI extends JPanel {
         chatPanel.setBackground(Color.WHITE);
         chatPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Label to know you are texting 
+        // Label to know you are texting
         usernameLabel = new JLabel();
         usernameLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Set font and size
         usernameLabel.setHorizontalAlignment(SwingConstants.CENTER); // Center the text
         usernameLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
         chatPanel.add(usernameLabel, BorderLayout.NORTH); // Add the label to the top of the chat panel
-
 
         // Display the messages in the chat area
         chatArea = new JTextArea();
@@ -92,17 +89,17 @@ public class DirectMessagingUI extends JPanel {
         // Add the chat panel to the message panel
         add(chatPanel, BorderLayout.CENTER);
 
-        // Button to go back to home page 
+        // Button to go back to home page
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> {
             getParent().getParent().setVisible(false);
-           QuakstagramHomeUI home = new QuakstagramHomeUI();
-           home.setVisible(true);;
-            // CardLayout cardLayout = (CardLayout) getParent().getParent().getLayout();
-            // cardLayout.show(getParent().getParent(), "Home");
+            QuakstagramHomeUI home = new QuakstagramHomeUI();
+            home.setVisible(true);
+            ;
         });
         add(backButton, BorderLayout.NORTH);
     }
+
     // Open the chat with User
     private void openChat(String username) {
         selectedUser = username;
@@ -110,7 +107,8 @@ public class DirectMessagingUI extends JPanel {
         chatArea.setText(""); // Clear the chat area
         loadChatHistory(selectedUser);
     }
-    // Method to get the old messages 
+
+    // Method to get the old messages
     private void loadChatHistory(String username) {
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "messages.txt"))) {
             String line;
@@ -121,10 +119,10 @@ public class DirectMessagingUI extends JPanel {
                     String receiver = parts[1];
                     String message = parts[2];
                     if ((sender.equals(currentUser) && receiver.equals(username)) ||
-                        (sender.equals(username) && receiver.equals(currentUser))) {
+                            (sender.equals(username) && receiver.equals(currentUser))) {
                         chatArea.append(sender + ": " + message + "\n");
                     }
-                }else {
+                } else {
                     System.out.println("Invalid message format: " + line); // Debug statement
                 }
             }
@@ -132,21 +130,23 @@ public class DirectMessagingUI extends JPanel {
             e.printStackTrace();
         }
     }
+
     // Method to send messages
     private void sendMessage(String sender, String receiver, String message) {
         String messageEntry = sender + ": " + receiver + ": " + message;
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "messages.txt"),StandardOpenOption.APPEND)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "messages.txt"),
+                StandardOpenOption.APPEND)) {
             writer.write(messageEntry);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    // This method ensures that the chat doesn't refresh itself again when click on the user 
+
+    // This method ensures that the chat doesn't refresh itself again when click on
+    // the user
     public void refreshChat() {
         if (selectedUser != null) {
             openChat(selectedUser); // Reload the chat history for the selected user
         }
     }
 }
-
-

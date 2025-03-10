@@ -16,7 +16,6 @@ public class ImageUploadUI extends BaseUI {
     private JTextArea bioTextArea;
     private JButton uploadButton;
     private JButton saveButton;
-    // private boolean imageUploaded = false;
 
     public ImageUploadUI() {
         setTitle("Upload Image");

@@ -12,11 +12,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 public class CommentsUI {
-   public static JPanel createCommentPanel(String imageId) {
+    public static JPanel createCommentPanel(String imageId) {
         JPanel commentPanel = new JPanel();
         commentPanel.setLayout(new BorderLayout());
         commentPanel.setBackground(Color.WHITE);
-        commentPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY)); //  a border for better visualization
+        commentPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // a border for better visualization
 
         // Text area to display comments
         JTextArea commentsArea = new JTextArea();
@@ -45,7 +45,7 @@ public class CommentsUI {
                 String comment = commentField.getText().trim();
                 if (!comment.isEmpty()) {
                     saveComment(imageId, comment);
-                    commentsArea.append( getCurrentUser() + " Commented: " + comment + "\n");
+                    commentsArea.append(getCurrentUser() + " Commented: " + comment + "\n");
                     commentField.setText("");
                 }
             }
@@ -72,8 +72,9 @@ public class CommentsUI {
     // methode to save the comment in local repo
     private static void saveComment(String imageId, String comment) {
         String currentUser = getCurrentUser();
-        String commentEntry = imageId + ": " + currentUser +" say's: "+  comment + "\n";
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "comments.txt"), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+        String commentEntry = imageId + ": " + currentUser + " say's: " + comment + "\n";
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "comments.txt"),
+                StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
             writer.write(commentEntry);
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,7 +98,8 @@ public class CommentsUI {
         } catch (IOException e) {
         }
     }
-    public static String getCurrentUser(){
+
+    public static String getCurrentUser() {
         return RefactoredSignIn.getLoggedInUsername();
     }
 }

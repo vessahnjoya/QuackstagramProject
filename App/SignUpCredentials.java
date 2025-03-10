@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class SignUpCredentials{
+public class SignUpCredentials {
 
     private final String profilePhotoStoragePath = "img/storage/profile/";
     private final String credentialsFilePath = "data/credentials.txt";
@@ -32,7 +32,7 @@ public class SignUpCredentials{
         }
     }
 
-     private boolean doesUsernameExist(String username) {
+    private boolean doesUsernameExist(String username) {
         try (BufferedReader reader = new BufferedReader(new FileReader(credentialsFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -46,13 +46,15 @@ public class SignUpCredentials{
         return false;
     }
 
-    public void savePFP(File file, String username){
+    public void savePFP(File file, String username) {
         saveProfilePicture(file, username);
     }
-    public void saveCreds(String username, String password, String bio){
+
+    public void saveCreds(String username, String password, String bio) {
         saveCredentials(username, password, bio);
     }
-    public boolean userExistence(String username){
+
+    public boolean userExistence(String username) {
         return doesUsernameExist(username);
     }
 }

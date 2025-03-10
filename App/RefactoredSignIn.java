@@ -97,7 +97,6 @@ public class RefactoredSignIn extends JFrame {
         return photoPanel;
     }
 
-
     private Component usernameField() {
         txtUsername = new JTextField("Username");
         txtUsername.setForeground(Color.BLACK);
@@ -121,7 +120,6 @@ public class RefactoredSignIn extends JFrame {
 
         return txtPassword;
     }
-
 
     public static String getLoggedInUsername() {
         return txtUsername.getText().trim();

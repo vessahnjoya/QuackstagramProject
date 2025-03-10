@@ -50,10 +50,10 @@ public class LikeFunctionality {
         }
 
         if (alreadyLiked) {
-            JOptionPane.showMessageDialog(null, "You have already liked this post!", "Like Failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "You have already liked this post!", "Like Failed",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
-
 
         // Read and update image_details.txt
         try (BufferedReader reader = Files.newBufferedReader(detailsPath)) {
@@ -87,7 +87,8 @@ public class LikeFunctionality {
 
             // Record the like in notifications.txt
             String notification = String.format("%s; %s; %s; %s\n", imageOwner, currentUser, imageId, timestamp);
-            try (BufferedWriter notificationWriter = Files.newBufferedWriter(Paths.get("data", "notifications.txt"), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+            try (BufferedWriter notificationWriter = Files.newBufferedWriter(Paths.get("data", "notifications.txt"),
+                    StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
                 notificationWriter.write(notification);
             } catch (IOException e) {
                 e.printStackTrace();
