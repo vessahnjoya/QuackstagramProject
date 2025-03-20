@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [Project Overview](#project-overview)
-- [Run Code](#run-code)
+- [Installation](#installation)
 
 ## Project Overview
 
@@ -15,7 +15,7 @@ Users sign up, log in, and add a personal touch with photos and bios, just as th
 would on Instagram. Once that is done, users can start sharing snapshots of their lives
 by uploading images with captions.
 
-## Run code
+## Installation
 
 ### Step 1: Clone the repository
 
@@ -24,11 +24,11 @@ Clone the Quackstagram repository from GitHub to your local machine:
 ```bash
 git clone https://github.com/vessahnjoya/QuackstagramProject.git
 ```
-OR 
 
-Inside Vs code, do the following commands:
-```
-Ctrl+shift+P, type git clone and press Enter, and enter the provided URL above
+Then Navigate to the project's Location
+
+```bash
+cd QuackstagramProject
 ```
 
 ### Step 2: Compile and Run the Main Application
