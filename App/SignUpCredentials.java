@@ -1,9 +1,5 @@
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -93,7 +89,7 @@ public class SignUpCredentials {
         saveProfilePicture(file, username);
     }
 
-    public void saveUserInfo(User user, String pfpPath){
+    public void saveUserInfo(User user, String pfpPath) {
         saveUserInformation(user, path);
     }
 
