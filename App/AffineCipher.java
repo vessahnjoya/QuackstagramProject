@@ -5,8 +5,9 @@
 public class AffineCipher {
     private String password;
 
-     /**
+    /**
      * Constructor to initialize the password
+     * 
      * @param password The plaintext to be encrypted
      */
     public AffineCipher(String password) {
@@ -16,6 +17,7 @@ public class AffineCipher {
     /**
      * Encrypts the stored password using a mathematical formula
      * Non-alphabetic characters remain unchanged
+     * 
      * @return The encrypted string
      */
     public String encrypt() {
@@ -36,4 +38,5 @@ public class AffineCipher {
         }
         return new String(charCipher);
     }
+
 }

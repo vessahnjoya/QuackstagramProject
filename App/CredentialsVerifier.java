@@ -16,12 +16,13 @@ public class CredentialsVerifier {
      * @return A User object if authentication is successful, otherwise null
      */
     private User verifyCredentials(String username, String password) {
+        AffineCipher passwordHasher = new AffineCipher(password);
 
         String query = "SELECT * FROM users WHERE username = ? AND user_password = ?";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
-            stmt.setString(2, password);
+            stmt.setString(2, passwordHasher.encrypt());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 String bio = getBio(username);

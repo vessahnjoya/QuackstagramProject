@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.imageio.ImageIO;
 
 /**
@@ -26,7 +25,7 @@ public class SignUpCredentials {
         try {
             BufferedImage image = ImageIO.read(file);
             File outputFile = new File(profilePhotoStoragePath + username + ".png");
-            path = outputFile.getPath().toString();
+            path = profilePhotoStoragePath + username + "/" + ".png";
             ImageIO.write(image, "png", outputFile);
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,12 +43,12 @@ public class SignUpCredentials {
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
             AffineCipher passwordHasher = new AffineCipher(user.getPassword());
+
             stmt.setString(1, user.getUsername());
             stmt.setString(2, passwordHasher.encrypt());
             stmt.setString(3, user.getBio());
             stmt.setString(4, pfpPath);
-            int rowsAffected = stmt.executeUpdate();
-            System.out.println(rowsAffected);
+            stmt.executeUpdate();
             // debug statement
             System.out.println("saving worked");
         } catch (SQLException e) {
@@ -67,7 +66,6 @@ public class SignUpCredentials {
         String query = "SELECT * FROM users where username = ?";
         try (Connection connection = DatabaseConnection.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
-            ;
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
             return result.next();
@@ -89,6 +87,13 @@ public class SignUpCredentials {
         saveProfilePicture(file, username);
     }
 
+    /**
+     * This method is used to call the user info saver, preventing unwanted access
+     * to the method
+     * 
+     * @param user
+     * @param pfpPath
+     */
     public void saveUserInfo(User user, String pfpPath) {
         saveUserInformation(user, path);
     }

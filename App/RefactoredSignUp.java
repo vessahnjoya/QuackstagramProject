@@ -28,7 +28,7 @@ public class RefactoredSignUp extends JFrame {
     private User newUser;
     private String pfpPath;
 
-    private SignUpCredentials signUpCredentials;
+    private SignUpCredentials signUpCredentials = new SignUpCredentials();
 
     public RefactoredSignUp() {
         setTitle("Quackstagram - Register");
@@ -312,7 +312,6 @@ public class RefactoredSignUp extends JFrame {
         pfpPath = signUpCredentials.getPath();
         System.out.println(pfpPath);
         signUpCredentials.saveUserInfo(newUser, pfpPath);
-        ;
         dispose();
     }
 
