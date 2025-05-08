@@ -280,7 +280,8 @@ public class RefactoredSignUp extends JFrame {
      */
     private void registerUser(String username, String password, String bio) {
         newUser = new User(username, bio, password);
-        CredentialsVerifier.saveUserInformation(newUser);
+        // TODO
+        // CredentialsVerifier.saveUserInformation(newUser);
         saveCredentials.saveCreds(username, password, bio);
         dispose();
     }

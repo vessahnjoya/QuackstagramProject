@@ -67,21 +67,21 @@ public class InstagramProfileUI extends BaseUI {
             e.printStackTrace();
         }
 
-        String bio = "";
+        String bio = user.getBio();
 
-        Path bioDetailsFilePath = Paths.get("data", "credentials.txt");
-        try (BufferedReader bioDetailsReader = Files.newBufferedReader(bioDetailsFilePath)) {
-            String line;
-            while ((line = bioDetailsReader.readLine()) != null) {
-                String[] parts = line.split(":");
-                if (parts[0].equals(currentUser.getUsername()) && parts.length >= 3) {
-                    bio = parts[2];
-                    break; // Exit the loop once the matching bio is found
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Path bioDetailsFilePath = Paths.get("data", "credentials.txt");
+        // try (BufferedReader bioDetailsReader = Files.newBufferedReader(bioDetailsFilePath)) {
+        //     String line;
+        //     while ((line = bioDetailsReader.readLine()) != null) {
+        //         String[] parts = line.split(":");
+        //         if (parts[0].equals(currentUser.getUsername()) && parts.length >= 3) {
+        //             bio = parts[2];
+        //             break; // Exit the loop once the matching bio is found
+        //         }
+        //     }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
 
         System.out.println("Bio for " + currentUser.getUsername() + ": " + bio);
         currentUser.setBio(bio);

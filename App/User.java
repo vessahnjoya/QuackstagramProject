@@ -41,6 +41,10 @@ public class User { // public to solve error in UI classes due to visibility
         return bio;
     }
 
+     public String getPassword() {
+        return password;
+    }
+
     public void setBio(String bio) {
         this.bio = bio;
     }
