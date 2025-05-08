@@ -110,6 +110,7 @@ public class ExploreUI extends BaseUI {
         String bio = "";
         String timestampString = "";
         int likes = 0;
+        //TODO UPDATE
         Path detailsPath = Paths.get("img", "image_details.txt");
         try (Stream<String> lines = Files.lines(detailsPath)) {
             String details = lines.filter(line -> line.contains("ImageID: " + imageId)).findFirst().orElse("");

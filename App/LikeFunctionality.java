@@ -17,6 +17,7 @@ public class LikeFunctionality {
      * @param imageId
      * @param likesLabel
      */
+    //TODO
     static void handleLikeAction(String imageId, JLabel likesLabel) {
         Path detailsPath = Paths.get("img", "image_details.txt");
         Path likesTrackingPath = Paths.get("data", "likes_tracking.txt");

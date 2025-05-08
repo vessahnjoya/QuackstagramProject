@@ -259,6 +259,7 @@ public class QuakstagramHomeUI extends BaseUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //TODO UPDATE
 
         String followedUsers = "";
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "following.txt"))) {
@@ -275,6 +276,8 @@ public class QuakstagramHomeUI extends BaseUI {
         if (followedUsers.isEmpty()) {
             return new String[0][];
         }
+
+        //TODO UPDATE
 
         // Temporary structure to hold the data
         String[][] tempData = new String[100][]; // Assuming a maximum of 100 posts for simplicity
@@ -416,6 +419,7 @@ public class QuakstagramHomeUI extends BaseUI {
      * @param postData
      * @param imageId
      */
+    //TODO UPDATE
     private void refreshDisplayImage(String[] postData, String imageId) {
         // Read updated likes count from image_details.txt
         try (BufferedReader reader = Files.newBufferedReader(Paths.get("img", "image_details.txt"))) {

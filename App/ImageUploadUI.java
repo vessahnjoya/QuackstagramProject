@@ -176,6 +176,7 @@ public class ImageUploadUI extends BaseUI {
  * @param bio
  * @throws IOException
  */
+//TODO UPDATE
     private void saveImageInfo(String imageId, String username, String bio) throws IOException {
         Path infoFilePath = Paths.get("img", "image_details.txt");
         if (!Files.exists(infoFilePath)) {

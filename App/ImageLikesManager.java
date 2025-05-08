@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 /** 
  * This class handles likes such as liking, read likes from a txt file and saving likes to a txt file
  */
+//TODO
 public class ImageLikesManager {
 
     private final String likesFilePath = "data/likes.txt";

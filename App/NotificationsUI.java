@@ -26,6 +26,7 @@ public class NotificationsUI extends BaseUI {
      * Initializes the user interface by setting up the header, navigation,
      * and content panels
      */
+    //TODO UPDATE
     private void initializeUI() {
         // Reuse the header and navigation panel creation methods from the
         // InstagramProfileUI class

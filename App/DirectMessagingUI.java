@@ -36,22 +36,23 @@ public class DirectMessagingUI extends JPanel {
         userListPanel.setBackground(Color.WHITE);
         userListPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // List of the user except the user's sending the message
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "credentials.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String username = line.split(":")[0].trim();
-                if (!username.equals(currentUser)) {
-                    JButton userButton = new JButton(username);
-                    userButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-                    userButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-                    userButton.addActionListener(e -> openChat(username));
-                    userListPanel.add(userButton);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //TODO
+        // // List of the user except the user's sending the message
+        // try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "credentials.txt"))) {
+        //     String line;
+        //     while ((line = reader.readLine()) != null) {
+        //         String username = line.split(":")[0].trim();
+        //         if (!username.equals(currentUser)) {
+        //             JButton userButton = new JButton(username);
+        //             userButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        //             userButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        //             userButton.addActionListener(e -> openChat(username));
+        //             userListPanel.add(userButton);
+        //         }
+        //     }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
 
         // Add the user to the chat panel
         JScrollPane userListScrollPane = new JScrollPane(userListPanel);
@@ -123,25 +124,26 @@ public class DirectMessagingUI extends JPanel {
  * This method is used to load previous messages between two users
  * @param username this is the receiver
  */    private void loadChatHistory(String username) {
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "messages.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(": ", 3);
-                if (parts.length == 3) {
-                    String sender = parts[0];
-                    String receiver = parts[1];
-                    String message = parts[2];
-                    if ((sender.equals(currentUser) && receiver.equals(username)) ||
-                            (sender.equals(username) && receiver.equals(currentUser))) {
-                        chatArea.append(sender + ": " + message + "\n");
-                    }
-                } else {
-                    System.out.println("Invalid message format: " + line); // Debug statement
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    //TODO
+        // try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "messages.txt"))) {
+        //     String line;
+        //     while ((line = reader.readLine()) != null) {
+        //         String[] parts = line.split(": ", 3);
+        //         if (parts.length == 3) {
+        //             String sender = parts[0];
+        //             String receiver = parts[1];
+        //             String message = parts[2];
+        //             if ((sender.equals(currentUser) && receiver.equals(username)) ||
+        //                     (sender.equals(username) && receiver.equals(currentUser))) {
+        //                 chatArea.append(sender + ": " + message + "\n");
+        //             }
+        //         } else {
+        //             System.out.println("Invalid message format: " + line); // Debug statement
+        //         }
+        //     }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
 /**
@@ -150,13 +152,14 @@ public class DirectMessagingUI extends JPanel {
  * @param receiver selected user
  * @param message 
  */    private void saveMessage(String sender, String receiver, String message) {
-        String messageEntry = sender + ": " + receiver + ": " + message;
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "messages.txt"),
-                StandardOpenOption.APPEND)) {
-            writer.write(messageEntry);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    //TODO
+        // String messageEntry = sender + ": " + receiver + ": " + message;
+        // try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "messages.txt"),
+        //         StandardOpenOption.APPEND)) {
+        //     writer.write(messageEntry);
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     /**

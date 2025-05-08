@@ -84,14 +84,15 @@ public class CommentsUI {
      * @param comment The comment text
      */
     private static void saveComment(String imageId, String comment) {
-        String currentUser = getCurrentUser();
-        String commentEntry = imageId + ": " + currentUser + " says: " + comment + "\n";
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "comments.txt"),
-                StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-            writer.write(commentEntry);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // TODO
+        // String currentUser = getCurrentUser();
+        // String commentEntry = imageId + ": " + currentUser + " says: " + comment + "\n";
+        // try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "comments.txt"),
+        //         StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+        //     writer.write(commentEntry);
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     /**
@@ -100,21 +101,22 @@ public class CommentsUI {
      * @param commentsArea The JTextArea where comments are displayed
      */
     private static void loadComments(String imageId, JTextArea commentsArea) {
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "comments.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith(imageId + ": ")) {
-                    String[] parts = line.split(": ", 3);
-                    if (parts.length == 3) {
-                        String username = parts[1];
-                        String comment = parts[2];
-                        commentsArea.append(username + ": " + comment + "\n");
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // TODO
+        // try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "comments.txt"))) {
+        //     String line;
+        //     while ((line = reader.readLine()) != null) {
+        //         if (line.startsWith(imageId + ": ")) {
+        //             String[] parts = line.split(": ", 3);
+        //             if (parts.length == 3) {
+        //                 String username = parts[1];
+        //                 String comment = parts[2];
+        //                 commentsArea.append(username + ": " + comment + "\n");
+        //             }
+        //         }
+        //     }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     /**
