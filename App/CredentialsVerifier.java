@@ -47,35 +47,12 @@ public class CredentialsVerifier {
         return verifyCredentials(username, password);
     }
 
-    /**
-     * saves user information to database
-     * 
-     * @param user The object containing user details
-     */
-    public static void saveUserInformation(User user, String pfpPath) {
-
-        String query = "INSERT INTO users (username, user_password, bio, profile_picture_path) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getPassword());
-            stmt.setString(3, user.getBio());
-            stmt.setString(4, pfpPath);
-            int rowsAffected = stmt.executeUpdate();
-            System.out.println(rowsAffected);
-            // debug statement
-            System.out.println("saving worked");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     private String getBio(String username) {
         String query = "SELECT bio FROM users WHERE username = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
+        try (Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 String bio = rs.getString("bio");
                 System.out.println("Retrieved bio for " + username + ": " + bio);
