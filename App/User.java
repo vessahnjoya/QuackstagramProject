@@ -12,7 +12,8 @@ public class User { // public to solve error in UI classes due to visibility
     private List<Picture> pictures;
 
     public User(String username, String bio, String password) {
-        this.username = RefactoredSignIn.getLoggedInUsername();
+        // this.username = RefactoredSignIn.getLoggedInUsername();
+        this.username = username;
         this.bio = bio;
         this.password = password;
         this.pictures = new ArrayList<>();

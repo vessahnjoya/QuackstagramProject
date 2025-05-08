@@ -172,7 +172,7 @@ public class RefactoredSignIn extends JFrame {
      * @return username
      */
     public static String getLoggedInUsername() {
-        return txtUsername.getText().trim();
+        return txtUsername.getText();
     }
 
     /**
