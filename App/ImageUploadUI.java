@@ -2,10 +2,10 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,9 +27,10 @@ public class ImageUploadUI extends BaseUI {
         setLayout(new BorderLayout());
         initializeUI();
     }
-/**
- * This method initializes the ui components and add them to the frame
- */
+
+    /**
+     * This method initializes the ui components and add them to the frame
+     */
     private void initializeUI() {
         JPanel headerPanel = super.BaseCreateHeaderPanel(); // Reuse the createHeaderPanel method
         JPanel navigationPanel = super.BaseCreateNavigationPanel(); // Reuse the createNavigationPanel method
@@ -74,10 +75,13 @@ public class ImageUploadUI extends BaseUI {
         add(contentPanel, BorderLayout.CENTER);
         add(navigationPanel, BorderLayout.SOUTH);
     }
-/**
- * This method handles upload action precisely file selction and displays an error if the file format is not supported
- * @param event defines if the action has occured
- */
+
+    /**
+     * This method handles upload action precisely file selction and displays an
+     * error if the file format is not supported
+     * 
+     * @param event defines if the action has occured
+     */
     private void uploadAction(ActionEvent event) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select an image file");
@@ -137,12 +141,14 @@ public class ImageUploadUI extends BaseUI {
             }
         }
     }
-/**
- * This method ensures the pictures are saved in the correct directory and 
- * @param username user uploading image
- * @return Id + 1
- * @throws IOException
- */
+
+    /**
+     * This method ensures the pictures are saved in the correct directory and
+     * 
+     * @param username user uploading image
+     * @return Id + 1
+     * @throws IOException
+     */
     private int getNextImageId(String username) throws IOException {
         Path storageDir = Paths.get("img", "uploaded"); // Ensure this is the directory where images are saved
         if (!Files.exists(storageDir)) {
@@ -169,30 +175,36 @@ public class ImageUploadUI extends BaseUI {
         }
         return maxId + 1; // Return the next available ID
     }
-/**
- * This method saves the user, image and bio info into a txt file
- * @param imageId 
- * @param username
- * @param bio
- * @throws IOException
- */
-//TODO UPDATE
-    private void saveImageInfo(String imageId, String username, String bio) throws IOException {
-        Path infoFilePath = Paths.get("img", "image_details.txt");
-        if (!Files.exists(infoFilePath)) {
-            Files.createFile(infoFilePath);
-        }
 
+    /**
+     * This method saves the user post into post table
+     * 
+     * @param imageId
+     * @param username
+     * @param bio
+     */
+    private void saveImageInfo(String imageId, String username, String caption) {
+        // String path = String.format("img/uploaded/%s_%s.png", username, imageId);
+        String path = "img/uploaded/" + username +"_" + imageId +".png";
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-        try (BufferedWriter writer = Files.newBufferedWriter(infoFilePath, StandardOpenOption.APPEND)) {
-            writer.write(String.format("ImageID: %s, Username: %s, Bio: %s, Timestamp: %s, Likes: 0", imageId, username,
-                    bio, timestamp));
-            writer.newLine();
+        String saveImage = "INSERT INTO post(user_id, caption, image_path, time_stamp, like_count) VALUES (getUser_id(?), ?, ?, ?, ?)";
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(saveImage)) {
+            statement.setString(1, username);
+            statement.setString(2, caption);
+            statement.setString(3, path);
+            statement.setString(4, timestamp);
+            statement.setInt(5, 0);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Failed to save user post: " + e.getMessage());
         }
-
     }
-
+/**
+ * This method is used to get the filextension
+ * @param file
+ * @return
+ */
     private String getFileExtension(File file) {
         String name = file.getName();
         int lastIndexOf = name.lastIndexOf(".");
@@ -204,6 +216,7 @@ public class ImageUploadUI extends BaseUI {
 
     /**
      * This method save the bio
+     * 
      * @param event
      */
     private void saveBioAction(ActionEvent event) {

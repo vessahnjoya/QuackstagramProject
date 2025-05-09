@@ -2,7 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * BaseUI is an abstract class that provides common UI components and navigation functionalities
+ * BaseUI is an abstract class that provides common UI components and navigation
+ * functionalities
  * and serves a base for other UI components
  */
 public abstract class BaseUI extends JFrame {
@@ -16,22 +17,25 @@ public abstract class BaseUI extends JFrame {
 
     /**
      * Creates and returns the header panel with a page label
+     * 
      * @return JPanel representing the header
      */
     public JPanel BaseCreateHeaderPanel() {
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         headerPanel.setBackground(new Color(51, 51, 51));
-        
+
         pageLabel.setFont(new Font("Arial", Font.BOLD, 16));
         pageLabel.setForeground(Color.WHITE);
         headerPanel.add(pageLabel);
         headerPanel.setPreferredSize(new Dimension(WIDTH, 40));
-        
+
         return headerPanel;
     }
 
     /**
-     * Creates and returns the navigation panel with icon buttons for different functionalities
+     * Creates and returns the navigation panel with icon buttons for different
+     * functionalities
+     * 
      * @return JPanel representing the navigation bar
      */
     public JPanel BaseCreateNavigationPanel() {
@@ -55,6 +59,7 @@ public abstract class BaseUI extends JFrame {
 
     /**
      * Creates an icon button with a specified image and button type
+     * 
      * @param iconPath   The path to the icon image
      * @param buttonType The type of button (e.g., "home", "profile", "upload")
      * @return JButton representing the navigation button
@@ -99,18 +104,13 @@ public abstract class BaseUI extends JFrame {
     }
 
     /**
-     * Opens the Profile UI with the currently logged-in user and disposes of the current frame
+     * Opens the Profile UI with the currently logged-in user and disposes of the
+     * current frame
      */
     public void BaseOpenProfileUI() {
         this.dispose();
-
-        String loggedInUsername = RefactoredSignIn.getLoggedInUsername();
-        if (loggedInUsername == null || loggedInUsername.isEmpty()) {
-            System.out.println("Error: No user is logged in!");
-            return;
-        }
-
-        User user = new User(loggedInUsername);
+        
+        User user = RefactoredSignIn.getLoggedInUser();
         InstagramProfileUI profileUI = new InstagramProfileUI(user);
         profileUI.setVisible(true);
     }
