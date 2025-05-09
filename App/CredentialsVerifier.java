@@ -17,10 +17,10 @@ public class CredentialsVerifier {
 
         String query = "SELECT * FROM users WHERE username = ? AND user_password = ?";
         try (var conn = DatabaseConnection.getConnection();
-                var stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, username);
-            stmt.setString(2, passwordHasher.encrypt());
-            var rs = stmt.executeQuery();
+                var statement = conn.prepareStatement(query)) {
+            statement.setString(1, username);
+            statement.setString(2, passwordHasher.encrypt());
+            var rs = statement.executeQuery();
             if (rs.next()) {
                 String bio = getBio(username);
                 // debug statement
