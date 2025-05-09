@@ -231,6 +231,7 @@ public class RefactoredSignIn extends JFrame {
     private void onSignInClicked(ActionEvent event) {
         String enteredUsername = txtUsername.getText();
         String enteredPassword = txtPassword.getText();
+        // debug statement
         System.out.println(enteredUsername + " <-> " + enteredPassword);
         newUser = credentialsVerifier.authenticate(enteredUsername, enteredPassword);
 

@@ -41,3 +41,7 @@ Open the file `Main.java`, and click on run OR type the following inside your te
 javac Main.java
 java Main
 ```
+
+### Database Implementation
+
+The database was implemented in these following classes:

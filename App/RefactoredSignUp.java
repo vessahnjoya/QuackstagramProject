@@ -310,6 +310,7 @@ public class RefactoredSignUp extends JFrame {
     private void registerUser(String username, String password, String bio) {
         newUser = new User(username, bio, password);
         pfpPath = signUpCredentials.getPath();
+        // debug statement
         System.out.println(pfpPath);
         signUpCredentials.saveUserInfo(newUser, pfpPath);
         dispose();

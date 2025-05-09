@@ -1,9 +1,6 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.imageio.ImageIO;
 
@@ -40,15 +37,15 @@ public class SignUpCredentials {
     private void saveUserInformation(User user, String pfpPath) {
 
         String query = "INSERT INTO users (username, user_password, bio, profile_picture_path) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(query)) {
             AffineCipher passwordHasher = new AffineCipher(user.getPassword());
 
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, passwordHasher.encrypt());
-            stmt.setString(3, user.getBio());
-            stmt.setString(4, pfpPath);
-            stmt.executeUpdate();
+            statement.setString(1, user.getUsername());
+            statement.setString(2, passwordHasher.encrypt());
+            statement.setString(3, user.getBio());
+            statement.setString(4, pfpPath);
+            statement.executeUpdate();
             // debug statement
             System.out.println("saving worked");
         } catch (SQLException e) {
@@ -64,10 +61,10 @@ public class SignUpCredentials {
      */
     private boolean doesUsernameExist(String username) {
         String query = "SELECT * FROM users where username = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
-            ResultSet result = statement.executeQuery();
+            var result = statement.executeQuery();
             return result.next();
         } catch (SQLException e) {
             System.out.println("Failed " + e.getMessage());

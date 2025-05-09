@@ -1,6 +1,3 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -19,11 +16,11 @@ public class CredentialsVerifier {
         AffineCipher passwordHasher = new AffineCipher(password);
 
         String query = "SELECT * FROM users WHERE username = ? AND user_password = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (var conn = DatabaseConnection.getConnection();
+                var stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
             stmt.setString(2, passwordHasher.encrypt());
-            ResultSet rs = stmt.executeQuery();
+            var rs = stmt.executeQuery();
             if (rs.next()) {
                 String bio = getBio(username);
                 // debug statement
@@ -50,10 +47,10 @@ public class CredentialsVerifier {
 
     private String getBio(String username) {
         String query = "SELECT bio FROM users WHERE username = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
-            ResultSet rs = statement.executeQuery();
+            var rs = statement.executeQuery();
             if (rs.next()) {
                 String bio = rs.getString("bio");
                 System.out.println("Retrieved bio for " + username + ": " + bio);
