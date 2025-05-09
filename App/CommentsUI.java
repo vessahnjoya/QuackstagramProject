@@ -4,14 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
- * Thgis class provides a user interface for displaying and adding comments under posts,
+ * This class provides a user interface for displaying and adding comments
+ * under posts,
  * Comments are stored in a text file
  */
 public class CommentsUI {
     /**
      * Creates a panel to display and add comments for a given image
+     * 
      * @param imageId The ID of the image for which comments are displayed
      * @return JPanel representing the comment section
      */
@@ -73,51 +78,84 @@ public class CommentsUI {
     }
 
     /**
-     * Saves a comment to a txt file
+     * Saves a comment to database
+     * 
      * @param imageId The ID of the image being commented on
      * @param comment The comment text
      */
     private static void saveComment(String imageId, String comment) {
-        // TODO
-        // String currentUser = getCurrentUser();
-        // String commentEntry = imageId + ": " + currentUser + " says: " + comment + "\n";
-        // try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "comments.txt"),
-        //         StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-        //     writer.write(commentEntry);
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        String imgId = imageId;
+        int postId = findPostIdQuery(imgId);
+        String currentUser = getCurrentUser();
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String saveCommentQuery = "INSERT into comment (time_stamp, user_id, comment_text) values (?, getUser_id(?), ?) WHERE post_id = ?";
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(saveCommentQuery)) {
+            statement.setString(1, timestamp);
+            statement.setString(2, currentUser);
+            statement.setString(3, comment);
+            statement.setInt(4, postId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Failed to save Comment " + e.getMessage());
+        }
     }
 
     /**
-     * Loads comments from a txt file and displays them in the text area
-     * @param imageId The ID of the image for which comments are loaded
+     * Loads comments from database and displays them in the text area
+     * 
+     * @param imageId      The ID of the image for which comments are loaded
      * @param commentsArea The JTextArea where comments are displayed
      */
     private static void loadComments(String imageId, JTextArea commentsArea) {
-        // TODO
-        // try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "comments.txt"))) {
-        //     String line;
-        //     while ((line = reader.readLine()) != null) {
-        //         if (line.startsWith(imageId + ": ")) {
-        //             String[] parts = line.split(": ", 3);
-        //             if (parts.length == 3) {
-        //                 String username = parts[1];
-        //                 String comment = parts[2];
-        //                 commentsArea.append(username + ": " + comment + "\n");
-        //             }
-        //         }
-        //     }
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        String imgId = imageId;
+        int postId = findPostIdQuery(imgId);
+
+        String loadCommentQuery = "SELECT get_Username(user_id) as username, comment_text FROM comment WHERE post_id = ? ";
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(loadCommentQuery)) {
+            statement.setInt(1, postId);
+            var result = statement.executeQuery();
+            while (result.next()) {
+                String username = result.getString("username");
+                String comment = result.getString("comment_text");
+                commentsArea.append(username + ": " + comment + "\n");
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to load Comments: " + e.getMessage());
+        }
     }
 
     /**
      * Getter method for the current logged-in user
+     * 
      * @return The username of the currently logged-in user
      */
     public static String getCurrentUser() {
         return RefactoredSignIn.getLoggedInUsername();
+    }
+
+    /**
+     * This method is used to find the post_id given an image path
+     * 
+     * @param imageId
+     * @return post_id
+     */
+    private static int findPostIdQuery(String imageId) {
+        String findPostIdQuery = "SELECT post_id FROM post WHERE image_path = ?";
+        int postId = 0;
+        String image_path = "img/uploaded/" + imageId;
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(findPostIdQuery)) {
+            statement.setString(1, image_path);
+            var result = statement.executeQuery();
+            if (result.next()) {
+                postId = result.getInt("post_id");
+                return postId;
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to find post_id: " + e.getMessage());
+        }
+        return -1;
     }
 }
