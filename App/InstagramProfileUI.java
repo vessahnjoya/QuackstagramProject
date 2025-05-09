@@ -3,8 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.awt.*;
 import java.nio.file.*;
@@ -138,25 +136,21 @@ public class InstagramProfileUI extends BaseUI {
 
         // Profile image
         String profileImageQuery = "Select image_path from post where user_id = getUser_id(?)";
-            try (var connection = DatabaseConnection.getConnection();
+        try (var connection = DatabaseConnection.getConnection();
                 var statement = connection.prepareStatement(profileImageQuery)) {
             statement.setString(1, loggedInUsername);
             var rs = statement.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 ImageIcon profileIcon = new ImageIcon(new ImageIcon(rs.getString("image_path"))
-                .getImage().getScaledInstance(PROFILE_IMAGE_SIZE, PROFILE_IMAGE_SIZE, Image.SCALE_SMOOTH));
-        JLabel profileImage = new JLabel(profileIcon);
-        profileImage.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        topHeaderPanel.add(profileImage, BorderLayout.WEST);
+                        .getImage().getScaledInstance(PROFILE_IMAGE_SIZE, PROFILE_IMAGE_SIZE, Image.SCALE_SMOOTH));
+                JLabel profileImage = new JLabel(profileIcon);
+                profileImage.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                topHeaderPanel.add(profileImage, BorderLayout.WEST);
             }
         } catch (SQLException e) {
-            System.err.println("Failed to get profile Image for username: " + loggedInUsername + ", Error: " + e.getMessage());
+            System.err.println(
+                    "Failed to get profile Image for username: " + loggedInUsername + ", Error: " + e.getMessage());
         }
-        ImageIcon profileIcon = new ImageIcon(new ImageIcon("img/storage/profile/" + currentUser.getUsername() + ".png")
-                .getImage().getScaledInstance(PROFILE_IMAGE_SIZE, PROFILE_IMAGE_SIZE, Image.SCALE_SMOOTH));
-        JLabel profileImage = new JLabel(profileIcon);
-        profileImage.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        topHeaderPanel.add(profileImage, BorderLayout.WEST);
 
         // Stats Panel
         JPanel statsPanel = new JPanel();
@@ -182,29 +176,29 @@ public class InstagramProfileUI extends BaseUI {
         } else {
             followButton = new JButton("Follow");
 
-            //TODO
+            // TODO
             // // Check if the current user is already being followed by the logged-in user
             // Path followingFilePath = Paths.get("data", "following.txt");
             // try (BufferedReader reader = Files.newBufferedReader(followingFilePath)) {
-            //     String line;
-            //     while ((line = reader.readLine()) != null) {
-            //         String[] parts = line.split(":");
-            //         if (parts[0].trim().equals(loggedInUsername)) {
-            //             String[] followedUsers = parts[1].split(";");
-            //             for (String followedUser : followedUsers) {
-            //                 if (followedUser.trim().equals(currentUser.getUsername())) {
-            //                     followButton.setText("Following");
-            //                     break;
-            //                 }
-            //             }
-            //         }
-            //     }
+            // String line;
+            // while ((line = reader.readLine()) != null) {
+            // String[] parts = line.split(":");
+            // if (parts[0].trim().equals(loggedInUsername)) {
+            // String[] followedUsers = parts[1].split(";");
+            // for (String followedUser : followedUsers) {
+            // if (followedUser.trim().equals(currentUser.getUsername())) {
+            // followButton.setText("Following");
+            // break;
+            // }
+            // }
+            // }
+            // }
             // } catch (IOException e) {
-            //     e.printStackTrace();
+            // e.printStackTrace();
             // }
             // followButton.addActionListener(e -> {
-            //     handleFollowAction(currentUser.getUsername());
-            //     followButton.setText("Following");
+            // handleFollowAction(currentUser.getUsername());
+            // followButton.setText("Following");
             // });
         }
 
@@ -255,64 +249,65 @@ public class InstagramProfileUI extends BaseUI {
 
     }
 
-    /**
-     * This method handles following of users and saves the following
-     * 
-     * @param usernameToFollow user to follow
-     */
-    // TODO
-    private void handleFollowAction(String usernameToFollow) {
-        Path followingFilePath = Paths.get("data", "following.txt");
-        Path usersFilePath = Paths.get("data", "users.txt");
-        String currentUserUsername = "";
+    // /**
+    // * This method handles following of users and saves the following
+    // *
+    // * @param usernameToFollow user to follow
+    // */
+    // // TODO
+    // private void handleFollowAction(String usernameToFollow) {
+    // Path followingFilePath = Paths.get("data", "following.txt");
+    // Path usersFilePath = Paths.get("data", "users.txt");
+    // String currentUserUsername = "";
 
-        try {
-            // Read the current user's username from users.txt
-            try (BufferedReader reader = Files.newBufferedReader(usersFilePath)) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(":");
-                    currentUserUsername = parts[0];
-                }
-            }
+    // try {
+    // // Read the current user's username from users.txt
+    // try (BufferedReader reader = Files.newBufferedReader(usersFilePath)) {
+    // String line;
+    // while ((line = reader.readLine()) != null) {
+    // String[] parts = line.split(":");
+    // currentUserUsername = parts[0];
+    // }
+    // }
 
-            System.out.println("Real user is " + currentUserUsername);
-            // If currentUserUsername is not empty, process following.txt
-            if (!currentUserUsername.isEmpty()) {
-                boolean found = false;
-                StringBuilder newContent = new StringBuilder();
+    // System.out.println("Real user is " + currentUserUsername);
+    // // If currentUserUsername is not empty, process following.txt
+    // if (!currentUserUsername.isEmpty()) {
+    // boolean found = false;
+    // StringBuilder newContent = new StringBuilder();
 
-                // Read and process following.txt
-                if (Files.exists(followingFilePath)) {
-                    try (BufferedReader reader = Files.newBufferedReader(followingFilePath)) {
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            String[] parts = line.split(":");
-                            if (parts[0].trim().equals(currentUserUsername)) {
-                                found = true;
-                                if (!line.contains(usernameToFollow)) {
-                                    line = line.concat(line.endsWith(":") ? "" : "; ").concat(usernameToFollow);
-                                }
-                            }
-                            newContent.append(line).append("\n");
-                        }
-                    }
-                }
+    // // Read and process following.txt
+    // if (Files.exists(followingFilePath)) {
+    // try (BufferedReader reader = Files.newBufferedReader(followingFilePath)) {
+    // String line;
+    // while ((line = reader.readLine()) != null) {
+    // String[] parts = line.split(":");
+    // if (parts[0].trim().equals(currentUserUsername)) {
+    // found = true;
+    // if (!line.contains(usernameToFollow)) {
+    // line = line.concat(line.endsWith(":") ? "" : "; ").concat(usernameToFollow);
+    // }
+    // }
+    // newContent.append(line).append("\n");
+    // }
+    // }
+    // }
 
-                // If the current user was not found in following.txt, add them
-                if (!found) {
-                    newContent.append(currentUserUsername).append(": ").append(usernameToFollow).append("\n");
-                }
+    // // If the current user was not found in following.txt, add them
+    // if (!found) {
+    // newContent.append(currentUserUsername).append(":
+    // ").append(usernameToFollow).append("\n");
+    // }
 
-                // Write the updated content back to following.txt
-                try (BufferedWriter writer = Files.newBufferedWriter(followingFilePath)) {
-                    writer.write(newContent.toString());
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    // // Write the updated content back to following.txt
+    // try (BufferedWriter writer = Files.newBufferedWriter(followingFilePath)) {
+    // writer.write(newContent.toString());
+    // }
+    // }
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
+    // }
 
     /**
      * This method creates an Image grid that contains users post

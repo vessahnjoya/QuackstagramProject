@@ -60,5 +60,5 @@ In this class the database was used to save new user information into the users 
 In this class the db is used to save the post infor such as image_path, caption, user_id and timestamp.
 
 ### 5: InstagramProfileUi
-In this class the user is used to get following, followers, and posts counts, Bio, 
+In this class the user is used to get following, followers, and posts counts, Bio, and profile image. 
 
