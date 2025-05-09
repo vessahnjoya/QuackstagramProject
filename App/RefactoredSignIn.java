@@ -13,6 +13,7 @@ public class RefactoredSignIn extends JFrame {
 
     private final Color blueColor = new Color(51, 204, 255);
     private User newUser;
+    private static User currentUser;
     private static JTextField txtUsername;
     private JTextField txtPassword;
     private JButton btnSignIn;
@@ -22,6 +23,7 @@ public class RefactoredSignIn extends JFrame {
     private JPanel headerPanel;
     private JPanel buttonPanel;
     private CredentialsVerifier credentialsVerifier;
+    private static String loggedInUsername;
 
     /**
      * The constructor initializes default values for the frame
@@ -172,9 +174,18 @@ public class RefactoredSignIn extends JFrame {
      * @return username
      */
     public static String getLoggedInUsername() {
-        return txtUsername.getText();
+        return loggedInUsername;
     }
 
+       /**
+     * This method is used to get the logged In user's username directly from the
+     * username field
+     * 
+     * @return username
+     */
+    public static User getLoggedInUser() {
+        return currentUser;
+    }
     /**
      * This methods create a sign In button and add an action listener to it
      * 
@@ -236,6 +247,8 @@ public class RefactoredSignIn extends JFrame {
         newUser = credentialsVerifier.authenticate(enteredUsername, enteredPassword);
 
         if (newUser != null) {
+            loggedInUsername = enteredUsername;
+            currentUser = newUser;
             JOptionPane.showMessageDialog(this, "Login Succesful, Welcome!");
             // Close the SignUpUI frame
             dispose();

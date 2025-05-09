@@ -6,13 +6,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.sql.SQLException;
+
 /**
- * This class provides interface for home UI and inherits implementation from baseUi class
+ * This class provides interface for home UI and inherits implementation from
+ * baseUi class
  */
 public class QuakstagramHomeUI extends BaseUI {
     private final int IMAGE_WIDTH = WIDTH - 100; // Width for the image posts
@@ -24,7 +24,7 @@ public class QuakstagramHomeUI extends BaseUI {
     private JPanel imageViewPanel;
     private DirectMessagingUI directMessagingUI;
 
-    /** 
+    /**
      * The cnstructor sets, adds default values for frame and initializes UI
      */
     @SuppressWarnings("unused")
@@ -109,9 +109,10 @@ public class QuakstagramHomeUI extends BaseUI {
 
         add(navigationPanel, BorderLayout.SOUTH);
     }
-/**
- * This method intializes UI components and adds them to the frame
- */
+
+    /**
+     * This method intializes UI components and adds them to the frame
+     */
     private void initializeUI() {
 
         // Content Scroll Panel
@@ -130,11 +131,14 @@ public class QuakstagramHomeUI extends BaseUI {
         homePanel.add(scrollPane, BorderLayout.CENTER);
 
     }
-/**
- * This method populates the content panel with different posts with formatting and adds them to the frame
- * @param panel
- * @param sampleData
- */
+
+    /**
+     * This method populates the content panel with different posts with formatting
+     * and adds them to the frame
+     * 
+     * @param panel
+     * @param sampleData
+     */
     private void populateContentPanel(JPanel panel, String[][] sampleData) {
 
         for (String[] postData : sampleData) {
@@ -241,84 +245,57 @@ public class QuakstagramHomeUI extends BaseUI {
 
     /**
      * This method create sample data from users txt file
+     * 
      * @return sample data
      */
     private String[][] createSampleData() {
+        // TODO
+        // Step1: Fecth followed users username
         String currentUser = RefactoredSignIn.getLoggedInUsername();
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-            String line;
+        String followedUsersQuery = "select u.username from users u join follow f  on u.user_id = f.followed_id" +
+                " where f.follower_id = getUser_id(?)";
+        StringBuilder followedUsersList = new StringBuilder();
 
-            while ((line = reader.readLine()) != null) { // Iterate through each line
-                String[] parts = line.split(":");
-
-                if (parts.length > 0 && parts[0].trim().equalsIgnoreCase(currentUser)) {
-                    currentUser = parts[0].trim();
-                    break; // Stop searching once found
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(followedUsersQuery)) {
+            statement.setString(1, currentUser);
+            var result = statement.executeQuery();
+            while (result.next()) {
+                if (followedUsersList.length() > 0) {
+                    followedUsersList.append(",");
                 }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //TODO UPDATE
+                followedUsersList.append(result.getString("username"));
 
-        String followedUsers = "";
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "following.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith(currentUser + ":")) {
-                    followedUsers = line.split(":")[1].trim();
-                    break;
-                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (followedUsers.isEmpty()) {
-            return new String[0][];
+        } catch (SQLException e) {
+            System.out.println("Failed to fetch followed Users: " + e.getMessage());
         }
 
-        //TODO UPDATE
+        // Step 2: fetch the followedUsers posts
+        String followedUsersPostQuery = "SELECT u.username, p.caption, p.like_count, p.image_path FROM post p" +
+                " JOIN users u ON p.user_id = u.user_id" +
+                " WHERE u.username IN (SELECT u2.username FROM users u2" +
+                " JOIN follow f ON u2.user_id = f.followed_id" +
+                " WHERE f.follower_id = getUser_id(?))";
 
         // Temporary structure to hold the data
         String[][] tempData = new String[100][]; // Assuming a maximum of 100 posts for simplicity
         int count = 0;
 
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("img", "image_details.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null && count < tempData.length) {
-                String[] details = line.split(", ");
-                String imagePoster = "";
-                if (details.length > 1 && details[1].contains(": ")) {
-                    String[] posterSplit = details[1].split(": ");
-                    if (posterSplit.length > 1) {
-                        imagePoster = posterSplit[1]; // Safe to access
-                    }
-                }
-                if (followedUsers.contains(imagePoster)) {
-                    String imagePath = ""; // Assuming PNG format
-                    if (details.length > 0 && details[0].contains(": ")) {
-                        String[] imageSplit = details[0].split(": ");
-                        imagePath = (imageSplit.length > 1) ? "img/uploaded/" + imageSplit[1] + ".png"
-                                : "img/default.png";
-                    }
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(followedUsersPostQuery)) {
+            statement.setString(1, currentUser);
+            var result = statement.executeQuery();
+            while (result.next() && count < tempData.length) {
+                String imagePoster = result.getString("username");
+                String description = result.getString("caption");
+                String likes = "Likes: " + result.getInt("like_count");
+                String imagePath = result.getString("image_path");
 
-                    String description = "";
-                    if (details.length > 2 && details[2].contains(": ")) {
-                        String[] descSplit = details[2].split(": ");
-                        description = (descSplit.length > 1) ? descSplit[1] : "No description";
-                    }
-
-                    String likes = "";
-                    if (details.length > 4 && details[4].contains(": ")) {
-                        String[] likesSplit = details[4].split(": ");
-                        likes = (likesSplit.length > 1) ? "Likes: " + likesSplit[1] : "Likes: 0";
-                    }
-
-                    tempData[count++] = new String[] { imagePoster, description, likes, imagePath };
-                }
+                tempData[count++] = new String[] { imagePoster, description, likes, imagePath };
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Failed to load followed Users Post: " + e.getMessage());
         }
 
         // Transfer the data to the final array
@@ -330,6 +307,7 @@ public class QuakstagramHomeUI extends BaseUI {
 
     /**
      * This methods display images with comments and like functionalities
+     * 
      * @param postData
      */
     private void displayImage(String[] postData) {
@@ -419,22 +397,22 @@ public class QuakstagramHomeUI extends BaseUI {
      * @param postData
      * @param imageId
      */
-    //TODO UPDATE
+    // TODO UPDATE
     private void refreshDisplayImage(String[] postData, String imageId) {
-        // Read updated likes count from image_details.txt
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get("img", "image_details.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.contains("ImageID: " + imageId)) {
-                    String likes = line.split(", ")[4].split(": ")[1];
-                    postData[2] = "Likes: " + likes;
-                    break;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
+        String updateLikesQuery = "SELECT like_count FROM post WHERE image_path = ?";
+        String path = "img/uploaded/" + imageId;
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(updateLikesQuery)) {
+            statement.setString(1, path);
+            var result = statement.executeQuery();
+            if (result.next()) {
+                int likes = result.getInt("like_count");
+                postData[2] = "Likes: " + likes;
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to refresh Like count for Image_path: " + path + ": " + e.getMessage());
+        }
         // Call displayImage with updated postData
         displayImage(postData);
     }

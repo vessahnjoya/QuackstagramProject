@@ -16,8 +16,8 @@ public class CredentialsVerifier {
         AffineCipher passwordHasher = new AffineCipher(password);
 
         String query = "SELECT * FROM users WHERE username = ? AND user_password = ?";
-        try (var conn = DatabaseConnection.getConnection();
-                var statement = conn.prepareStatement(query)) {
+        try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             statement.setString(2, passwordHasher.encrypt());
             var rs = statement.executeQuery();

@@ -51,8 +51,17 @@ The database was implemented in these following classes:
 This is the main class where the databaseconnection is created.
 
 ### 2: Credentials Verifier
-In this class the database was used to verify user credentials upon login ( verifyCredentials() ), and to get user Bio ( getBio()).
+In this class the database was used to verify user credentials upon login, and to get user Bio.
 
 ### 3: SignUpCredentials
-In this class the database was used to save new user information into the users table ( saveUserInformation() ), and to verify if the username entered by the new user already exists in the users table ( doesUsernameExist() ).
+In this class the database was used to save new user information into the users table, and to verify if the username entered by the new user already exists in the users table.
+
+### 4: ImageUploadUI
+In this class the db is used to save the post infor such as image_path, caption, user_id and timestamp.
+
+### 5: InstagramProfileUi
+In this class the user is used to get following, followers, and posts counts, Bio, and profile image.
+
+### 6: DirectMessagingUI
+In this class the database is used to send and retrieve chat history between users
 
