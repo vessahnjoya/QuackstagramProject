@@ -60,8 +60,10 @@ In this class the database was used to save new user information into the users 
 In this class the db is used to save the post infor such as image_path, caption, user_id and timestamp.
 
 ### 5: InstagramProfileUi
-In this class the user is used to get following, followers, and posts counts, Bio, and profile image.
+In this class the user is used to get following, followers, and posts counts, Bio, and profile image. Note that here we did not handleFollowAction Action to save time
 
 ### 6: DirectMessagingUI
 In this class the database is used to send and retrieve chat history between users
 
+### 7: QuackstagramHomeUI
+IOn this class the database is implemented to retrieve followed users post with all their data
