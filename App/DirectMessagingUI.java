@@ -216,7 +216,7 @@ public class DirectMessagingUI extends JPanel {
         try (var connection = DatabaseConnection.getConnection();
                 var statement = connection.prepareStatement(saveMessageQuery)) {
             statement.setInt(1, sender_Id);
-            statement.setInt(1, receiver_Id);
+            statement.setInt(2, receiver_Id);
             statement.setString(3, message);
             statement.setString(4, timestamp);
             statement.executeUpdate();
