@@ -127,25 +127,8 @@ public class InstagramProfileUI extends BaseUI {
         boolean isCurrentUser = true;
         String loggedInUsername = currentUser.getUsername();
 
-        // Read the logged-in user's username from users.txt
-        // try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-        //     String line = reader.readLine();
-        //     if (line != null) {
-        //         loggedInUsername = line.split(":")[0].trim();
-        //         isCurrentUser = loggedInUsername.equals(currentUser.getUsername());
-        //     }
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
-
         // Header Panel
         JPanel headerPanel = new JPanel();
-        // try (Stream<String> lines = Files.lines(Paths.get("data", "users.txt"))) {
-        //     isCurrentUser = lines.anyMatch(line -> line.startsWith(currentUser.getUsername() + ":"));
-        // } catch (IOException e) {
-        //     e.printStackTrace(); // Log or handle the exception as appropriate
-        // }
-
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
         headerPanel.setBackground(Color.GRAY);
 
@@ -154,6 +137,21 @@ public class InstagramProfileUI extends BaseUI {
         topHeaderPanel.setBackground(new Color(249, 249, 249));
 
         // Profile image
+        String profileImageQuery = "Select image_path from post where user_id = getUser_id(?)";
+            try (var connection = DatabaseConnection.getConnection();
+                var statement = connection.prepareStatement(profileImageQuery)) {
+            statement.setString(1, loggedInUsername);
+            var rs = statement.executeQuery();
+            if(rs.next()){
+                ImageIcon profileIcon = new ImageIcon(new ImageIcon(rs.getString("image_path"))
+                .getImage().getScaledInstance(PROFILE_IMAGE_SIZE, PROFILE_IMAGE_SIZE, Image.SCALE_SMOOTH));
+        JLabel profileImage = new JLabel(profileIcon);
+        profileImage.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        topHeaderPanel.add(profileImage, BorderLayout.WEST);
+            }
+        } catch (SQLException e) {
+            System.err.println("Failed to get profile Image for username: " + loggedInUsername + ", Error: " + e.getMessage());
+        }
         ImageIcon profileIcon = new ImageIcon(new ImageIcon("img/storage/profile/" + currentUser.getUsername() + ".png")
                 .getImage().getScaledInstance(PROFILE_IMAGE_SIZE, PROFILE_IMAGE_SIZE, Image.SCALE_SMOOTH));
         JLabel profileImage = new JLabel(profileIcon);

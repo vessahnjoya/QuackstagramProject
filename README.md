@@ -56,3 +56,9 @@ In this class the database was used to verify user credentials upon login ( veri
 ### 3: SignUpCredentials
 In this class the database was used to save new user information into the users table ( saveUserInformation() ), and to verify if the username entered by the new user already exists in the users table ( doesUsernameExist() ).
 
+### 4: ImageUploadUI
+In this class the db is used to save the post infor such as image_path, caption, user_id and timestamp.
+
+### 5: InstagramProfileUi
+In this class the user is used to get following, followers, and posts counts, Bio, 
+
