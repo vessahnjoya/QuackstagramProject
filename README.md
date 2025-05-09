@@ -4,6 +4,7 @@
 
 - [Project Overview](#project-overview)
 - [Installation](#installation)
+- [Database Implementation](#Database)
 
 ## Project Overview
 
@@ -42,6 +43,16 @@ javac Main.java
 java Main
 ```
 
-### Database Implementation
+## Database
 
 The database was implemented in these following classes:
+
+### 1: DatabaseConnection
+This is the main class where the databaseconnection is created.
+
+### 2: Credentials Verifier
+In this class the database was used to verify user credentials upon login ( verifyCredentials() ), and to get user Bio ( getBio()).
+
+### 3: SignUpCredentials
+In this class the database was used to save new user information into the users table ( saveUserInformation() ), and to verify if the username entered by the new user already exists in the users table ( doesUsernameExist() ).
+

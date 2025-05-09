@@ -1,11 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+
 /**
  * This class provides user interface for communication with other users
  */
@@ -17,6 +12,7 @@ public class DirectMessagingUI extends JPanel {
 
     /**
      * The constructor initializes the currentUser, and UI
+     * 
      * @param currentUser this is the logged In user
      */
     public DirectMessagingUI(String currentUser) {
@@ -36,22 +32,23 @@ public class DirectMessagingUI extends JPanel {
         userListPanel.setBackground(Color.WHITE);
         userListPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        //TODO
+        // TODO
         // // List of the user except the user's sending the message
-        // try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "credentials.txt"))) {
-        //     String line;
-        //     while ((line = reader.readLine()) != null) {
-        //         String username = line.split(":")[0].trim();
-        //         if (!username.equals(currentUser)) {
-        //             JButton userButton = new JButton(username);
-        //             userButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        //             userButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        //             userButton.addActionListener(e -> openChat(username));
-        //             userListPanel.add(userButton);
-        //         }
-        //     }
+        // try (BufferedReader reader = Files.newBufferedReader(Paths.get("data",
+        // "credentials.txt"))) {
+        // String line;
+        // while ((line = reader.readLine()) != null) {
+        // String username = line.split(":")[0].trim();
+        // if (!username.equals(currentUser)) {
+        // JButton userButton = new JButton(username);
+        // userButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // userButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        // userButton.addActionListener(e -> openChat(username));
+        // userListPanel.add(userButton);
+        // }
+        // }
         // } catch (IOException e) {
-        //     e.printStackTrace();
+        // e.printStackTrace();
         // }
 
         // Add the user to the chat panel
@@ -110,60 +107,69 @@ public class DirectMessagingUI extends JPanel {
         add(backButton, BorderLayout.NORTH);
     }
 
-/**
- * This method opens the chat upon clicking of a username
- * @param username this is the selectedUser
- */    private void openChat(String username) {
+    /**
+     * This method opens the chat upon clicking of a username
+     * 
+     * @param username this is the selectedUser
+     */
+    private void openChat(String username) {
         selectedUser = username;
         usernameLabel.setText("Texting " + username); // Set the username label
         chatArea.setText(""); // Clear the chat area
         loadChatHistory(selectedUser);
     }
 
-/**
- * This method is used to load previous messages between two users
- * @param username this is the receiver
- */    private void loadChatHistory(String username) {
-    //TODO
-        // try (BufferedReader reader = Files.newBufferedReader(Paths.get("data", "messages.txt"))) {
-        //     String line;
-        //     while ((line = reader.readLine()) != null) {
-        //         String[] parts = line.split(": ", 3);
-        //         if (parts.length == 3) {
-        //             String sender = parts[0];
-        //             String receiver = parts[1];
-        //             String message = parts[2];
-        //             if ((sender.equals(currentUser) && receiver.equals(username)) ||
-        //                     (sender.equals(username) && receiver.equals(currentUser))) {
-        //                 chatArea.append(sender + ": " + message + "\n");
-        //             }
-        //         } else {
-        //             System.out.println("Invalid message format: " + line); // Debug statement
-        //         }
-        //     }
-        // } catch (IOException e) {
-        //     e.printStackTrace();
+    /**
+     * This method is used to load previous messages between two users
+     * 
+     * @param username this is the receiver
+     */
+    private void loadChatHistory(String username) {
+        // TODO
+        // try (BufferedReader reader = Files.newBufferedReader(Paths.get("data",
+        // "messages.txt"))) {
+        // String line;
+        // while ((line = reader.readLine()) != null) {
+        // String[] parts = line.split(": ", 3);
+        // if (parts.length == 3) {
+        // String sender = parts[0];
+        // String receiver = parts[1];
+        // String message = parts[2];
+        // if ((sender.equals(currentUser) && receiver.equals(username)) ||
+        // (sender.equals(username) && receiver.equals(currentUser))) {
+        // chatArea.append(sender + ": " + message + "\n");
         // }
-    }
-
-/**
- * This method is used to save Messages 
- * @param sender logged in user sending message
- * @param receiver selected user
- * @param message 
- */    private void saveMessage(String sender, String receiver, String message) {
-    //TODO
-        // String messageEntry = sender + ": " + receiver + ": " + message;
-        // try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data", "messages.txt"),
-        //         StandardOpenOption.APPEND)) {
-        //     writer.write(messageEntry);
+        // } else {
+        // System.out.println("Invalid message format: " + line); // Debug statement
+        // }
+        // }
         // } catch (IOException e) {
-        //     e.printStackTrace();
+        // e.printStackTrace();
         // }
     }
 
     /**
-     * This method ensures that the chat doesn't refresh itself again when a chat is already opened upon misclick
+     * This method is used to save Messages
+     * 
+     * @param sender   logged in user sending message
+     * @param receiver selected user
+     * @param message
+     */
+    private void saveMessage(String sender, String receiver, String message) {
+        // TODO
+        // String messageEntry = sender + ": " + receiver + ": " + message;
+        // try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("data",
+        // "messages.txt"),
+        // StandardOpenOption.APPEND)) {
+        // writer.write(messageEntry);
+        // } catch (IOException e) {
+        // e.printStackTrace();
+        // }
+    }
+
+    /**
+     * This method ensures that the chat doesn't refresh itself again when a chat is
+     * already opened upon misclick
      */
     public void refreshChat() {
         if (selectedUser != null) {
