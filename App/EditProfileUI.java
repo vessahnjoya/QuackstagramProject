@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.io.*;
+import java.sql.SQLException;
 /**
  * This class provides user interface for profile customization
  * This class is not functional!
@@ -106,21 +107,24 @@ public class EditProfileUI extends JFrame {
 
     private Component submitButton() {
         submitButton = new JButton("Submit");
-        submitButton.addActionListener(new ActionListener() {
+        submitButton.addActionListener(e -> {
+            String newBio = txtBio.getText().trim();
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (imgUploaded || bioUpdated) {
-                    saveNewBio(currentUser, credentialsFilePath);
-                    dispose();
-                    InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
-                    igProfile.setVisible(true);
-                }
+            if (!newBio.isEmpty()) {
+                saveNewBio(currentUser, newBio);
+                JOptionPane.showMessageDialog(null, "Bio updated successfully.");
+                dispose();
+                InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
+                igProfile.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Bio cannot be empty.");
             }
-
         });
+
         return submitButton;
     }
+
+    
 
     private Component imgaeIcon() {
         ImageIcon profileIcon = new ImageIcon(new ImageIcon("img/storage/profile/" + currentUser.getUsername() + ".png")
@@ -164,27 +168,18 @@ public class EditProfileUI extends JFrame {
         }
     }
 
-    public void saveNewBio(User user, String newBio) {
-        newBio = txtBio.getText();
-        String username = user.getUsername();
-        String currentBio = user.getBio();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(credentialsFilePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] credentials = line.split(":");
-                if (credentials[0].equals(username) && credentials[2].equals(currentBio)) {
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(credentialsFilePath, true))) {
-                        writer.write(user.toString());
-                        bioUpdated = true;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        } catch (IOException e) {
+    private void saveNewBio(User user, String newBio) {
+        String query = "UPDATE users SET bio = ? WHERE username = ?";
+        try (var conn = DatabaseConnection.getConnection();
+            var stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, newBio);
+            stmt.setString(2, user.getUsername());
+            stmt.executeUpdate();
+            bioUpdated = true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Failed to update bio: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
+
 }

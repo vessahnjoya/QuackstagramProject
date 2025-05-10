@@ -1,113 +1,100 @@
-import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.*;
+
 /**
  * This class handles the like functionality
  */
 public class LikeFunctionality {
     /**
-     * This method handles the like functionality inide the home UI
+     * This method handles the like functionality inside the home UI
      * @param imageId
      * @param likesLabel
      */
-    //TODO
     static void handleLikeAction(String imageId, JLabel likesLabel) {
-        Path detailsPath = Paths.get("img", "image_details.txt");
-        Path likesTrackingPath = Paths.get("data", "likes_tracking.txt");
-        StringBuilder newContent = new StringBuilder();
-        boolean updated = false;
-        boolean alreadyLiked = false;
         String currentUser = RefactoredSignIn.getLoggedInUsername();
-        String imageOwner = "";
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        // Ensure likes_tracking.txt exists
-        try {
-            if (!Files.exists(likesTrackingPath)) {
-                Files.createFile(likesTrackingPath);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Retrieve the current user from users.txt
-        try (BufferedReader userReader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-            String line = userReader.readLine();
-            if (line != null) {
-                currentUser = line.split(":")[0].trim();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Check if the user has already liked this post
-        try (BufferedReader likesReader = Files.newBufferedReader(likesTrackingPath)) {
-            String line;
-            while ((line = likesReader.readLine()) != null) {
-                if (line.equals(currentUser + ";" + imageId)) {
-                    alreadyLiked = true;
-                    break;
+        String imagePath = "img/uploaded/" + imageId + ".png";
+
+        String getPostId = "SELECT post_id, user_id FROM post WHERE image_path = ?";
+        String checkLike = "SELECT * FROM like_table WHERE user_id = ? AND post_id = ?";
+        String insertLike = "INSERT INTO like_table (user_id, post_id, time_stamp) VALUES (?, ?, ?)";
+        String updateLikes = "UPDATE post SET like_count = like_count + 1 WHERE image_path = ?";
+        String notifySQL = "INSERT INTO notification (recipient_id, sender_id, post_id, message, time_stamp) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            int postId = -1;
+            int ownerId = -1;
+            int likerId = getUserIdQuery(currentUser);
+
+            // Step 1: Get post ID and owner ID
+            try (PreparedStatement stmt = conn.prepareStatement(getPostId)) {
+                stmt.setString(1, imagePath);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    postId = rs.getInt("post_id");
+                    ownerId = rs.getInt("user_id");
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        if (alreadyLiked) {
-            JOptionPane.showMessageDialog(null, "You have already liked this post!", "Like Failed",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Read and update image_details.txt
-        try (BufferedReader reader = Files.newBufferedReader(detailsPath)) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.contains("ImageID: " + imageId)) {
-                    String[] parts = line.split(", ");
-                    imageOwner = parts[1].split(": ")[1];
-                    int likes = Integer.parseInt(parts[4].split(": ")[1]);
-                    likes++; // Increment the likes count
-                    parts[4] = "Likes: " + likes;
-                    line = String.join(", ", parts);
-
-                    // Update the UI
-                    likesLabel.setText("Likes: " + likes);
-                    updated = true;
+            // Step 2: Check if the user already liked the post
+            try (PreparedStatement stmt = conn.prepareStatement(checkLike)) {
+                stmt.setInt(1, likerId);
+                stmt.setInt(2, postId);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(null, "You already liked this post.");
+                    return;
                 }
-                newContent.append(line).append("\n");
             }
-        } catch (IOException e) {
+
+            // Step 3: Insert into like_table
+            try (PreparedStatement stmt = conn.prepareStatement(insertLike)) {
+                stmt.setInt(1, likerId);
+                stmt.setInt(2, postId);
+                stmt.setString(3, timestamp);
+                stmt.executeUpdate();
+            }
+
+            // Step 4: Update like count in post table
+            try (PreparedStatement stmt = conn.prepareStatement(updateLikes)) {
+                stmt.setString(1, imagePath);
+                stmt.executeUpdate();
+            }
+
+            // Step 5: Add notification
+            try (PreparedStatement stmt = conn.prepareStatement(notifySQL)) {
+                stmt.setInt(1, ownerId);
+                stmt.setInt(2, likerId);
+                stmt.setInt(3, postId);
+                stmt.setString(4, currentUser + " liked your post");
+                stmt.setString(5, timestamp);
+                stmt.executeUpdate();
+            }
+
+            // Step 6: Update label
+            likesLabel.setText("Liked!");
+            JOptionPane.showMessageDialog(null, "You liked the post.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error updating like in database.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private static int getUserIdQuery(String username) {
+        String query = "SELECT user_id FROM users WHERE username = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("user_id");
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        // Write updated likes back to image_details.txt
-        if (updated) {
-            try (BufferedWriter writer = Files.newBufferedWriter(detailsPath)) {
-                writer.write(newContent.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // Record the like in notifications.txt
-            String notification = String.format("%s; %s; %s; %s\n", imageOwner, currentUser, imageId, timestamp);
-            try (BufferedWriter notificationWriter = Files.newBufferedWriter(Paths.get("data", "notifications.txt"),
-                    StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-                notificationWriter.write(notification);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            // Record the like in likes_tracking.txt to prevent duplicate likes
-            try (BufferedWriter likesWriter = Files.newBufferedWriter(likesTrackingPath, StandardOpenOption.APPEND)) {
-                likesWriter.write(currentUser + ";" + imageId);
-                likesWriter.newLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        return -1;
     }
 }
