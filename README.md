@@ -67,3 +67,6 @@ In this class the database is used to send and retrieve chat history between use
 
 ### 7: QuackstagramHomeUI
 IOn this class the database is implemented to retrieve followed users post with all their data
+
+### 8: CommentsUI
+In this class the database is used to save, load comments. However not functional :)

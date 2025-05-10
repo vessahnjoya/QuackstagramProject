@@ -137,6 +137,7 @@ public class CommentsUI {
 
     /**
      * This method is used to find the post_id given an image path
+     * NOT FUNCTIONAL !!!!!
      * 
      * @param imageId
      * @return post_id
@@ -144,10 +145,10 @@ public class CommentsUI {
     private static int findPostIdQuery(String imageId) {
         String findPostIdQuery = "SELECT post_id FROM post WHERE image_path = ?";
         int postId = 0;
-        String image_path = "img/uploaded/" + imageId;
+         String path = "img/uploaded/" +"_" + imageId +".png";
         try (var connection = DatabaseConnection.getConnection();
                 var statement = connection.prepareStatement(findPostIdQuery)) {
-            statement.setString(1, image_path);
+            statement.setString(1, path);
             var result = statement.executeQuery();
             if (result.next()) {
                 postId = result.getInt("post_id");
@@ -156,6 +157,6 @@ public class CommentsUI {
         } catch (SQLException e) {
             System.out.println("Failed to find post_id: " + e.getMessage());
         }
-        return -1;
+        return postId;
     }
 }
