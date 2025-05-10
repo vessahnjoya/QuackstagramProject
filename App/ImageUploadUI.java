@@ -184,7 +184,7 @@ public class ImageUploadUI extends BaseUI {
      * @param bio
      */
     private void saveImageInfo(String imageId, String username, String caption) {
-        String path = "img/uploaded/" + username +"_" + imageId +".png";
+        String path = "img/uploaded/"+ imageId +".png";
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         String saveImage = "INSERT INTO post(user_id, caption, image_path, time_stamp, like_count) VALUES (getUser_id(?), ?, ?, ?, ?)";
         try (var connection = DatabaseConnection.getConnection();

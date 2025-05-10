@@ -19,51 +19,9 @@ public class LikeFunctionality {
      */
     //TODO
     static void handleLikeAction(String imageId, JLabel likesLabel) {
-        Path detailsPath = Paths.get("img", "image_details.txt");
-        Path likesTrackingPath = Paths.get("data", "likes_tracking.txt");
-        StringBuilder newContent = new StringBuilder();
-        boolean updated = false;
-        boolean alreadyLiked = false;
         String currentUser = RefactoredSignIn.getLoggedInUsername();
-        String imageOwner = "";
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        // Ensure likes_tracking.txt exists
-        try {
-            if (!Files.exists(likesTrackingPath)) {
-                Files.createFile(likesTrackingPath);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Retrieve the current user from users.txt
-        try (BufferedReader userReader = Files.newBufferedReader(Paths.get("data", "users.txt"))) {
-            String line = userReader.readLine();
-            if (line != null) {
-                currentUser = line.split(":")[0].trim();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // Check if the user has already liked this post
-        try (BufferedReader likesReader = Files.newBufferedReader(likesTrackingPath)) {
-            String line;
-            while ((line = likesReader.readLine()) != null) {
-                if (line.equals(currentUser + ";" + imageId)) {
-                    alreadyLiked = true;
-                    break;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        if (alreadyLiked) {
-            JOptionPane.showMessageDialog(null, "You have already liked this post!", "Like Failed",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Read and update image_details.txt
        // Convert imageId to full path
         String imagePath = "img/uploaded/" + imageId + ".png";
 
