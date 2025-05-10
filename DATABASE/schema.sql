@@ -44,7 +44,7 @@ CREATE TABLE notification (
     FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE
 );
 
-CREATE TABLE likes (
+CREATE TABLE like_table (
     user_id INT(11) NOT NULL,
     post_id INT(11) NOT NULL,
     time_stamp DATETIME DEFAULT CURRENT_TIMESTAMP,
