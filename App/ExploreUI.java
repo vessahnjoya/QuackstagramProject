@@ -143,7 +143,22 @@ public class ExploreUI extends BaseUI {
         JPanel bottomPanel = new JPanel(new BorderLayout());
         JTextArea captionArea = new JTextArea(caption);
         captionArea.setEditable(false);
-        JLabel likesLabel = new JLabel("Likes: " + likes);
+        int updatedLikes = 0;
+        String getLikesQuery = "SELECT like_count FROM post WHERE image_path = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(getLikesQuery)) {
+            stmt.setString(1, imagePath);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                updatedLikes = rs.getInt("like_count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        JLabel likesLabel = new JLabel("Likes: " + updatedLikes);
+
         bottomPanel.add(captionArea, BorderLayout.CENTER);
         bottomPanel.add(likesLabel, BorderLayout.SOUTH);
 

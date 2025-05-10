@@ -107,21 +107,24 @@ public class EditProfileUI extends JFrame {
 
     private Component submitButton() {
         submitButton = new JButton("Submit");
-        submitButton.addActionListener(new ActionListener() {
+        submitButton.addActionListener(e -> {
+            String newBio = txtBio.getText().trim();
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (imgUploaded || bioUpdated) {
-                    saveNewBio(currentUser, credentialsFilePath);
-                    dispose();
-                    InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
-                    igProfile.setVisible(true);
-                }
+            if (!newBio.isEmpty()) {
+                saveNewBio(currentUser, newBio);
+                JOptionPane.showMessageDialog(null, "Bio updated successfully.");
+                dispose();
+                InstagramProfileUI igProfile = new InstagramProfileUI(currentUser);
+                igProfile.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Bio cannot be empty.");
             }
-
         });
+
         return submitButton;
     }
+
+    
 
     private Component imgaeIcon() {
         ImageIcon profileIcon = new ImageIcon(new ImageIcon("img/storage/profile/" + currentUser.getUsername() + ".png")
@@ -174,6 +177,7 @@ public class EditProfileUI extends JFrame {
             stmt.executeUpdate();
             bioUpdated = true;
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Failed to update bio: " + e.getMessage());
             e.printStackTrace();
         }
     }
