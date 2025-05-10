@@ -71,3 +71,15 @@ IOn this class the database is implemented to retrieve followed users post with 
 
 ### 8: CommentsUI
 In this class the database is used to save, load comments. However not functional :)
+
+### 9: EditPorifleUI
+Here the database is used to update user's bio
+
+### 10: Like Functionality
+Herze the database is used to like user's posts
+
+### 11: ExploreUI
+Here the database is used to retrieve all exisiting pots to populate the discovery/explore page
+
+### 12: NotificationsUI
+Here the database is used to display recents notifications recieved by a user
