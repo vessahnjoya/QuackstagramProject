@@ -44,6 +44,7 @@ java Main
 ```
 
 ## Database
+Schema, Views and Triggers can be found under the DATABASE folder.
 
 The database was implemented in these following classes:
 
