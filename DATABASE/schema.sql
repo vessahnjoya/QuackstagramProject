@@ -73,6 +73,18 @@ CREATE TABLE follow (
     FOREIGN KEY (followed_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
+CREATE TABLE `postlogs` (
+  `log_id` int NOT NULL AUTO_INCREMENT,
+  `message` text,
+  PRIMARY KEY (`log_id`)
+);
+
+CREATE TABLE `follow_log` (
+  `log_id` int NOT NULL AUTO_INCREMENT,
+  `follow_message` text,
+  PRIMARY KEY (`log_id`)
+);
+
 INSERT INTO users (username, user_password, bio, profile_picture_path) VALUES
 ('Louis', 'pslli', 'Bio', 'img/storage/profile/Louis.png'),
 ('abdul', 'inxel1', 'zzzzz', 'img/storage/profile/abdul.png'),
@@ -100,6 +112,7 @@ INSERT INTO post (user_id, caption, image_path, time_stamp, like_count) VALUES
 (2, 'Enter a caption', 'img/uploaded/abdul_1.png', '2025-03-06 16:03:25', 0),
 (2, 'post', 'img/uploaded/abdul_2.png', '2025-03-06 16:06:45', 0);
 
+--Note: Only Insert these after creating the function get_Username
 INSERT INTO notification (recipient_id, sender_id, post_id, message, time_stamp) VALUES
 (5, 4, 1, concat(get_Username(4), ' Liked your post'), '2023-12-17 19:29:41'),
 (6, 5, 7, concat(get_Username(5), ' Liked your post'), '2025-03-10 17:01:22');
