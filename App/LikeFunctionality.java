@@ -76,6 +76,7 @@ public class LikeFunctionality {
             // Step 6: Update label
             likesLabel.setText("Liked!");
             JOptionPane.showMessageDialog(null, "You liked the post.");
+            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,6 +93,8 @@ public class LikeFunctionality {
             if (rs.next()) {
                 return rs.getInt("user_id");
             }
+                        conn.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

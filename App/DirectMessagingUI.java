@@ -48,6 +48,8 @@ public class DirectMessagingUI extends JPanel {
                 userButton.addActionListener(e -> openChat(username));
                 userListPanel.add(userButton);
             }
+            connection.close();
+
 
         } catch (SQLException e) {
             System.out.println("Failed to Load users " + e.getMessage());
@@ -146,6 +148,7 @@ public class DirectMessagingUI extends JPanel {
                 chatArea.append(senderUsername + ": " + message + "\n");
 
             }
+            connection.close();
 
         } catch (SQLException e) {
             System.out.println(
@@ -170,6 +173,7 @@ public class DirectMessagingUI extends JPanel {
                 username = result.getString("username");
                 return username;
             }
+            connection.close();
 
         } catch (SQLException e) {
             System.out.println("Failed to retrieve Username: " + e.getMessage());
@@ -194,6 +198,7 @@ public class DirectMessagingUI extends JPanel {
                 user_id = result.getInt("user_id");
                 return user_id;
             }
+            connection.close();
 
         } catch (SQLException e) {
             System.out.println("Failed to retrieve Username: " + e.getMessage());
@@ -220,6 +225,8 @@ public class DirectMessagingUI extends JPanel {
             statement.setString(3, message);
             statement.setString(4, timestamp);
             statement.executeUpdate();
+            connection.close();
+
         } catch (SQLException e) {
             System.out.println("Failed to save message: " + e.getMessage());
         }

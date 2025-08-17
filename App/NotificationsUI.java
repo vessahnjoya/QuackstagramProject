@@ -56,6 +56,7 @@ public class NotificationsUI extends BaseUI {
 
                 contentPanel.add(notificationPanel);
             }
+            conn.close();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Failed to load notifications: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

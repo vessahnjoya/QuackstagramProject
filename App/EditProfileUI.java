@@ -27,7 +27,6 @@ public class EditProfileUI extends JFrame {
     boolean imgUploaded = false;
     boolean bioUpdated = false;
 
-    private final String credentialsFilePath = "data/credentials.txt";
     private final String profilePhotoStoragePath = "img/storage/profile/";
 
 
@@ -176,6 +175,8 @@ public class EditProfileUI extends JFrame {
             stmt.setString(2, user.getUsername());
             stmt.executeUpdate();
             bioUpdated = true;
+            conn.close();
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Failed to update bio: " + e.getMessage());
             e.printStackTrace();

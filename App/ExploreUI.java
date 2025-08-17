@@ -79,6 +79,7 @@ public class ExploreUI extends BaseUI {
 
                 imageGridPanel.add(imageLabel);
             }
+            conn.close();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Failed to load explore posts: " + e.getMessage());
@@ -110,6 +111,8 @@ public class ExploreUI extends BaseUI {
             if (rs.next()) {
                 timeStamp = rs.getString("time_stamp");
             }
+            conn.close();
+
         } catch (SQLException e) {
             timeStamp = "Unknown";
         }

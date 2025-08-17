@@ -37,6 +37,7 @@ public class InstagramProfileUI extends BaseUI {
             if (rs.next()) {
                 imageCount = rs.getInt("image_count");
             }
+            connection.close();
 
         } catch (SQLException e) {
             System.out.println("Failed to retrieve number of posts " + e.getMessage());
@@ -51,6 +52,7 @@ public class InstagramProfileUI extends BaseUI {
             if (result.next()) {
                 followersCount = result.getInt("followers");
             }
+            connection.close();
 
         } catch (SQLException e) {
             System.out.println("Failed to retrieve followers count " + e.getMessage());
@@ -65,6 +67,7 @@ public class InstagramProfileUI extends BaseUI {
             if (result.next()) {
                 followingCount = result.getInt("following");
             }
+            connection.close();
 
         } catch (SQLException e) {
             System.out.println("Failed to retrieve following count " + e.getMessage());
@@ -147,6 +150,8 @@ public class InstagramProfileUI extends BaseUI {
                 profileImage.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 topHeaderPanel.add(profileImage, BorderLayout.WEST);
             }
+            connection.close();
+
         } catch (SQLException e) {
             System.err.println(
                     "Failed to get profile Image for username: " + loggedInUsername + ", Error: " + e.getMessage());

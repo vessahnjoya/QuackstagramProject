@@ -267,6 +267,8 @@ public class QuakstagramHomeUI extends BaseUI {
                 followedUsersList.append(result.getString("username"));
 
             }
+            connection.close();
+
         } catch (SQLException e) {
             System.out.println("Failed to fetch followed Users: " + e.getMessage());
         }
@@ -294,6 +296,8 @@ public class QuakstagramHomeUI extends BaseUI {
 
                 tempData[count++] = new String[] { imagePoster, description, likes, imagePath };
             }
+            connection.close();
+
         } catch (SQLException e) {
             System.out.println("Failed to load followed Users Post: " + e.getMessage());
         }
@@ -410,6 +414,8 @@ public class QuakstagramHomeUI extends BaseUI {
                 int likes = result.getInt("like_count");
                 postData[2] = "Likes: " + likes;
             }
+            connection.close();
+
         } catch (SQLException e) {
             System.out.println("Failed to refresh Like count for Image_path: " + path + ": " + e.getMessage());
         }

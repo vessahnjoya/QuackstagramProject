@@ -96,6 +96,7 @@ public class CommentsUI {
             statement.setString(3, comment);
             statement.setInt(4, postId);
             statement.executeUpdate();
+            connection.close();
         } catch (SQLException e) {
             System.out.println("Failed to save Comment " + e.getMessage());
         }
@@ -121,6 +122,8 @@ public class CommentsUI {
                 String comment = result.getString("comment_text");
                 commentsArea.append(username + ": " + comment + "\n");
             }
+            connection.close();
+
         } catch (SQLException e) {
             System.out.println("Failed to load Comments: " + e.getMessage());
         }
@@ -154,6 +157,7 @@ public class CommentsUI {
                 postId = result.getInt("post_id");
                 return postId;
             }
+            connection.close();
         } catch (SQLException e) {
             System.out.println("Failed to find post_id: " + e.getMessage());
         }

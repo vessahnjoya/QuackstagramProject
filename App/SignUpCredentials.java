@@ -48,6 +48,7 @@ public class SignUpCredentials {
             statement.executeUpdate();
             // debug statement
             System.out.println("saving worked");
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,6 +66,7 @@ public class SignUpCredentials {
                 var statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             var result = statement.executeQuery();
+            connection.close();
             return result.next();
         } catch (SQLException e) {
             System.out.println("Failed " + e.getMessage());

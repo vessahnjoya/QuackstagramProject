@@ -27,6 +27,8 @@ public class CredentialsVerifier {
                 System.out.println(" login worked");
                 return new User(username, bio, password);
             }
+            connection.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -56,6 +58,8 @@ public class CredentialsVerifier {
                 System.out.println("Retrieved bio for " + username + ": " + bio);
                 return bio;
             }
+            connection.close();
+
         } catch (SQLException e) {
             System.err.println("Failed to get bio for username: " + username + ", Error: " + e.getMessage());
         }

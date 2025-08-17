@@ -195,6 +195,8 @@ public class ImageUploadUI extends BaseUI {
             statement.setString(4, timestamp);
             statement.setInt(5, 0);
             statement.executeUpdate();
+            connection.close();
+
         } catch (SQLException e) {
             System.out.println("Failed to save user post: " + e.getMessage());
         }
